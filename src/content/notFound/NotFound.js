@@ -1,4 +1,10 @@
+import { useEffect } from "react";
+
 const NotFound = () => {
+  useEffect(() => {
+    document.title = "Không tìm thấy trang";
+  }, []);
+
   return (
     <div className="container">
       <div className="containerGhost">
