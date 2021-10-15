@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 const NCC = () => {
   useEffect(() => {
-    document.title = "Distributor Management";
+    document.title = "Quản trị - Nhà cung cấp";
   }, []);
 
   return (

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 const Categories = () => {
   useEffect(() => {
-    document.title = "Category Management";
+    document.title = "Quản trị - Loại hàng";
   }, []);
 
   return (

@@ -6,7 +6,7 @@ import ProfitYears from "./tabs/ProfitYears";
 
 const Reports = () => {
   useEffect(() => {
-    document.title = "Report Management";
+    document.title = "Thống kê";
   }, []);
 
   return (

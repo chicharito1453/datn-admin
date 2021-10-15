@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 const Home = () => {
   useEffect(() => {
-    document.title = "Admin Home";
+    document.title = "Trang chủ";
   }, []);
 
   return (

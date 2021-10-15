@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 const Orders = () => {
   useEffect(() => {
-    document.title = "Order Management";
+    document.title = "Quản trị - Đơn hàng";
   }, []);
 
   return (

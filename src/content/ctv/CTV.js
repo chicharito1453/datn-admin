@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 const CTV = () => {
   useEffect(() => {
-    document.title = "Collaborator Management";
+    document.title = "Quản trị - Cộng tác viên";
   }, []);
 
   return (
