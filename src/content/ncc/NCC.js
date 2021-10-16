@@ -15,7 +15,7 @@ const NCC = () => {
       var height = document.querySelector(".content").style.height;
       document.querySelector(".content").style.height =
         height === "100vh" ? "auto" : "100vh";
-
+      console.log(document.querySelector(".content").style.height);
       window.onresize = function () {}; // Tắt hàm resize content
     };
   }, []);
