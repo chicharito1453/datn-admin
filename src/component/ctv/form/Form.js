@@ -1,6 +1,6 @@
 import ImageCTV from "./ImageCtv";
 import Button from "react-bootstrap/Button";
-import InputGroup from "../../../utils/InputGroup";
+import InputGroup from "../../common/InputGroup";
 
 const Form = () => {
   return (

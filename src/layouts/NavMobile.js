@@ -1,5 +1,4 @@
-import menu from "../routes/menu";
-
+import Menu from "../routes/Menu";
 const NavMobile = () => {
   return (
     <div className="mobile_nav">
@@ -12,12 +11,7 @@ const NavMobile = () => {
         <i className="fas fa-bars nav_btn"></i>
       </div>
       <div className="mobile_nav_items">
-        {menu.map((link, index) => (
-          <a key={index} href={link.to}>
-            <i className={link.classIcon}></i>
-            <span>{link.name}</span>
-          </a>
-        ))}
+        <Menu />
       </div>
     </div>
   );

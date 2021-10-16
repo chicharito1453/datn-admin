@@ -1,4 +1,4 @@
-import menu from "../routes/menu";
+import Menu from "../routes/Menu";
 
 const Sidebar = () => {
   return (
@@ -7,12 +7,7 @@ const Sidebar = () => {
         <img src="/assets/img/avatar.png" className="profile_image" alt="" />
         <h4>Định</h4>
       </div>
-      {menu.map((link, index) => (
-        <a key={index} href={link.to}>
-          <i className={link.classIcon}></i>
-          <span>{link.name}</span>
-        </a>
-      ))}
+      <Menu />
     </div>
   );
 };

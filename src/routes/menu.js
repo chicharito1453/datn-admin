@@ -1,4 +1,4 @@
-const menu = [
+const menuLink = [
   { to: "/", name: "Trang chủ", classIcon: "fas fa-home" },
   { to: "/admin/category", name: "Loại", classIcon: "fas fa-cogs" },
   { to: "/admin/ctv", name: "Cộng tác viên", classIcon: "fas fa-users" },
@@ -7,4 +7,14 @@ const menu = [
   { to: "/admin/order", name: "Đơn hàng", classIcon: "fas fa-box-open" },
   { to: "/admin/report", name: "Thống kê", classIcon: "fas fa-desktop" },
 ];
-export default menu;
+const Menu = () => {
+  return menuLink.map((link, index) => {
+    return (
+      <a key={index} href={link.to}>
+        <i className={link.classIcon}></i>
+        <span>{link.name}</span>
+      </a>
+    );
+  });
+};
+export default Menu;

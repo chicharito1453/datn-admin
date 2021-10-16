@@ -1,9 +1,9 @@
-import InputGroup from "../../../utils/InputGroup";
+import InputGroup from "../../common/InputGroup";
 import Button from "react-bootstrap/Button";
 
 const Form = ({ xemChiTiet }) => {
   return (
-    <form style={{ width: "75%", textAlign: "left" }}>
+    <form style={{ width: "70%", textAlign: "left" }}>
       <br />
       <InputGroup id="fullname" text="Cộng tác viên" />
       <InputGroup id="customer" text="Khách hàng" />

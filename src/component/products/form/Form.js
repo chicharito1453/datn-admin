@@ -1,5 +1,5 @@
-import Image from "../../../utils/Image";
-import InputGroup from "../../../utils/InputGroup";
+import Image from "../../common/Image";
+import InputGroup from "../../common/InputGroup";
 import Description from "./Description";
 import Button from "react-bootstrap/Button";
 
@@ -15,7 +15,7 @@ const ncc = [
 
 const Form = () => {
   return (
-    <form style={{ width: "75%", textAlign: "left" }} id="productForm">
+    <form style={{ width: "70%", textAlign: "left" }} id="productForm">
       <div className="col-sm">
         {/* Trường dữ liệu */}
         <InputGroup id="name" text="Tên sản phẩm" />

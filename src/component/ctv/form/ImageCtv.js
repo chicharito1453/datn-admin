@@ -1,4 +1,4 @@
-import Image from "../../../utils/Image";
+import Image from "../../common/Image";
 
 const ImageCtv = () => {
   return (
