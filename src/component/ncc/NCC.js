@@ -8,21 +8,13 @@ const NCC = () => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    document.title = "Quản trị - Nhà cung cấp";
+    if (!document.title) document.title = "Quản trị - Nhà cung cấp";
+    const $ = document.querySelector.bind(document);
 
-    // Resize lại trang khi form xuất hiện
-    document.querySelector("#showNCC").onclick = function () {
-      var height = document.querySelector(".content").style.height;
-      document.querySelector(".content").style.height =
-        height === "100vh" ? "auto" : "100vh";
-      console.log(document.querySelector(".content").style.height);
-      window.onresize = function () {}; // Tắt hàm resize content
-    };
-  }, []);
-
-  function handleShow() {
-    setShow(!show);
-  }
+    // Resize sử dụng show làm dependencies
+    window.onresize = function () {};
+    $(".content").style.height = show ? "auto" : "100vh";
+  }, [show]);
 
   return (
     <div className="container">
@@ -31,7 +23,7 @@ const NCC = () => {
         style={{ float: "right" }}
         id="showNCC"
         variant="primary"
-        onClick={handleShow}
+        onClick={() => setShow(!show)}
       >
         {!show ? "Thêm Nhà cung cấp" : "Đóng"}
       </Button>

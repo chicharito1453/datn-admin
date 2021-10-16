@@ -1,12 +1,12 @@
 import React from "react";
-import CTV from "../content/ctv/CTV";
-import NCC from "../content/ncc/NCC";
-import Product from "../content/products/Products";
-import Orders from "../content/orders/Orders";
-import Categories from "../content/categories/Categories";
-import Reports from "../content/reports/Reports";
-import Home from "../content/home/Home";
-import NotFound from "../content/notFound/NotFound";
+import CTV from "../component/ctv/CTV";
+import NCC from "../component/ncc/NCC";
+import Product from "../component/products/Products";
+import Orders from "../component/orders/Orders";
+import Categories from "../component/categories/Categories";
+import Reports from "../component/reports/Reports";
+import Home from "../component/home/Home";
+import NotFound from "../component/notFound/NotFound";
 
 const routes = [
   {

@@ -1,11 +1,11 @@
-import Image from "./Image";
+import ImageCTV from "./ImageCtv";
 import Button from "react-bootstrap/Button";
 import InputGroup from "../../../utils/InputGroup";
 
 const Form = () => {
   return (
     <div className="row">
-      <Image />
+      <ImageCTV />
       <div className="col">
         <form id="ctvForm">
           <InputGroup id="username" text="Tài khoản" />

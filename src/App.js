@@ -11,7 +11,7 @@ function App() {
     const $$ = document.querySelectorAll.bind(document);
 
     var browserHeight = window.innerHeight;
-    var contentHeight = document.documentElement.scrollHeight;
+    var contentHeight = document.body.scrollHeight;
 
     // Khi thu Sidebar thì set tittle cho thẻ a trong sidebar
     $("#check").onchange = function () {

@@ -59,7 +59,7 @@ const Home = () => {
         <div className="cloud cloud18"></div>
         <div className="cloud cloud19"></div>
         <div className="greeting">
-          Chúc bạn làm việc tốt ! <i class="fas fa-fist-raised"></i>
+          Chúc bạn làm việc tốt ! <i className="fas fa-fist-raised"></i>
           <span>--Dropshopping web--</span>
         </div>
       </div>

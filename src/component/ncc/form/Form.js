@@ -1,12 +1,12 @@
-import Image from "./Image";
+import ImageNcc from "./ImageNcc";
 import Introduce from "./Introduce";
 import InputGroup from "../../../utils/InputGroup";
 import Button from "react-bootstrap/Button";
 
 const Form = () => {
   return (
-    <div className="row showForm">
-      <Image />
+    <div className="row">
+      <ImageNcc />
       <div className="col">
         <form id="nccForm">
           <InputGroup id="username" text="Tài khoản" />

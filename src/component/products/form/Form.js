@@ -1,4 +1,4 @@
-import Images from "./Images";
+import Image from "../../../utils/Image";
 import InputGroup from "../../../utils/InputGroup";
 import Description from "./Description";
 import Button from "react-bootstrap/Button";
@@ -17,6 +17,7 @@ const Form = () => {
   return (
     <form id="productForm">
       <div className="col-sm">
+        {/* Trường dữ liệu */}
         <InputGroup id="name" text="Tên sản phẩm" />
         <InputGroup id="price" text="Giá" valueD={0} type="number" min="0" />
         <InputGroup
@@ -46,9 +47,30 @@ const Form = () => {
           </div>
         </div>
         <br />
-        <Images />
+        {/* Hình ảnh */}
+        <div className="row">
+          <Image
+            text="Chọn ảnh 1"
+            idFile="link1"
+            idButton="btnLink1"
+            classButton="danger"
+          />
+          <Image
+            text="Chọn ảnh 2"
+            idFile="link2"
+            idButton="btnLink2"
+            classButton="danger"
+          />
+          <Image
+            text="Chọn ảnh 3"
+            idFile="link3"
+            idButton="btnLink3"
+            classButton="danger"
+          />
+        </div>
         <Description />
         <br />
+        {/* Nút */}
         <div className="btnForm">
           <Button type="reset" variant="primary">
             Mới

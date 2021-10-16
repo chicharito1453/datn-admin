@@ -3,34 +3,34 @@ const InputGroup = ({
   text,
   value,
   valueD,
-  type,
+  type = "text",
   disabled,
   min,
   name,
-  nameClass,
-  labelClass,
-  elementClass,
+  nameClass = "mb3",
+  labelClass = "form-label",
+  elementClass = "form-control",
   options,
 }) => {
   return (
-    <div className={nameClass || "mb3"}>
-      <label htmlFor={id} className={labelClass || "form-label"}>
+    <div className={nameClass}>
+      <label htmlFor={id} className={labelClass}>
         {text}
       </label>
-      {(!type || ["number", "email", "radio", "password"].includes(type)) && (
+      {["text", "number", "email", "radio", "password"].includes(type) && (
         <input
-          type={type || "text"}
+          type={type}
           min={min}
           defaultValue={valueD}
           value={value}
           name={name}
-          className={elementClass || "form-control"}
+          className={elementClass}
           id={id}
           disabled={disabled || false}
         />
       )}
       {type === "select" && (
-        <select id={id} className={elementClass || "form-control"}>
+        <select id={id} className={elementClass}>
           {options.map((opt) => (
             <option value={opt.id} key={opt.id}>
               {opt.name}
