@@ -26,16 +26,16 @@ function App() {
       $(".mobile_nav_items").classList.toggle("active");
     };
 
-    // Thiết lập chiều cao cho content
+    // Thiết lập chiều cao cho content khi load trang
     function setHeight() {
       $(".content").style.height =
         contentHeight > browserHeight ? "auto" : "100vh";
     }
 
     // Thiết lập chiều cao cho content khi resize
-    window.addEventListener("resize", function (event) {
+    window.onresize = function () {
       setHeight();
-    });
+    };
     setHeight();
   }, []);
 

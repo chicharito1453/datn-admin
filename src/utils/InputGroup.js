@@ -13,11 +13,11 @@ const InputGroup = ({
   options,
 }) => {
   return (
-    <div className={nameClass}>
+    <div className={nameClass || "mb3"}>
       <label htmlFor={id} className={labelClass || "form-label"}>
         {text}
       </label>
-      {(!type || ["number", "email", "radio"].includes(type)) && (
+      {(!type || ["number", "email", "radio", "password"].includes(type)) && (
         <input
           type={type || "text"}
           min={min}
