@@ -3,8 +3,11 @@ import Details from "./table/Details";
 import TableList from "./table/TableList";
 import { Tabs, Tab } from "react-bootstrap";
 import { useEffect } from "react";
+import { useState } from "react";
 
 const Orders = () => {
+  const [show, setShow] = useState(false);
+
   useEffect(() => {
     document.title = "Quản trị - Đơn hàng";
   }, []);
@@ -17,13 +20,12 @@ const Orders = () => {
         id="uncontrolled-tab-example"
         className="mb-3"
       >
-        <Tab eventKey="home" title="Chi tiết">
-          <div className="row">
-            <Form />
-          </div>
-          <div className="row">
-            <Details />
-          </div>
+        <Tab align="center" eventKey="home" title="Chi tiết">
+          <Form xemChiTiet={() => setShow(!show)} />
+          <br />
+          <br />
+          <br />
+          {show && <Details />}
         </Tab>
         <Tab eventKey="profile" title="Danh sách">
           <div className="row">

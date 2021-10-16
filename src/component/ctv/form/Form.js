@@ -7,7 +7,15 @@ const Form = () => {
     <div className="row">
       <ImageCTV />
       <div className="col">
-        <form id="ctvForm">
+        <form
+          style={{
+            fontSize: 15,
+            width: "60%",
+            height: "80%",
+            marginLeft: "10%",
+          }}
+          id="ctvForm"
+        >
           <InputGroup id="username" text="Tài khoản" />
           <InputGroup id="password" text="Mật khẩu" type="password" />
           <InputGroup id="hoten" text="Họ tên" />

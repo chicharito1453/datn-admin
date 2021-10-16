@@ -1,9 +1,9 @@
 import InputGroup from "../../../utils/InputGroup";
 import Button from "react-bootstrap/Button";
 
-const Form = () => {
+const Form = ({ xemChiTiet }) => {
   return (
-    <form>
+    <form style={{ width: "75%", textAlign: "left" }}>
       <br />
       <InputGroup id="fullname" text="Cộng tác viên" />
       <InputGroup id="customer" text="Khách hàng" />
@@ -38,11 +38,9 @@ const Form = () => {
         />
       </div>
       <div className="btnForm">
-        <Button type="reset" variant="primary">
-          Mới
-        </Button>
-        <Button type="button" variant="primary">
-          Thêm
+        <Button variant="primary">Thêm</Button>
+        <Button variant="primary" onClick={xemChiTiet}>
+          Chi tiết
         </Button>
       </div>
     </form>

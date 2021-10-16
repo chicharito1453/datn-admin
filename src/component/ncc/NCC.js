@@ -9,11 +9,10 @@ const NCC = () => {
 
   useEffect(() => {
     if (!document.title) document.title = "Quản trị - Nhà cung cấp";
-    const $ = document.querySelector.bind(document);
 
     // Resize sử dụng show làm dependencies
     window.onresize = function () {};
-    $(".content").style.height = show ? "auto" : "100vh";
+    document.querySelector(".content").style.height = show ? "auto" : "100vh";
   }, [show]);
 
   return (
@@ -21,7 +20,6 @@ const NCC = () => {
       <h1 className="hit-the-floor">Nhà cung cấp</h1>
       <Button
         style={{ float: "right" }}
-        id="showNCC"
         variant="primary"
         onClick={() => setShow(!show)}
       >

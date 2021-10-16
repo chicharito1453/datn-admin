@@ -16,7 +16,7 @@ const Products = () => {
         id="uncontrolled-tab-example"
         className="mb-3"
       >
-        <Tab eventKey="home" title="Form">
+        <Tab align="center" eventKey="home" title="Form">
           <Form />
           <br />
           <br />

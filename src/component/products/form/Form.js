@@ -15,7 +15,7 @@ const ncc = [
 
 const Form = () => {
   return (
-    <form id="productForm">
+    <form style={{ width: "75%", textAlign: "left" }} id="productForm">
       <div className="col-sm">
         {/* Trường dữ liệu */}
         <InputGroup id="name" text="Tên sản phẩm" />
@@ -72,9 +72,6 @@ const Form = () => {
         <br />
         {/* Nút */}
         <div className="btnForm">
-          <Button type="reset" variant="primary">
-            Mới
-          </Button>
           <Button type="button" variant="primary">
             Thêm
           </Button>

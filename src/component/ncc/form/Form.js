@@ -8,7 +8,15 @@ const Form = () => {
     <div className="row">
       <ImageNcc />
       <div className="col">
-        <form id="nccForm">
+        <form
+          style={{
+            fontSize: 15,
+            width: "60%",
+            height: "80%",
+            marginLeft: "10%",
+          }}
+          id="nccForm"
+        >
           <InputGroup id="username" text="Tài khoản" />
           <InputGroup id="password" text="Mật khẩu" type="password" />
           <InputGroup id="hoten" text="Nhà cung cấp" />

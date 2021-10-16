@@ -6,13 +6,9 @@ const Form = () => {
     <form id="formLoai">
       <InputGroup id="maloai" text="Mã loại" />
       <InputGroup id="tenloai" text="Tên loại" />
+      <br />
       <div className="btnForm">
-        <Button variant="primary" type="reset">
-          Mới
-        </Button>
-        <Button variant="primary" type="button">
-          Thêm
-        </Button>
+        <Button variant="primary">Thêm</Button>
       </div>
     </form>
   );
