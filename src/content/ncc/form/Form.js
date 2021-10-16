@@ -5,24 +5,20 @@ import Button from "react-bootstrap/Button";
 
 const Form = () => {
   return (
-    <div className="row">
+    <div className="row showForm">
       <Image />
       <div className="col">
         <form id="nccForm">
-          <InputGroup id="username" text="Tài khoản" element="0" />
-          <InputGroup id="hoten" text="Nhà cung cấp" element="0" />
-          <InputGroup id="sdt" text="SĐT" element="0" />
-          <InputGroup id="diachi" text="Địa chỉ" element="0" />
+          <InputGroup id="username" text="Tài khoản" />
+          <InputGroup id="password" text="Mật khẩu" type="password" />
+          <InputGroup id="hoten" text="Nhà cung cấp" />
+          <InputGroup id="sdt" text="SĐT" />
+          <InputGroup id="diachi" text="Địa chỉ" />
           <br />
           <Introduce />
           <br />
           <div className="btnForm">
-            <Button type="reset" variant="primary">
-              Mới
-            </Button>
-            <Button type="button" variant="primary">
-              Thêm
-            </Button>
+            <Button variant="primary">Lưu</Button>
           </div>
         </form>
       </div>
