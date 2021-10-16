@@ -8,11 +8,12 @@ const Form = () => {
       <Image />
       <div className="col">
         <form id="ctvForm">
-          <InputGroup nameClass="mb-3" id="username" text="Tài khoản" />
-          <InputGroup nameClass="mb-3" id="hoten" text="Họ tên" />
-          <InputGroup nameClass="mb-3" id="email" text="Email" type="email" />
-          <InputGroup nameClass="mb-3" id="sdt" text="SĐT" />
-          <InputGroup nameClass="mb-3" id="diachi" name="Địa chỉ" />
+          <InputGroup id="username" text="Tài khoản" />
+          <InputGroup id="password" text="Mật khẩu" type="password" />
+          <InputGroup id="hoten" text="Họ tên" />
+          <InputGroup id="email" text="Email" type="email" />
+          <InputGroup id="sdt" text="SĐT" />
+          <InputGroup id="diachi" text="Địa chỉ" />
           <br />
           <div className="col-md-6">
             <label htmlFor="nam" className="form-label">
