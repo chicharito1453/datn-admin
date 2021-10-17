@@ -1735,6 +1735,21 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/datatables.net-buttons@^1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@types/datatables.net-buttons/-/datatables.net-buttons-1.4.7.tgz#1ecbc6465abab0123fff80979824705cdacc72f3"
+  integrity sha512-BicCRXPmHoLReYvEBD35aZIkXptUP61pXD6N5t82Xh4+gquErTqDiqOY7V5kFLIleMsZJY/IZp2XlCFhzFiGKw==
+  dependencies:
+    "@types/datatables.net" "*"
+    "@types/jquery" "*"
+
+"@types/datatables.net@*":
+  version "1.10.21"
+  resolved "https://registry.yarnpkg.com/@types/datatables.net/-/datatables.net-1.10.21.tgz#dcb0b1c9a0b3051ad04754f7f605ef21e1cdcb3d"
+  integrity sha512-fXtWlm70PUEv0k5NfpI+BmHTTHxU6XMkKF0B2G3ly2g64EUYJc2SuNI9hZ7l/+aComO0IpLv0eLAOHGEfzMFiQ==
+  dependencies:
+    "@types/jquery" "*"
+
 "@types/eslint@^7.2.6":
   version "7.2.6"
   resolved "https://registry.yarnpkg.com/@types/eslint/-/eslint-7.2.6.tgz#5e9aff555a975596c03a98b59ecd103decc70c3c"
@@ -1804,6 +1819,13 @@
   dependencies:
     jest-diff "^27.0.0"
     pretty-format "^27.0.0"
+
+"@types/jquery@*":
+  version "3.5.7"
+  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.5.7.tgz#07614671f79c6ad70633bb2d8977f01cea242e27"
+  integrity sha512-Why+9t1KuqWtIqYKtbk6wgWbE1PjyXJOyGkpmTUh0RX5p4HL7nnRuBkjAO9P2r9tGQP6bLWxl77jRLew3V5xXg==
+  dependencies:
+    "@types/sizzle" "*"
 
 "@types/json-schema@*", "@types/json-schema@^7.0.3", "@types/json-schema@^7.0.5", "@types/json-schema@^7.0.6":
   version "7.0.7"
@@ -1877,6 +1899,11 @@
   version "0.16.2"
   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
+
+"@types/sizzle@*":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@types/sizzle/-/sizzle-2.3.3.tgz#ff5e2f1902969d305225a047c8a0fd5c915cebef"
+  integrity sha512-JYM8x9EGF163bEyhdJBpR2QX1R5naCJHC8ucJylJ3w9/CVBaskdQ8WqBf8MmQrd1kRvp/a4TS8HJ+bxzR7ZJYQ==
 
 "@types/source-list-map@*":
   version "0.1.2"
@@ -3986,6 +4013,38 @@ data-urls@^2.0.0:
     abab "^2.0.3"
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
+
+datatables.net-buttons-dt@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/datatables.net-buttons-dt/-/datatables.net-buttons-dt-2.0.1.tgz#184bace6f29c77885ba3a2c399802247e847fedb"
+  integrity sha512-AjfXdeaTjSj629BE7htiGHLfTNT1thUWfv5YZXJiJYFwfdITG6BtBR1VJwdaTUY+Fe+w0rKIetfprvEKQjg2yw==
+  dependencies:
+    datatables.net-buttons ">=1.7.1"
+    datatables.net-dt ">=1.10.25"
+    jquery ">=1.7"
+
+datatables.net-buttons@>=1.7.1, datatables.net-buttons@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/datatables.net-buttons/-/datatables.net-buttons-2.0.1.tgz#0ffd52dcc9921766f9ea5144dc610f1f45712cf7"
+  integrity sha512-Vl64BZmBWCpenE2OB+DMnsl4FX/timC9KHvjxyLoCedfIWJcuwQxJ9netMXgsd9dfl7XLQfYn4S1ObgvrrZzsw==
+  dependencies:
+    datatables.net ">=1.10.25"
+    jquery ">=1.7"
+
+datatables.net-dt@>=1.10.25, datatables.net-dt@^1.11.3:
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/datatables.net-dt/-/datatables.net-dt-1.11.3.tgz#242556a490585b457b7d2b9f5fd8fb10761d621b"
+  integrity sha512-EX/thRwXpQRj8hZSb+ZMDNQ4uW1zLZa9BoAhhw1b5HIDH1nJ9WRTkERsoxE+3WISeX8bDiaEydf8TTQBSqxXVw==
+  dependencies:
+    datatables.net ">=1.10.25"
+    jquery ">=1.7"
+
+datatables.net@>=1.10.25:
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/datatables.net/-/datatables.net-1.11.3.tgz#80e691036efcd62467558ee64c07dd566cb761b4"
+  integrity sha512-VMj5qEaTebpNurySkM6jy6sGpl+s6onPK8xJhYr296R/vUBnz1+id16NVqNf9z5aR076OGcpGHCuiTuy4E05oQ==
+  dependencies:
+    jquery ">=1.7"
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0, debug@^2.6.9:
   version "2.6.9"
@@ -6779,7 +6838,7 @@ jest@26.6.0:
     import-local "^3.0.2"
     jest-cli "^26.6.0"
 
-jquery@^3.6.0:
+jquery@>=1.7, jquery@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
   integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==

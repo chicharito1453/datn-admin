@@ -1,30 +1,34 @@
+import $ from "jquery";
+import categories from "../../testApi/categories";
+import configTable from "../../common/configTable";
+import { useEffect } from "react";
+
 const Table = () => {
+  useEffect(() => {
+    configTable.columns = [{ data: "id" }, { data: "name" }];
+    var table = $("#dataTable").DataTable(configTable);
+    table.clear().draw();
+    table.rows.add(categories).draw();
+  }, []);
+
   return (
-    <div className="table-responsive">
-      <table className="table">
-        <thead>
+    <div
+      style={{ height: 600, overflowY: "hidden" }}
+      className="table-responsive"
+    >
+      <br />
+      <table
+        id="dataTable"
+        className="table table-striped table-borderless table-hover table-md table-responsive-sm"
+        cellSpacing="0"
+      >
+        <thead className="thead-blue">
           <tr>
             <th>Mã loại</th>
             <th>Tên loại</th>
-            <th></th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>LT</td>
-            <td>Laptop</td>
-            <td>
-              <i className="fas fa-edit"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>TV</td>
-            <td>Tivi</td>
-            <td>
-              <i className="fas fa-edit"></i>
-            </td>
-          </tr>
-        </tbody>
+        <tbody></tbody>
       </table>
     </div>
   );
