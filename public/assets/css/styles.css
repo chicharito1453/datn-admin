@@ -4,6 +4,12 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+/* thead table */
+.table .thead-blue {
+  background-color: #0066cc;
+  color: #fff;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
