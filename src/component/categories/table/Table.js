@@ -1,6 +1,6 @@
 import $ from "jquery";
 import categories from "../../testApi/categories";
-import configTable from "../../common/configTable";
+import configTable from "../../../utils/configTable";
 import { useEffect } from "react";
 
 const Table = () => {
