@@ -12,7 +12,9 @@ const CTV = () => {
 
     // Resize sử dụng show làm dependencies
     window.onresize = function () {};
-    document.querySelector(".content").style.height = show ? "auto" : "100vh";
+    document.querySelector(".content").style.height = show
+      ? "auto"
+      : window.innerHeight - 65 + "px";
   }, [show]);
 
   return (
