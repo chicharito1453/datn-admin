@@ -4,8 +4,11 @@ const configTable = {
   destroy: true,
   pagingType: "full_numbers",
   pageLength: 10,
-  lengthChange: false,
-  dom: "Bfrtip",
+  lengthMenu: [
+    [5, 10, 25, -1],
+    [5, 10, 25, "All"],
+  ],
+  dom: "Blfrtip",
   buttons: [
     {
       extend: "copy",
@@ -13,9 +16,14 @@ const configTable = {
       className: "btn btn-primary",
     },
     {
-      extend: "csv",
+      extend: "excelHtml5",
       text: '<div><i class="far fa-file-excel"></i> Excel</div>',
       className: "btn btn-success",
+    },
+    {
+      extend: "csv",
+      text: '<div><i class="fas fa-file-csv"></i> CSV</div>',
+      className: "btn btn-secondary",
     },
     {
       extend: "print",
