@@ -20,33 +20,39 @@ function App() {
     const $ = document.querySelector.bind(document);
     const $$ = document.querySelectorAll.bind(document);
 
-    var browserHeight = window.innerHeight;
-    var contentHeight = document.body.scrollHeight;
+    $(".content").style.height = window.innerHeight - 60 + "px";
 
-    // Khi thu Sidebar thì set tittle cho thẻ a trong sidebar
-    $("#check").onchange = function () {
-      var check = this.checked;
-      $$(".sidebar a").forEach((element) => {
-        element.title = check ? element.text : "";
-      });
-    };
+    setTimeout(() => {
+      var browserHeight = window.innerHeight;
+      var contentHeight = document.body.scrollHeight;
 
-    // Đóng mở nav khi responsive
-    $(".nav_btn").onclick = function (e) {
-      $(".mobile_nav_items").classList.toggle("active");
-    };
+      // Khi thu Sidebar thì set tittle cho thẻ a trong sidebar
+      $("#check").onchange = function () {
+        var check = this.checked;
+        $$(".sidebar a").forEach((element) => {
+          element.title = check ? element.text : "";
+        });
+      };
 
-    // Thiết lập chiều cao cho content khi load trang
-    function setHeight() {
-      $(".content").style.height =
-        contentHeight > browserHeight ? "auto" : "100vh";
-    }
+      // Đóng mở nav khi responsive
+      $(".nav_btn").onclick = function (e) {
+        $(".mobile_nav_items").classList.toggle("active");
+      };
 
-    // Thiết lập chiều cao cho content khi resize
-    window.onresize = function () {
+      // Thiết lập chiều cao cho content khi load trang
+      function setHeight() {
+        $(".content").style.height =
+          contentHeight > browserHeight
+            ? "auto"
+            : window.innerHeight - 60 + "px";
+      }
+
+      // Thiết lập chiều cao cho content khi resize
+      window.onresize = function () {
+        setHeight();
+      };
       setHeight();
-    };
-    setHeight();
+    }, 700);
   }, []);
 
   return (
