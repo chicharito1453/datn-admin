@@ -5,8 +5,8 @@ body {
 }
 
 /* thead table */
-.table .thead-blue {
-  background-color: #0066cc;
+.table .thead-dark {
+  background-color: #2f323a;
   color: #fff;
 }
 
@@ -249,7 +249,7 @@ label #sidebar_btn:hover {
   height: auto;
   margin-left: 255px;
   padding-top: 65px;
-  background: url(../img/background.jpg) no-repeat;
+  background: url(../img/light-theme1.jpg) no-repeat;
   background-position: center;
   background-size: cover;
   transition: 0.5s;
