@@ -4,6 +4,16 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+.loading-screen {
+  /* Phần loading screen */
+  left: 45%;
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  top: 20%;
+  z-index: 10000;
+}
+
 /* thead table */
 .table .thead-dark {
   background-color: #2f323a;
@@ -269,6 +279,15 @@ label #sidebar_btn:hover {
 }
 /* Responsive css */
 @media screen and (max-width: 780px) {
+  /* Phần loading screen */
+  .loading-screen {
+    left: 34%;
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    top: 30%;
+    z-index: 10000;
+  }
   /* Phần header */
   .left-area h3 {
     color: #fff;
@@ -443,6 +462,29 @@ label #sidebar_btn:hover {
   .top {
     font-size: 10px;
     margin-top: 50px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  /* Phần loading screen */
+  .loading-screen {
+    left: 28%;
+    position: fixed;
+    width: 280px;
+    height: 280px;
+    top: 30%;
+    z-index: 10000;
+  }
+}
+@media screen and (max-width: 350px) {
+  /* Phần loading screen */
+  .loading-screen {
+    left: 20%;
+    position: fixed;
+    width: 250px;
+    height: 250px;
+    top: 30%;
+    z-index: 10000;
   }
 }
 @media screen and (max-width: 300px) {
