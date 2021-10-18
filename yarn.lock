@@ -6991,6 +6991,11 @@ jsprim@^1.2.2:
     array-includes "^3.1.2"
     object.assign "^4.1.2"
 
+jzip@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/jzip/-/jzip-1.0.0.tgz#78e15fc5cfd3387315900473d7efe85bc52d6f8c"
+  integrity sha1-eOFfxc/TOHMVkARz1+/oW8Utb4w=
+
 killable@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/killable/-/killable-1.0.1.tgz#4c8ce441187a061c7474fb87ca08e2a638194892"
