@@ -12,17 +12,14 @@ const Table = () => {
   }, []);
 
   return (
-    <div
-      style={{ height: 600, overflowY: "hidden" }}
-      className="table-responsive"
-    >
+    <div style={{ height: 600 }} className="table-responsive">
       <br />
       <table
         id="dataTable"
         className="table table-striped table-borderless table-hover table-md table-responsive-sm"
         cellSpacing="0"
       >
-        <thead className="thead-blue">
+        <thead className="thead-dark">
           <tr>
             <th>Mã loại</th>
             <th>Tên loại</th>
