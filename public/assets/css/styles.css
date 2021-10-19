@@ -3,11 +3,16 @@ body {
   padding: 0;
   font-family: "Roboto", sans-serif;
 }
-
+/* Phần loading screen */
+.wraper-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .loading-screen {
-  /* Phần loading screen */
   width: 400px;
   height: 400px;
+  margin-top: 5%;
   z-index: 10000;
 }
 
@@ -54,7 +59,6 @@ table .fa {
 }
 /* Trang collaborators */
 #ctvForm label {
-  font-weight: 600;
   margin-left: 5px;
 }
 #btnImage {
@@ -72,7 +76,6 @@ table .fa {
 }
 /* Trang distributors */
 #nccForm label {
-  font-weight: 600;
   margin-left: 5px;
 }
 #btnLogoNcc {
@@ -84,10 +87,6 @@ table .fa {
   width: 100%;
 }
 /* Trang products */
-#productForm label {
-  font-weight: 600;
-}
-
 #productForm #link1,
 #link2,
 #link3 {
@@ -259,9 +258,6 @@ label #sidebar_btn:hover {
   width: calc(100% - 255px);
   margin-top: 60px;
   padding: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: auto;
   margin-left: 255px;
   padding-top: 65px;
@@ -287,8 +283,8 @@ label #sidebar_btn:hover {
 @media screen and (max-width: 780px) {
   /* Phần loading screen */
   .loading-screen {
-    width: 300px;
-    height: 300px;
+    width: 350px;
+    height: 350px;
     z-index: 10000;
   }
   /* Phần header */
@@ -467,7 +463,6 @@ label #sidebar_btn:hover {
     margin-top: 50px;
   }
 }
-
 @media screen and (max-width: 300px) {
   /* Phần loading screen */
   .loading-screen {
@@ -721,12 +716,12 @@ Nguồn : https://codepen.io/lgrqvst/pen/LLbPzx
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100%;
   background: rgba(0, 0, 0, 0.1);
 }
 
 .body {
-  width: 1200px;
+  width: 800px;
   max-width: 100%;
   position: relative;
   border-radius: 10px;
