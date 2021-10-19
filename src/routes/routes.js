@@ -16,32 +16,32 @@ const routes = [
   },
   {
     path: "/admin/ctv",
-    exact: false,
+    exact: true,
     main: () => <CTV />,
   },
   {
     path: "/admin/ncc",
-    exact: false,
+    exact: true,
     main: () => <NCC />,
   },
   {
     path: "/admin/product",
-    exact: false,
+    exact: true,
     main: () => <Product />,
   },
   {
     path: "/admin/order",
-    exact: false,
+    exact: true,
     main: () => <Orders />,
   },
   {
     path: "/admin/category",
-    exact: false,
+    exact: true,
     main: () => <Categories />,
   },
   {
     path: "/admin/report",
-    exact: false,
+    exact: true,
     main: () => <Reports />,
   },
   {
