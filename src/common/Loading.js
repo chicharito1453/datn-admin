@@ -12,8 +12,10 @@ const defaultOptions = {
 
 const Loading = () => {
   return (
-    <div className="loading-screen">
-      <Lottie options={defaultOptions} />
+    <div className="wraper-loading">
+      <div className="loading-screen">
+        <Lottie options={defaultOptions} />
+      </div>
     </div>
   );
 };
