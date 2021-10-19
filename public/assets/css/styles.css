@@ -6,11 +6,8 @@ body {
 
 .loading-screen {
   /* Phần loading screen */
-  left: 45%;
-  position: fixed;
   width: 400px;
   height: 400px;
-  top: 20%;
   z-index: 10000;
 }
 
@@ -57,6 +54,7 @@ table .fa {
 }
 /* Trang collaborators */
 #ctvForm label {
+  font-weight: 600;
   margin-left: 5px;
 }
 #btnImage {
@@ -74,6 +72,7 @@ table .fa {
 }
 /* Trang distributors */
 #nccForm label {
+  font-weight: 600;
   margin-left: 5px;
 }
 #btnLogoNcc {
@@ -85,6 +84,10 @@ table .fa {
   width: 100%;
 }
 /* Trang products */
+#productForm label {
+  font-weight: 600;
+}
+
 #productForm #link1,
 #link2,
 #link3 {
@@ -256,6 +259,9 @@ label #sidebar_btn:hover {
   width: calc(100% - 255px);
   margin-top: 60px;
   padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: auto;
   margin-left: 255px;
   padding-top: 65px;
@@ -281,11 +287,8 @@ label #sidebar_btn:hover {
 @media screen and (max-width: 780px) {
   /* Phần loading screen */
   .loading-screen {
-    left: 34%;
-    position: fixed;
     width: 300px;
     height: 300px;
-    top: 30%;
     z-index: 10000;
   }
   /* Phần header */
@@ -465,29 +468,13 @@ label #sidebar_btn:hover {
   }
 }
 
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 300px) {
   /* Phần loading screen */
   .loading-screen {
-    left: 28%;
-    position: fixed;
-    width: 280px;
-    height: 280px;
-    top: 30%;
-    z-index: 10000;
-  }
-}
-@media screen and (max-width: 350px) {
-  /* Phần loading screen */
-  .loading-screen {
-    left: 20%;
-    position: fixed;
     width: 250px;
     height: 250px;
-    top: 30%;
     z-index: 10000;
   }
-}
-@media screen and (max-width: 300px) {
   /* Phần header */
   header {
     z-index: 1;
