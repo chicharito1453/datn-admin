@@ -1,5 +1,5 @@
-import Image from "../../common/Image";
-import InputGroup from "../../common/InputGroup";
+import Image from "../../../common/Image";
+import InputGroup from "../../../common/InputGroup";
 import Description from "./Description";
 import Button from "react-bootstrap/Button";
 

@@ -1,4 +1,4 @@
-import Menu from "../component/common/Menu";
+import Menu from "../common/Menu";
 
 const Sidebar = () => {
   return (

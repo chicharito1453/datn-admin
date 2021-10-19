@@ -1,6 +1,6 @@
 import ImageNcc from "./ImageNcc";
 import Introduce from "./Introduce";
-import InputGroup from "../../common/InputGroup";
+import InputGroup from "../../../common/InputGroup";
 import Button from "react-bootstrap/Button";
 
 const Form = () => {
