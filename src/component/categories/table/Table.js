@@ -1,25 +1,29 @@
-import Datatable from "../../../datatables/Datatable";
+import Datatable from "../../../utils/datatable/Datatable";
 import {
   headingsLoai,
   columnsLoai,
   urlLoai,
-} from "../../../datatables/configData";
+  eventLoai,
+} from "../../../utils/datatable/configData";
 import { useEffect } from "react";
 
 const Table = () => {
   useEffect(() => {
-    var myFunction = setInterval(() => {
-      var chooseer = document.querySelectorAll("#dataTable #name");
-      if (chooseer.length > 0) {
-        chooseer.forEach((element) => {
-          element.addEventListener("change", () => nohope(element, 2));
-        });
-        clearInterval(myFunction);
+    eventLoai.forEach((temp) => {
+      if (temp.selector === "#id") {
+        temp.operation = cohope;
       }
-    }, 10);
+      if (temp.selector === "#name") {
+        temp.operation = nohope;
+      }
+    });
   }, []);
-  function nohope(element, thaotac) {
-    console.log(thaotac, element.value);
+
+  function nohope(value, thaotac) {
+    console.log(thaotac, value);
+  }
+  function cohope(value) {
+    console.log(value);
   }
   return (
     <Datatable
@@ -27,6 +31,7 @@ const Table = () => {
       headings={headingsLoai}
       columns={columnsLoai}
       url={urlLoai}
+      addEvents={eventLoai}
     />
   );
 };
