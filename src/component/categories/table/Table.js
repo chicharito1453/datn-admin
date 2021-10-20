@@ -1,33 +1,33 @@
-import $ from "jquery";
-import categories from "../../testApi/categories";
-import configTable from "../../../utils/configTable";
+import Datatable from "../../../datatables/Datatable";
+import {
+  headingsLoai,
+  columnsLoai,
+  urlLoai,
+} from "../../../datatables/configData";
 import { useEffect } from "react";
 
 const Table = () => {
   useEffect(() => {
-    configTable.columns = [{ data: "id" }, { data: "name" }];
-    var table = $("#dataTable").DataTable(configTable);
-    table.clear().draw();
-    table.rows.add(categories).draw();
+    var myFunction = setInterval(() => {
+      var chooseer = document.querySelectorAll("#dataTable #name");
+      if (chooseer.length > 0) {
+        chooseer.forEach((element) => {
+          element.addEventListener("change", () => nohope(element, 2));
+        });
+        clearInterval(myFunction);
+      }
+    }, 10);
   }, []);
-
+  function nohope(element, thaotac) {
+    console.log(thaotac, element.value);
+  }
   return (
-    <div style={{ height: 600 }} className="table-responsive">
-      <br />
-      <table
-        id="dataTable"
-        className="table table-striped table-borderless table-hover table-md table-responsive-sm"
-        cellSpacing="0"
-      >
-        <thead className="thead-dark">
-          <tr>
-            <th>Mã loại</th>
-            <th>Tên loại</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+    <Datatable
+      id="dataTable"
+      headings={headingsLoai}
+      columns={columnsLoai}
+      url={urlLoai}
+    />
   );
 };
 export default Table;
