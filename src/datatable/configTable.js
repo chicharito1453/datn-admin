@@ -31,6 +31,6 @@ const configTable = {
       className: "btn btn-danger ",
     },
   ],
-  columns: [],
+  columnDefs: [],
 };
 export default configTable;
