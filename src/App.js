@@ -42,7 +42,7 @@ function App() {
         setHeight();
       };
 
-      console.clear();
+      // console.clear();
       setHeight();
     }, 700);
   }, []);
