@@ -18,6 +18,12 @@ const reducerLoai = (state, action) => {
       localStorage.removeItem("categories");
       return state;
 
+    case "TEST1":
+      console.log("1");
+      return state;
+    case "TEST2":
+      console.log("2");
+      return state;
     default:
       return state;
   }
