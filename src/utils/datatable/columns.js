@@ -1,5 +1,4 @@
-// Table loại
-export const headingsLoai = ["Mã loại", "Tên loại"];
+// table loại
 export const columnsLoai = [
   {
     data: "id",
@@ -18,16 +17,5 @@ export const columnsLoai = [
       }
       return data;
     },
-  },
-];
-export const urlLoai = "https://reqres.in/api/users?page=2";
-export const eventLoai = [
-  {
-    selector: "#name",
-    event: "change",
-  },
-  {
-    selector: "#id",
-    event: "change",
   },
 ];
