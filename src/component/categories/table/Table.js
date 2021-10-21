@@ -2,35 +2,29 @@ import Datatable from "../../../utils/datatable/Datatable";
 import {
   headingsLoai,
   columnsLoai,
-  urlLoai,
   eventLoai,
 } from "../../../utils/datatable/configData";
-import { useEffect } from "react";
+import reducerLoai from "../../../reducer/reducerLoai";
+import { useEffect, useReducer } from "react";
 
 const Table = () => {
+  const [data, dispatch] = useReducer(reducerLoai, []);
+
   useEffect(() => {
-    eventLoai.forEach((temp) => {
-      if (temp.selector === "#id") {
-        temp.operation = cohope;
-      }
-      if (temp.selector === "#name") {
-        temp.operation = nohope;
-      }
-    });
+    dispatch({ type: "GETLIST" });
   }, []);
 
-  function nohope(value, thaotac) {
-    console.log(thaotac, value);
+  function test(e) {
+    console.log(e.target.value);
   }
-  function cohope(value) {
-    console.log(value);
-  }
+
   return (
     <Datatable
       id="dataTable"
+      test={test}
       headings={headingsLoai}
       columns={columnsLoai}
-      url={urlLoai}
+      data={data}
       addEvents={eventLoai}
     />
   );
