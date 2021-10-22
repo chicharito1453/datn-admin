@@ -1,5 +1,4 @@
 import Datatable from "../../../utils/datatable/Datatable";
-import { eventLoai } from "../../../utils/datatable/events";
 import { columnsLoai } from "../../../utils/datatable/columns";
 import { headingLoai } from "../../../utils/datatable/headings";
 import reducerLoai from "../../../reducer/reducerLoai";
@@ -18,8 +17,6 @@ const Table = () => {
       headings={headingLoai}
       columns={columnsLoai}
       data={data}
-      addEvents={eventLoai}
-      myReducer={reducerLoai}
     />
   );
 };
