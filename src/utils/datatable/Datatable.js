@@ -8,13 +8,11 @@ import "datatables.net-buttons/js/buttons.colVis.js";
 import "datatables.net-buttons/js/buttons.flash.js";
 import "datatables.net-buttons/js/buttons.html5.js";
 import "datatables.net-buttons/js/buttons.print.js";
-import { useEffect, useReducer } from "react";
+import { useEffect } from "react";
 const jzip = require("jzip");
 window.JSZip = jzip;
 
-const Datatable = ({ id, headings, columns, data, addEvents, myReducer }) => {
-  const [list, dispatch] = useReducer(myReducer, data);
-
+const Datatable = ({ id, headings, columns, data }) => {
   useEffect(() => {
     var table = $("#" + id).DataTable({
       ...configTable,
@@ -24,22 +22,22 @@ const Datatable = ({ id, headings, columns, data, addEvents, myReducer }) => {
     table.clear().draw();
     table.rows.add(data).draw();
     // Them su kien
-    addEvents.forEach((addEvent) => {
-      const myFunction = setInterval(() => {
-        var chooseer = document.querySelectorAll(
-          "#" + id + " " + addEvent.selector
-        );
-        if (chooseer.length > 0) {
-          chooseer.forEach((element) => {
-            element.addEventListener(addEvent.event, () =>
-              dispatch({ type: addEvent.operation, thaotac: addEvent.thaotac })
-            );
-          });
-          clearInterval(myFunction);
-        }
-      }, 10);
-    });
-  }, [id, columns, data, addEvents]);
+    // addEvents.forEach((addEvent) => {
+    //   const myFunction = setInterval(() => {
+    //     var chooseer = document.querySelectorAll(
+    //       "#" + id + " " + addEvent.selector
+    //     );
+    //     if (chooseer.length > 0) {
+    //       chooseer.forEach((element) => {
+    //         element.addEventListener(addEvent.event, () =>
+    //           dispatch({ type: addEvent.operation, thaotac: addEvent.thaotac })
+    //         );
+    //       });
+    //       clearInterval(myFunction);
+    //     }
+    //   }, 10);
+    // });
+  }, [id, columns, data]);
 
   return (
     <div style={{ height: 600 }} className="table-responsive">

@@ -4,7 +4,7 @@ export const columnsLoai = [
     data: "id",
     render: (data, type, row, meta) => {
       if (type === "display") {
-        data = `<input id="id" style="border: none;background-color: rgba(0, 0, 0, 0);" value="${data}" />`;
+        data = `<input style="border: none;background-color: rgba(0, 0, 0, 0);" value="${data}" />`;
       }
       return data;
     },
@@ -13,7 +13,7 @@ export const columnsLoai = [
     data: "name",
     render: (data, type, row, meta) => {
       if (type === "display") {
-        data = `<input id="name" style="border: none;background-color: rgba(0, 0, 0, 0);" value="${data}" />`;
+        data = `<input onchange="update_tenloai(${row.id},this.value)" style="border: none;background-color: rgba(0, 0, 0, 0);" value="${data}" />`;
       }
       return data;
     },
