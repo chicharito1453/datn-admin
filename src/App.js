@@ -45,7 +45,7 @@ function App() {
       // console.clear();
       setHeight();
     }, 700);
-  }, []);
+  });
 
   return (
     <React.Fragment>
