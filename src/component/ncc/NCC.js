@@ -14,7 +14,7 @@ const NCC = () => {
     window.onresize = function () {};
     document.querySelector(".content").style.height = show
       ? "auto"
-      : window.innerHeight - 65 + "px";
+      : window.innerHeight - 60 + "px";
   }, [show]);
 
   return (
