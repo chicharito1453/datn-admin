@@ -5,11 +5,11 @@ import Sidebar from "./layouts/Sidebar";
 import React from "react";
 import { useEffect } from "react";
 
+const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
+
 function App() {
   useEffect(() => {
-    const $ = document.querySelector.bind(document);
-    const $$ = document.querySelectorAll.bind(document);
-
     $(".content").style.height = window.innerHeight - 60 + "px";
 
     setTimeout(() => {
@@ -42,7 +42,6 @@ function App() {
         setHeight();
       };
 
-      // console.clear();
       setHeight();
     }, 700);
   });
