@@ -1,20 +1,11 @@
-import Lottie from "react-lottie";
+import Lottie from "react-lottie-player";
 import * as waiting from "./waiting.json";
-
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: waiting.default,
-  rendererSettings: {
-    preserveAspectRatio: "xMidYMid slice",
-  },
-};
 
 const Loading = () => {
   return (
     <div className="wraper-loading">
       <div className="loading-screen">
-        <Lottie options={defaultOptions} />
+        <Lottie loop animationData={waiting} play />
       </div>
     </div>
   );
