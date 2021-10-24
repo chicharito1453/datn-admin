@@ -1,8 +1,7 @@
 import Form from "./form/Form";
 import Table from "./table/Table";
 import Button from "react-bootstrap/Button";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const NCC = () => {
   const [show, setShow] = useState(false);

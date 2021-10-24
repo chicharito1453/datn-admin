@@ -1,8 +1,7 @@
 import Table from "./table/Table";
 import Form from "./form/Form";
 import Button from "react-bootstrap/Button";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const CTV = () => {
   const [show, setShow] = useState(false);
