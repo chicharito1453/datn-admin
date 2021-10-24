@@ -8,13 +8,14 @@ const reducerLoai = (state, action) => {
           "https://jsonplaceholder.typicode.com/users"
         );
         if (error) {
-          console.log("Error");
+          console.log("Error: lấy danh sách loại bị lỗi");
           return false;
         }
         localStorage.setItem("categories", JSON.stringify(resp.data));
         return true;
       })();
-      state = JSON.parse(localStorage.getItem("categories"));
+      const json = JSON.parse(localStorage.getItem("categories"));
+      state = json || state;
       localStorage.removeItem("categories");
       return state;
 
