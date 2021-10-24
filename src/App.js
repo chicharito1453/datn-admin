@@ -3,13 +3,13 @@ import Header from "./layouts/Header";
 import NavMobile from "./layouts/NavMobile";
 import Sidebar from "./layouts/Sidebar";
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
 function App() {
-  useEffect(() => {
+  const setHeightPage = useCallback(() => {
     $(".content").style.height = window.innerHeight - 60 + "px";
 
     setTimeout(() => {
@@ -44,7 +44,11 @@ function App() {
 
       setHeight();
     }, 700);
-  });
+  }, []);
+
+  useEffect(() => {
+    setHeightPage();
+  }, [setHeightPage]);
 
   return (
     <React.Fragment>
