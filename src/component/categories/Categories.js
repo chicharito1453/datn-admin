@@ -1,15 +1,22 @@
 import Form from "./form/Form";
 import Table from "./table/Table";
 import Button from "react-bootstrap/Button";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 const Categories = () => {
   const [show, setShow] = useState(false);
+  const setHeight = useCallback(() => {
+    // Resize sử dụng show làm dependencies
+    window.onresize = function () {};
+    document.querySelector(".content").style.height = show
+      ? "auto"
+      : window.innerHeight - 60 + "px";
+  }, [show]);
 
   useEffect(() => {
-    document.title = "Quản trị - Loại hàng";
-  }, []);
+    if (!document.title) document.title = "Quản trị - Loại hàng";
+    setHeight();
+  }, [setHeight]);
 
   return (
     <div className="container">
