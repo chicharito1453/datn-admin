@@ -1,6 +1,6 @@
 import Datatable from "../../../utils/datatable/Datatable";
-import { columnsLoai } from "../../../utils/datatable/columns";
 import { headingLoai } from "../../../utils/datatable/headings";
+import configLoai from "../../../utils/datatable/config/configLoai";
 import reducerLoai from "../../../reducer/reducerLoai";
 import { useEffect, useReducer } from "react";
 
@@ -15,8 +15,8 @@ const Table = () => {
     <Datatable
       id="dataTable"
       headings={headingLoai}
-      columns={columnsLoai}
       data={data}
+      config={configLoai}
     />
   );
 };
