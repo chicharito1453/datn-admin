@@ -11,6 +11,7 @@ const InputGroup = ({
   labelClass = "form-label",
   elementClass = "form-control",
   options,
+  changed,
 }) => {
   return (
     <div className={nameClass}>
@@ -27,10 +28,11 @@ const InputGroup = ({
           className={elementClass}
           id={id}
           disabled={disabled || false}
+          onChange={changed}
         />
       )}
       {type === "select" && (
-        <select id={id} className={elementClass}>
+        <select id={id} className={elementClass} onChange={changed}>
           {options.map((opt) => (
             <option value={opt.id} key={opt.id}>
               {opt.name}
