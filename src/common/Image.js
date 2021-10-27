@@ -1,5 +1,4 @@
 import Button from "react-bootstrap/Button";
-import { useEffect } from "react";
 
 const Image = ({
   classWraper = "col",
@@ -10,24 +9,24 @@ const Image = ({
   idButton,
   classButton,
   cssImage,
+  styleWraper,
+  changed,
 }) => {
-  useEffect(() => {
-    const $ = document.querySelector.bind(document);
-    $(`#${idButton}`).onclick = function () {
-      $(`#${idFile}`).click();
-    };
-  }, [idButton, idFile]);
-
   return (
-    <div align="center" className={classWraper}>
+    <div align="center" style={styleWraper} className={classWraper}>
       <img style={cssImage} src={src} className={classImg} alt="..." />
       <input
         style={{ display: "none" }}
         id={idFile}
         accept="image/*"
         type="file"
+        onChange={changed}
       />
-      <Button id={idButton} variant={classButton}>
+      <Button
+        id={idButton}
+        variant={classButton}
+        onClick={() => document.querySelector(`#${idFile}`).click()}
+      >
         {text}
       </Button>
     </div>
