@@ -13,9 +13,7 @@ window.JSZip = jzip;
 
 const Datatable = ({ id, headings, data, config }) => {
   useEffect(() => {
-    var table = $("#" + id).DataTable({
-      ...config,
-    });
+    var table = $("#" + id).DataTable(config);
     if (data.length === 0) return;
     table.clear().draw();
     table.rows.add(data).draw();
