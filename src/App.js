@@ -13,8 +13,8 @@ function App() {
     $(".content").style.height = window.innerHeight - 60 + "px";
 
     setTimeout(() => {
-      var browserHeight = window.innerHeight;
-      var contentHeight = document.body.scrollHeight;
+      const browserHeight = window.innerHeight;
+      const contentHeight = document.body.scrollHeight;
 
       // Khi thu Sidebar thì set tittle cho thẻ a trong sidebar
       $("#check").onchange = function () {
@@ -32,9 +32,7 @@ function App() {
       // Thiết lập chiều cao cho content khi load trang
       function setHeight() {
         $(".content").style.height =
-          contentHeight > browserHeight
-            ? "auto"
-            : window.innerHeight - 60 + "px";
+          contentHeight >= browserHeight ? "auto" : browserHeight;
       }
 
       // Thiết lập chiều cao cho content khi resize
