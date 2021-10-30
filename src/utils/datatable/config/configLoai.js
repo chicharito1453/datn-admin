@@ -31,18 +31,12 @@ const configLoai = {
   columns: [
     {
       data: "idcate",
-      render: (data, type, row, meta) => {
-        if (type === "display") {
-          data = `<input style="border: none;background-color: rgba(0, 0, 0, 0);" value="${data}" />`;
-        }
-        return data;
-      },
     },
     {
       data: "typename",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          data = `<input onchange="update_tenloai(${row.id},this.value)" style="border: none;background-color: rgba(0, 0, 0, 0);" value="${data}" />`;
+          data = `<input onchange="update_loai('${row.idcate}', this.value, 0)" style="border: none;background-color: rgba(0, 0, 0, 0);" value="${data}" />`;
         }
         return data;
       },
@@ -50,29 +44,34 @@ const configLoai = {
     {
       data: "img",
       render: (data, type, row, meta) => {
-        if (type === "display") {
-          const src = data || "/assets/img/default.jpg";
-          data = ` <img
-          src=${src}
-          width="50"
-          alt=""
-          className="img img-thumbnail pull-left"
-        />`;
-        }
-        return data;
+        const src = data || "/assets/img/default.jpg";
+        return ` <img
+        src=${src}
+        onclick="setImgLoai()"
+        width="50"
+        alt=""
+        style="cursor:pointer"
+        className="img img-thumbnail pull-left"
+      /><input id="anhLoai" type="file" style="display: none" onchange="update_loai('${row.idcate}', this.files[0], 1)" />`;
       },
     },
     {
       data: "parent",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          data = `<input onchange="update_tenloai(${
-            row.id
-          },this.value)" style="border: none;background-color: rgba(0, 0, 0, 0);" value="${
+          data = `<input onchange="update_loai('${
+            row.idcate
+          }',this.value, 2)" style="border: none;background-color: rgba(0, 0, 0, 0);" value="${
             data || ""
           }" />`;
         }
         return data;
+      },
+    },
+    {
+      data: "idcate",
+      render: (data, type, row, meta) => {
+        return `<i style="cursor:pointer" onclick="delete_loai('${data}')" class="far fa-trash-alt"></i>`;
       },
     },
   ],
