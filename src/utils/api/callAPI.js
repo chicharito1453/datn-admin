@@ -1,9 +1,9 @@
 import axios from "axios";
 
-async function callAPI(url, method = "GET", data = null) {
+async function callAPI(endpoint, method = "GET", data = null) {
   try {
     const resp = await axios({
-      url,
+      url: "http://localhost:8080/api/v1" + endpoint,
       method,
       data,
     });
