@@ -1,4 +1,5 @@
 import Menu from "../common/Menu";
+import { memo } from "react";
 
 const Sidebar = () => {
   return (
@@ -11,4 +12,4 @@ const Sidebar = () => {
     </div>
   );
 };
-export default Sidebar;
+export default memo(Sidebar);
