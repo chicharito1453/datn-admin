@@ -1,30 +1,29 @@
 import InputGroup from "../../../common/InputGroup";
 import Button from "react-bootstrap/Button";
 import Image from "../../../common/Image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 
-const Form = () => {
-  useEffect(() => {
-    return () => {
-      temp && URL.revokeObjectURL(temp);
-    };
-  });
-
+const Form = ({ add }) => {
+  const [temp, setTemp] = useState(null);
   const [formData, setFormData] = useState({
     idcate: "",
     typename: "",
     image: null,
     parent: "",
   });
-  const [file, setFile] = useState();
-  const [temp, setTemp] = useState(null);
 
+  // TẠO IMAGE TẠM VÀ LƯU FILE VÀ FORMDATA
   function handleImage(e) {
-    const image = e.target.files[0];
-    setTemp(URL.createObjectURL(image));
-    setFile(image);
-    console.log(file);
+    const file = e.target.files[0];
+    setTemp(URL.createObjectURL(file));
+    setFormData({ ...formData, image: file });
   }
+
+  useEffect(() => {
+    return () => {
+      temp && URL.revokeObjectURL(temp); // hủy image tạm
+    };
+  });
 
   return (
     <form id="formLoai">
@@ -62,11 +61,11 @@ const Form = () => {
       />
       <br />
       <div className="btnForm">
-        <Button variant="primary" onClick={() => console.log(formData)}>
+        <Button variant="primary" onClick={() => add(formData)}>
           Thêm
         </Button>
       </div>
     </form>
   );
 };
-export default Form;
+export default memo(Form);

@@ -1,12 +1,9 @@
 import Datatable from "../../../utils/datatable/Datatable";
 import { headingLoai } from "../../../utils/datatable/headings";
+import { memo } from "react";
 import configLoai from "../../../utils/datatable/config/configLoai";
-import { Tabledata } from "../Categories";
-import { useContext } from "react";
 
-const Table = () => {
-  var { data } = useContext(Tabledata);
-
+const Table = ({ data }) => {
   return (
     <Datatable
       id="dataTable"
@@ -16,4 +13,4 @@ const Table = () => {
     />
   );
 };
-export default Table;
+export default memo(Table);
