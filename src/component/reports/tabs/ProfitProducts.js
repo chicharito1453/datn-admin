@@ -11,7 +11,7 @@ const ProfitProducts = () => {
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="item in pagerP.items track by item.group.id">
+          <tr>
             <td>
               <img
                 src="https://cellphones.com.vn/media/catalog/product/l/a/laptop-surface-4-01.jpg"
