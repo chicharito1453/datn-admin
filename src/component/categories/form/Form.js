@@ -8,7 +8,7 @@ const Form = ({ add }) => {
   const [formData, setFormData] = useState({
     idcate: "",
     typename: "",
-    image: null,
+    img: null,
     parent: "",
   });
 
@@ -16,7 +16,7 @@ const Form = ({ add }) => {
   function handleImage(e) {
     const file = e.target.files[0];
     setTemp(URL.createObjectURL(file));
-    setFormData({ ...formData, image: file });
+    setFormData({ ...formData, img: file });
   }
 
   useEffect(() => {
@@ -61,7 +61,19 @@ const Form = ({ add }) => {
       />
       <br />
       <div className="btnForm">
-        <Button variant="primary" onClick={() => add(formData)}>
+        <Button
+          variant="primary"
+          onClick={() =>
+            add(
+              {
+                ...formData,
+                idcate: formData.idcate.toUpperCase(),
+                parent: formData.parent.toUpperCase(),
+              },
+              setTemp
+            )
+          }
+        >
           Thêm
         </Button>
       </div>
