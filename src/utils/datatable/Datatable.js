@@ -20,7 +20,7 @@ const Datatable = ({ id, headings, data, config }) => {
   }, [id, data, config]);
 
   return (
-    <div className="table-responsive">
+    <div className="table-responsive" style={{ minHeight: 500 }}>
       <br />
       <table
         id={id}
