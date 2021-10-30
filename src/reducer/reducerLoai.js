@@ -1,4 +1,6 @@
 import callAPI from "../utils/api/callAPI";
+import { Fail } from "../utils/sweetalert/alert";
+import { isOK } from "../common/isOk";
 
 const reducerLoai = (state, action) => {
   switch (action.type) {
@@ -9,7 +11,12 @@ const reducerLoai = (state, action) => {
           console.log("Error: lấy danh sách loại bị lỗi");
           return false;
         }
-        localStorage.setItem("categories", JSON.stringify(resp.data));
+        const { result, message } = resp.data;
+        if (!isOK(message)) {
+          Fail(message);
+          return false;
+        }
+        localStorage.setItem("categories", JSON.stringify(result));
         return true;
       })();
       const json = JSON.parse(localStorage.getItem("categories"));
@@ -17,12 +24,6 @@ const reducerLoai = (state, action) => {
       localStorage.removeItem("categories");
       return state;
 
-    case "TEST1":
-      console.log("1");
-      return state;
-    case "TEST2":
-      console.log("2");
-      return state;
     default:
       return state;
   }
