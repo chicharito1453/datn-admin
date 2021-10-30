@@ -30,7 +30,7 @@ const configLoai = {
   ],
   columns: [
     {
-      data: "id",
+      data: "idcate",
       render: (data, type, row, meta) => {
         if (type === "display") {
           data = `<input style="border: none;background-color: rgba(0, 0, 0, 0);" value="${data}" />`;
@@ -39,10 +39,38 @@ const configLoai = {
       },
     },
     {
-      data: "name",
+      data: "typename",
       render: (data, type, row, meta) => {
         if (type === "display") {
           data = `<input onchange="update_tenloai(${row.id},this.value)" style="border: none;background-color: rgba(0, 0, 0, 0);" value="${data}" />`;
+        }
+        return data;
+      },
+    },
+    {
+      data: "img",
+      render: (data, type, row, meta) => {
+        if (type === "display") {
+          const src = data || "/assets/img/default.jpg";
+          data = ` <img
+          src=${src}
+          width="50"
+          alt=""
+          className="img img-thumbnail pull-left"
+        />`;
+        }
+        return data;
+      },
+    },
+    {
+      data: "parent",
+      render: (data, type, row, meta) => {
+        if (type === "display") {
+          data = `<input onchange="update_tenloai(${
+            row.id
+          },this.value)" style="border: none;background-color: rgba(0, 0, 0, 0);" value="${
+            data || ""
+          }" />`;
         }
         return data;
       },
