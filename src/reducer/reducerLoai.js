@@ -4,9 +4,7 @@ const reducerLoai = (state, action) => {
   switch (action.type) {
     case "GETLIST":
       (async () => {
-        const [error, resp] = await callAPI(
-          "https://jsonplaceholder.typicode.com/users"
-        );
+        const [error, resp] = await callAPI("/category/list");
         if (error) {
           console.log("Error: lấy danh sách loại bị lỗi");
           return false;
