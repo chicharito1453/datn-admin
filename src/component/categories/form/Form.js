@@ -11,9 +11,10 @@ const Form = () => {
   });
 
   const [formData, setFormData] = useState({
-    maloai: "",
-    tenloai: "",
-    image: "",
+    idcate: "",
+    typename: "",
+    image: null,
+    parent: "",
   });
   const [file, setFile] = useState();
   const [temp, setTemp] = useState(null);
@@ -28,15 +29,20 @@ const Form = () => {
   return (
     <form id="formLoai">
       <InputGroup
-        changed={(e) => setFormData({ ...formData, maloai: e.target.value })}
+        changed={(e) => setFormData({ ...formData, idcate: e.target.value })}
         value={formData.maloai}
-        id="maloai"
+        id="idcate"
         text="Mã loại"
       />
       <InputGroup
-        changed={(e) => setFormData({ ...formData, tenloai: e.target.value })}
-        id="tenloai"
+        changed={(e) => setFormData({ ...formData, typename: e.target.value })}
+        id="typename"
         text="Tên loại"
+      />
+      <InputGroup
+        changed={(e) => setFormData({ ...formData, parent: e.target.value })}
+        id="parent"
+        text="Menu"
       />
       <Image
         styleWraper={{ marginLeft: "30%" }}
