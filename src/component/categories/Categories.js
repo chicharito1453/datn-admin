@@ -4,14 +4,12 @@ import callAPI from "../../utils/api/callAPI";
 import { Fail, Success } from "../../utils/sweetalert/alert";
 import { isOK } from "../../common/isOk";
 import Button from "react-bootstrap/Button";
-import reducerLoai from "../../reducer/reducerLoai";
-import { useLayoutEffect, useState, useCallback, useReducer } from "react";
+import { useLayoutEffect, useState, useCallback } from "react";
 import axios from "axios";
 
 const Categories = () => {
   const [show, setShow] = useState(false);
-  const [data, setData] = useState();
-  const [tData, dispatch] = useReducer(reducerLoai, []);
+  const [data, setData] = useState(list_loai);
 
   // RESIZE KHI ĐÓNG MỞ FORM
   const setHeight = useCallback(() => {
@@ -23,6 +21,22 @@ const Categories = () => {
       ? "auto"
       : height + "px";
   }, [show]);
+
+  // DANH SÁCH LOẠI
+  async function list_loai() {
+    const [error, resp] = await callAPI("/category/list");
+    if (error) {
+      console.log("Error: lấy danh sách loại bị lỗi");
+      return false;
+    }
+    const { result, message } = resp.data;
+    if (!isOK(message)) {
+      Fail(message);
+      return false;
+    }
+    setData(result);
+    return true;
+  }
 
   // THÊM LOẠI
   async function them_loai(formData, setTemp) {
@@ -65,7 +79,6 @@ const Categories = () => {
 
   useLayoutEffect(() => {
     if (!document.title) document.title = "Quản trị - Loại hàng";
-    dispatch({ type: "GETLIST" });
     setHeight();
   }, [setHeight]);
 
@@ -82,7 +95,7 @@ const Categories = () => {
       {show && <Form add={them_loai} />}
       <br />
       <br />
-      <Table data={data || tData} />
+      <Table data={data} />
     </div>
   );
 };
