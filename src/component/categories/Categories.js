@@ -4,8 +4,8 @@ import callAPI from "../../utils/api/callAPI";
 import { Fail, Success } from "../../utils/sweetalert/alert";
 import { isOK } from "../../common/isOk";
 import Button from "react-bootstrap/Button";
+import upload from "../../utils/api/upload";
 import { useLayoutEffect, useState, useCallback } from "react";
-import axios from "axios";
 
 const Categories = () => {
   const [show, setShow] = useState(false);
@@ -16,7 +16,7 @@ const Categories = () => {
     window.onresize = function () {};
     const browserHeight = window.innerHeight;
     const contentHeight = document.body.scrollHeight;
-    const height = contentHeight >= browserHeight ? "auto" : browserHeight + 15;
+    const height = contentHeight >= browserHeight ? "auto" : browserHeight + 60;
     document.querySelector(".content").style.height = show
       ? "auto"
       : height + "px";
@@ -40,6 +40,7 @@ const Categories = () => {
 
   // THÊM LOẠI
   async function them_loai(formData, setTemp) {
+    // check
     if (formData.idcate.trim() === "") {
       Fail("Chưa nhập mã loại!");
       return false;
@@ -49,16 +50,17 @@ const Categories = () => {
       return false;
     }
     if (!formData.parent) formData.parent = null;
+    // upload hinh anh
     if (formData.img) {
-      const dataImage = new FormData();
-      dataImage.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
-      dataImage.append("file", formData.img);
-      await axios
-        .post(process.env.REACT_APP_UPLOAD_URL, dataImage)
-        .then((resp) => {
-          formData.img = resp.data.secure_url;
-        });
+      const [error, resp] = await upload(formData.img);
+      if (error) {
+        Fail("Không upload được ảnh!");
+        console.log(error);
+        return false;
+      }
+      formData.img = resp.data.secure_url;
     }
+    // them
     const [error, resp] = await callAPI("/category/add", "POST", formData);
     if (error) {
       Fail("Không thực hiện được thao tác!");
