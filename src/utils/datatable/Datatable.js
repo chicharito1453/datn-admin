@@ -7,20 +7,24 @@ import "datatables.net-buttons/js/buttons.colVis.js";
 import "datatables.net-buttons/js/buttons.flash.js";
 import "datatables.net-buttons/js/buttons.html5.js";
 import "datatables.net-buttons/js/buttons.print.js";
-import { useEffect } from "react";
+import { useLayoutEffect, memo } from "react";
 const jzip = require("jzip");
 window.JSZip = jzip;
 
 const Datatable = ({ id, headings, data, config }) => {
-  useEffect(() => {
+  useLayoutEffect(() => {
+    if (!Array.isArray(data)) return;
     var table = $("#" + id).DataTable(config);
-    if (data.length === 0) return;
     table.clear().draw();
     table.rows.add(data).draw();
+    document.querySelector(".table-responsive").style.display = "block";
   }, [id, data, config]);
 
   return (
-    <div className="table-responsive" style={{ minHeight: 500 }}>
+    <div
+      className="table-responsive"
+      style={{ minHeight: 500, display: "none" }}
+    >
       <br />
       <table
         id={id}
@@ -39,4 +43,4 @@ const Datatable = ({ id, headings, data, config }) => {
     </div>
   );
 };
-export default Datatable;
+export default memo(Datatable);
