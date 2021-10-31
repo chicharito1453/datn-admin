@@ -36,7 +36,7 @@ const configLoai = {
       data: "typename",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          data = `<input onchange="update_loai('${row.idcate}', this.value, 0)" style="border: none;background-color: rgba(0, 0, 0, 0);" value="${data}" />`;
+          data = `<input onchange="update_loai('${row.idcate}', this.value, 0, '${data}', this)" style="border: none;background-color: rgba(0, 0, 0, 0);" value="${data}" />`;
         }
         return data;
       },
@@ -52,7 +52,7 @@ const configLoai = {
         alt=""
         style="cursor:pointer"
         className="img img-thumbnail pull-left"
-      /><input id="anhLoai" type="file" style="display: none" onchange="update_loai('${row.idcate}', this.files[0], 1)" />`;
+      /><input id="anhLoai" type="file" style="display: none" onchange="update_loai('${row.idcate}', this.files[0], 1, '${data}', this)" />`;
       },
     },
     {
@@ -61,7 +61,7 @@ const configLoai = {
         if (type === "display") {
           data = `<input onchange="update_loai('${
             row.idcate
-          }',this.value, 2)" style="border: none;background-color: rgba(0, 0, 0, 0);" value="${
+          }',this.value, 2, '${data}', this)" style="border: none;background-color: rgba(0, 0, 0, 0);" value="${
             data || ""
           }" />`;
         }
@@ -71,7 +71,7 @@ const configLoai = {
     {
       data: "idcate",
       render: (data, type, row, meta) => {
-        return `<i style="cursor:pointer" onclick="delete_loai('${data}')" class="far fa-trash-alt"></i>`;
+        return `<i style="cursor:pointer" onclick="delete_loai('${data}',${meta.row})" class="far fa-trash-alt"></i>`;
       },
     },
   ],
