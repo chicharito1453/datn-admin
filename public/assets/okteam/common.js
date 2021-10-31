@@ -17,6 +17,10 @@ const Fail = (message, title = "Có lỗi xảy ra!") => {
   swal({ icon: "error", title: title, text: message });
 };
 
+function isOK(message) {
+  return message == "OK";
+}
+
 //gọi api
 async function callAPI(endpoint, method = "GET", data = null) {
   try {
