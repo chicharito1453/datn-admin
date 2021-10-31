@@ -46,13 +46,14 @@ const configLoai = {
       render: (data, type, row, meta) => {
         const src = data || "/assets/img/default.jpg";
         return ` <img
+        id="img_loai_${row.idcate}"
         src=${src}
-        onclick="setImgLoai()"
+        onclick="setImgLoai('${row.idcate}')"
         width="50"
         alt=""
         style="cursor:pointer"
         className="img img-thumbnail pull-left"
-      /><input id="anhLoai" type="file" style="display: none" onchange="update_loai('${row.idcate}', this.files[0], 1, '${data}', this)" />`;
+      /><input id="file_loai_${row.idcate}" type="file" style="display: none" onchange="update_loai('${row.idcate}', this.files[0], 1, '${data}', this)" />`;
       },
     },
     {
