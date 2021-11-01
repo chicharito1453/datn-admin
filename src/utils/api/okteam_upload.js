@@ -1,6 +1,6 @@
 import axios from "axios";
 
-async function upload(image) {
+async function okteam_upload(image) {
   try {
     const dataImage = new FormData();
     dataImage.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
@@ -12,4 +12,4 @@ async function upload(image) {
   }
 }
 
-export default upload;
+export default okteam_upload;
