@@ -41,7 +41,7 @@ const Form = ({ add }) => {
       <InputGroup
         changed={(e) => setFormData({ ...formData, parent: e.target.value })}
         id="parent"
-        text="Menu"
+        text="Loại cha"
       />
       <Image
         styleWraper={{ marginLeft: "30%" }}

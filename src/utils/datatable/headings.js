@@ -1,2 +1,2 @@
 // table loại
-export const headingLoai = ["Mã loại", "Tên loại", "Ảnh", "Menu", ""];
+export const headingLoai = ["Mã loại", "Tên loại", "Ảnh", "Loại cha", ""];
