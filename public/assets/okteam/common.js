@@ -10,11 +10,27 @@ const $$ = document.querySelectorAll.bind(document);
 
 //thông báo
 const Success = (message, title = "Thông báo") => {
-  swal({ icon: "success", title: title, text: message });
+  Swal.fire({ icon: "success", title: title, text: message });
 };
 
 const Fail = (message, title = "Có lỗi xảy ra!") => {
-  swal({ icon: "error", title: title, text: message });
+  Swal.fire({ icon: "error", title: title, text: message });
+};
+
+const Confirm = (message, next) => {
+  Swal.fire({
+    icon: "warning",
+    title: "Xác nhận",
+    text: message,
+    showCancelButton: true,
+    confirmButtonText: "Đồng ý",
+    confirmButtonColor: "#d33",
+    cancelButtonText: "Hủy bỏ",
+  }).then((result) => {
+    if (result.value) {
+      next();
+    }
+  });
 };
 
 function isOK(message) {
