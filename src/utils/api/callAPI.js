@@ -1,9 +1,9 @@
 import axios from "axios";
 
-async function callAPI(endpoint, method = "GET", data = null) {
+async function callAPI(url, method = "GET", data = null) {
   try {
     const resp = await axios({
-      url: process.env.REACT_APP_API + endpoint,
+      url,
       method,
       data,
     });
