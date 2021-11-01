@@ -35,7 +35,3 @@ async function update_loai(idcate, value, thaotac, oldValue, element) {
 function setImgLoai(idcate) {
   document.querySelector(`#file_loai_${idcate}`).click();
 }
-
-function delete_loai(id, index) {
-  $("#dataTable").deleteRow(index);
-}
