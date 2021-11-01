@@ -1,7 +1,7 @@
 // cap nhat loai
 async function update_loai(idcate, value, thaotac, oldValue, element) {
   if (thaotac == "1") {
-    const [error, resp] = await upload(value);
+    const [error, resp] = await okteam_upload(value);
     if (error) {
       Fail("Không upload được ảnh!");
       console.log(error);
@@ -9,7 +9,7 @@ async function update_loai(idcate, value, thaotac, oldValue, element) {
     }
     value = resp.data.secure_url;
   }
-  const [error, resp] = await callAPI(
+  const [error, resp] = await okteamAPI(
     `/category/update?idcate=${idcate}&value=${value.trim()}&thaotac=${thaotac}`,
     "PUT"
   );

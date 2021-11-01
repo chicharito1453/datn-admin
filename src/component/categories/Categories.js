@@ -1,10 +1,10 @@
 import Form from "./form/Form";
 import Table from "./table/Table";
-import callAPI from "../../utils/api/callAPI";
+import okteamAPI from "../../utils/api/okteamAPI";
 import { Fail, Success } from "../../utils/sweetalert2/alert";
 import { isOK } from "../../common/isOk";
 import Button from "react-bootstrap/Button";
-import upload from "../../utils/api/upload";
+import okteam_upload from "../../utils/api/okteam_upload";
 import { useLayoutEffect, useState, useCallback } from "react";
 
 const Categories = () => {
@@ -24,9 +24,10 @@ const Categories = () => {
 
   // DANH SÁCH LOẠI
   async function list_loai() {
-    const [error, resp] = await callAPI("/category/list");
+    const [error, resp] = await okteamAPI("/category/list");
     if (error) {
-      console.log("Error: lấy danh sách loại bị lỗi");
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
       return false;
     }
     const { result, message } = resp.data;
@@ -50,18 +51,18 @@ const Categories = () => {
       return false;
     }
     if (!formData.parent) formData.parent = null;
-    // upload hinh anh
+    // okteam_upload hinh anh
     if (formData.img) {
-      const [error, resp] = await upload(formData.img);
+      const [error, resp] = await okteam_upload(formData.img);
       if (error) {
-        Fail("Không upload được ảnh!");
+        Fail("Không okteam_upload được ảnh!");
         console.log(error);
         return false;
       }
       formData.img = resp.data.secure_url;
     }
     // them
-    const [error, resp] = await callAPI("/category/add", "POST", formData);
+    const [error, resp] = await okteamAPI("/category/add", "POST", formData);
     if (error) {
       Fail("Không thực hiện được thao tác!");
       console.log(error);
