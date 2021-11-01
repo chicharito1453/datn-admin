@@ -72,7 +72,7 @@ const configLoai = {
     {
       data: "idcate",
       render: (data, type, row, meta) => {
-        return `<i style="cursor:pointer" onclick="delete_loai('${data}',${meta.row})" class="far fa-trash-alt"></i>`;
+        return `<i style="cursor:pointer" class="far fa-trash-alt"></i>`;
       },
     },
   ],
