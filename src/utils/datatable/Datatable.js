@@ -11,14 +11,17 @@ import { useLayoutEffect, memo } from "react";
 const jzip = require("jzip");
 window.JSZip = jzip;
 
-const Datatable = ({ id, headings, data, config }) => {
+const Datatable = ({ id, headings, data, config, deleted }) => {
   useLayoutEffect(() => {
     if (!Array.isArray(data)) return;
     var table = $("#" + id).DataTable(config);
     table.clear().draw();
     table.rows.add(data).draw();
+    table.on("click", "tbody tr i", function () {
+      deleted(table.row($(this).parents("tr")).data().idcate);
+    });
     document.querySelector(".table-responsive").style.display = "block";
-  }, [id, data, config]);
+  }, [id, data, config, deleted]);
 
   return (
     <div
