@@ -50,12 +50,26 @@ async function okteam_upload(image) {
   }
 }
 
-//gọi api
+//gọi api okteam
 async function okteamAPI(endpoint, method = "GET", data = null) {
   try {
     const resp = await axios({
       method,
       url: REACT_APP_API + endpoint,
+      data,
+    });
+    return [null, resp];
+  } catch (error) {
+    return [error, null];
+  }
+}
+
+// gọi api
+async function callAPI(url, method = "GET", data = null) {
+  try {
+    const resp = await axios({
+      method,
+      url,
       data,
     });
     return [null, resp];
