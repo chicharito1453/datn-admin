@@ -33,10 +33,7 @@ async function update_loai(idcate, value, thaotac, oldValue, element) {
 }
 // chon anh
 function setImgLoai(idcate) {
-  // document.querySelector(`#file_loai_${idcate}`).click();
-  Confirm("Tiếp hok m!", () => {
-    console.log("ok thôi");
-  });
+  document.querySelector(`#file_loai_${idcate}`).click();
 }
 
 function delete_loai(id, index) {
