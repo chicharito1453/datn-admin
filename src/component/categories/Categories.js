@@ -1,7 +1,7 @@
 import Form from "./form/Form";
 import Table from "./table/Table";
 import callAPI from "../../utils/api/callAPI";
-import { Fail, Success } from "../../utils/sweetalert/alert";
+import { Fail, Success } from "../../utils/sweetalert2/alert";
 import { isOK } from "../../common/isOk";
 import Button from "react-bootstrap/Button";
 import upload from "../../utils/api/upload";
