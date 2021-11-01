@@ -17,7 +17,7 @@ const Fail = (message, title = "Có lỗi xảy ra!") => {
   Swal.fire({ icon: "error", title: title, text: message });
 };
 
-const Confirm = (message, next) => {
+const Approve = (message, next) => {
   Swal.fire({
     icon: "warning",
     title: "Xác nhận",
