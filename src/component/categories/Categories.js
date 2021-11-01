@@ -1,7 +1,7 @@
 import Form from "./form/Form";
 import Table from "./table/Table";
 import okteamAPI from "../../utils/api/okteamAPI";
-import { Fail, Success } from "../../utils/sweetalert2/alert";
+import { Fail, Success, Approve } from "../../utils/sweetalert2/alert";
 import { isOK } from "../../common/isOk";
 import Button from "react-bootstrap/Button";
 import okteam_upload from "../../utils/api/okteam_upload";
@@ -51,11 +51,11 @@ const Categories = () => {
       return false;
     }
     if (!formData.parent) formData.parent = null;
-    // okteam_upload hinh anh
+    // upload hinh anh
     if (formData.img) {
       const [error, resp] = await okteam_upload(formData.img);
       if (error) {
-        Fail("Không okteam_upload được ảnh!");
+        Fail("Không upload được ảnh!");
         console.log(error);
         return false;
       }
@@ -80,6 +80,31 @@ const Categories = () => {
     return true;
   }
 
+  async function delete_loai(idcate) {
+    Approve(
+      "Bạn đang thực hiện xóa Loại hàng này.\nTiếp tục thực hiện ?",
+      async () => {
+        const [error, resp] = await okteamAPI(
+          `/category/delete?idcate=${idcate}`,
+          "DELETE"
+        );
+        if (error) {
+          Fail("Không thực hiện được thao tác!");
+          console.log(error);
+          return false;
+        }
+        const { result, message } = resp.data;
+        if (!isOK(message)) {
+          Fail(message);
+          return false;
+        }
+        Success("Loại hàng đã được xóa!");
+        setData(result);
+        return true;
+      }
+    );
+  }
+
   useLayoutEffect(() => {
     if (!document.title) document.title = "Quản trị - Loại hàng";
     setHeight();
@@ -98,7 +123,7 @@ const Categories = () => {
       {show && <Form add={them_loai} />}
       <br />
       <br />
-      <Table data={data} />
+      <Table data={data} deleted={delete_loai} />
     </div>
   );
 };
