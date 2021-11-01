@@ -38,7 +38,7 @@ function isOK(message) {
 }
 
 // upload ảnh
-async function upload(image) {
+async function okteam_upload(image) {
   try {
     const dataImage = new FormData();
     dataImage.append("upload_preset", REACT_APP_UPLOAD_PRESET);
@@ -51,7 +51,7 @@ async function upload(image) {
 }
 
 //gọi api
-async function callAPI(endpoint, method = "GET", data = null) {
+async function okteamAPI(endpoint, method = "GET", data = null) {
   try {
     const resp = await axios({
       method,
