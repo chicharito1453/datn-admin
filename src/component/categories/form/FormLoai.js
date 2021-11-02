@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Image from "../../../common/Image";
 import { useState, useEffect, memo } from "react";
 
-const Form = ({ add }) => {
+const FormLoai = ({ add }) => {
   const [temp, setTemp] = useState(null);
   const [formData, setFormData] = useState({
     idcate: "",
@@ -80,4 +80,4 @@ const Form = ({ add }) => {
     </form>
   );
 };
-export default memo(Form);
+export default memo(FormLoai);
