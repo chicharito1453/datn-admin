@@ -7,9 +7,11 @@ const InputGroup = ({
   disabled,
   min,
   name,
+  placeholder,
   nameClass = "mb3",
   labelClass = "form-label",
   elementClass = "form-control",
+  inputStyle,
   options,
   changed,
 }) => {
@@ -24,7 +26,9 @@ const InputGroup = ({
           min={min}
           defaultValue={valueD}
           value={value}
+          placeholder={placeholder}
           name={name}
+          style={inputStyle}
           className={elementClass}
           id={id}
           disabled={disabled || false}
@@ -32,12 +36,19 @@ const InputGroup = ({
         />
       )}
       {type === "select" && (
-        <select id={id} className={elementClass} onChange={changed}>
-          {options.map((opt) => (
-            <option value={opt.id} key={opt.id}>
-              {opt.name}
-            </option>
-          ))}
+        <select
+          id={id}
+          className={elementClass}
+          style={inputStyle}
+          onChange={(e) => changed(e.target.value)}
+        >
+          <option value="0">Tất cả</option>
+          {Array.isArray(options) &&
+            options.map((opt) => (
+              <option value={opt.id} key={opt.id}>
+                {opt.name}
+              </option>
+            ))}
         </select>
       )}
     </div>
