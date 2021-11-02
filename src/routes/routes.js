@@ -7,12 +7,23 @@ import Categories from "../component/categories/Categories";
 import Reports from "../component/reports/Reports";
 import Home from "../component/home/Home";
 import NotFound from "../component/notFound/NotFound";
+import Brand from "../component/brand/Brand";
 
 const routes = [
   {
     path: "/",
     exact: true,
     main: () => <Home />,
+  },
+  {
+    path: "/admin/category",
+    exact: true,
+    main: () => <Categories />,
+  },
+  {
+    path: "/admin/brand",
+    exact: true,
+    main: () => <Brand />,
   },
   {
     path: "/admin/ctv",
@@ -33,11 +44,6 @@ const routes = [
     path: "/admin/order",
     exact: true,
     main: () => <Orders />,
-  },
-  {
-    path: "/admin/category",
-    exact: true,
-    main: () => <Categories />,
   },
   {
     path: "/admin/report",
