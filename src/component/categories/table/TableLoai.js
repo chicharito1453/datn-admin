@@ -3,7 +3,7 @@ import { headingLoai } from "../../../utils/datatable/headings";
 import { memo } from "react";
 import configLoai from "../../../utils/datatable/config/configLoai";
 
-const Table = ({ data, deleted }) => {
+const TableLoai = ({ data, deleted }) => {
   return (
     <Datatable
       id="dataTable"
@@ -14,4 +14,4 @@ const Table = ({ data, deleted }) => {
     />
   );
 };
-export default memo(Table);
+export default memo(TableLoai);
