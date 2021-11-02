@@ -1,5 +1,5 @@
-import Form from "./form/Form";
-import Table from "./table/Table";
+import FormLoai from "./form/FormLoai";
+import TableLoai from "./table/TableLoai";
 import okteamAPI from "../../utils/api/okteamAPI";
 import { Fail, Success, Approve } from "../../utils/sweetalert2/alert";
 import { isOK } from "../../common/isOk";
@@ -80,6 +80,7 @@ const Categories = () => {
     return true;
   }
 
+  // XÓA LOẠI
   async function delete_loai(idcate) {
     Approve(
       "Bạn đang thực hiện xóa Loại hàng này.\nTiếp tục thực hiện ?",
@@ -120,10 +121,10 @@ const Categories = () => {
       >
         {!show ? "Thêm loại hàng" : "Đóng"}
       </Button>
-      {show && <Form add={them_loai} />}
+      {show && <FormLoai add={them_loai} />}
       <br />
       <br />
-      <Table data={data} deleted={delete_loai} />
+      <TableLoai data={data} deleted={delete_loai} />
     </div>
   );
 };
