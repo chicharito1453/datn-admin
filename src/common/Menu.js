@@ -1,6 +1,7 @@
 const menuLink = [
   { to: "/", name: "Trang chủ", classIcon: "fas fa-home" },
   { to: "/admin/category", name: "Loại", classIcon: "fas fa-cogs" },
+  { to: "/admin/brand", name: "Nhãn hàng", classIcon: "fas fa-tags" },
   { to: "/admin/ctv", name: "Cộng tác viên", classIcon: "fas fa-users" },
   { to: "/admin/ncc", name: "Nhà cung cấp", classIcon: "fas fa-truck" },
   { to: "/admin/product", name: "Sản phẩm", classIcon: "fas fa-shopping-cart" },
