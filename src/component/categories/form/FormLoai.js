@@ -32,16 +32,19 @@ const FormLoai = ({ add }) => {
         value={formData.maloai}
         id="idcate"
         text="Mã loại"
+        placeholder="Nhập mã loại"
       />
       <InputGroup
         changed={(e) => setFormData({ ...formData, typename: e.target.value })}
         id="typename"
         text="Tên loại"
+        placeholder="Nhập tên loại"
       />
       <InputGroup
         changed={(e) => setFormData({ ...formData, parent: e.target.value })}
         id="parent"
         text="Loại cha"
+        placeholder="Nhập loại cha"
       />
       <Image
         styleWraper={{ marginLeft: "30%" }}
