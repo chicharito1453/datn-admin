@@ -1,8 +1,10 @@
 import InputGroup from "../../../common/InputGroup";
 import Button from "react-bootstrap/Button";
-import { memo } from "react";
+import { memo, useState } from "react";
 
-const FormNhan = ({ options, changed }) => {
+const FormNhan = ({ options, changed, add }) => {
+  const [formData, setFormData] = useState({ id: null, name: "" });
+
   return (
     <form className="row row-cols-lg-auto g-3 align-items-center">
       <div style={{ width: 200 }} className="col-12">
@@ -18,12 +20,19 @@ const FormNhan = ({ options, changed }) => {
         <InputGroup
           id="name"
           text="Tên nhãn hàng"
+          value={formData.name}
+          changed={(e) => setFormData({ ...formData, name: e.target.value })}
           placeholder="Nhập tên nhãn hàng"
         />
       </div>
       <div className="col-12">
         <div style={{ marginTop: 28 }} className="btnForm">
-          <Button variant="primary">Thêm</Button>
+          <Button
+            variant="primary"
+            onClick={() => add({ ...formData, name: formData.name.trim() })}
+          >
+            Thêm
+          </Button>
         </div>
       </div>
     </form>
