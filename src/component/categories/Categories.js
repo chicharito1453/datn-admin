@@ -42,11 +42,11 @@ const Categories = () => {
   // THÊM LOẠI
   async function them_loai(formData, setTemp) {
     // check
-    if (formData.idcate.trim() === "") {
+    if (!formData.idcate.trim()) {
       Fail("Chưa nhập mã loại!");
       return false;
     }
-    if (formData.typename.trim() === "") {
+    if (!formData.typename.trim()) {
       Fail("Chưa nhập tên loại!");
       return false;
     }
