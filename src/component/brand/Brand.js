@@ -62,7 +62,7 @@ const Brand = () => {
   }
 
   // THÊM NHÃN HÀNG
-  async function them_nhan(formData) {
+  async function them_nhan(formData, setFormData) {
     // check
     if (maLoai === "0") {
       Fail("Chưa chọn mã loại");
@@ -89,6 +89,7 @@ const Brand = () => {
       return false;
     }
     Success("Thêm nhãn hàng thành công!");
+    setFormData({ id: null, name: "" });
     setData(result);
     return true;
   }

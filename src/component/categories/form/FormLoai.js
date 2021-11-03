@@ -29,19 +29,21 @@ const FormLoai = ({ add }) => {
     <form id="formLoai">
       <InputGroup
         changed={(e) => setFormData({ ...formData, idcate: e.target.value })}
-        value={formData.maloai}
+        value={formData.idcate}
         id="idcate"
         text="Mã loại"
         placeholder="Nhập mã loại"
       />
       <InputGroup
         changed={(e) => setFormData({ ...formData, typename: e.target.value })}
+        value={formData.typename}
         id="typename"
         text="Tên loại"
         placeholder="Nhập tên loại"
       />
       <InputGroup
         changed={(e) => setFormData({ ...formData, parent: e.target.value })}
+        value={formData.parent}
         id="parent"
         text="Loại cha"
         placeholder="Nhập loại cha"
@@ -73,7 +75,8 @@ const FormLoai = ({ add }) => {
                 idcate: formData.idcate.toUpperCase(),
                 parent: formData.parent.toUpperCase(),
               },
-              setTemp
+              setTemp,
+              setFormData
             )
           }
         >

@@ -40,7 +40,7 @@ const Categories = () => {
   }
 
   // THÊM LOẠI
-  async function them_loai(formData, setTemp) {
+  async function them_loai(formData, setTemp, setFormData) {
     // check
     if (!formData.idcate.trim()) {
       Fail("Chưa nhập mã loại!");
@@ -74,7 +74,12 @@ const Categories = () => {
       return false;
     }
     Success("Thêm loại thành công!");
-    document.querySelector("#formLoai").reset();
+    setFormData({
+      idcate: "",
+      typename: "",
+      img: null,
+      parent: "",
+    });
     setTemp(null);
     setData(result);
     return true;

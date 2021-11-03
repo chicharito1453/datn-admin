@@ -6,7 +6,7 @@ const FormNhan = ({ options, changed, add }) => {
   const [formData, setFormData] = useState({ id: null, name: "" });
 
   return (
-    <form className="row row-cols-lg-auto g-3 align-items-center">
+    <form id="formNhan" className="row row-cols-lg-auto g-3 align-items-center">
       <div style={{ width: 200 }} className="col-12">
         <InputGroup
           id="select-loai"
@@ -29,7 +29,9 @@ const FormNhan = ({ options, changed, add }) => {
         <div style={{ marginTop: 28 }} className="btnForm">
           <Button
             variant="primary"
-            onClick={() => add({ ...formData, name: formData.name.trim() })}
+            onClick={() =>
+              add({ ...formData, name: formData.name.trim() }, setFormData)
+            }
           >
             Thêm
           </Button>
