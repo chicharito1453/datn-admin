@@ -35,3 +35,6 @@ async function update_loai(idcate, value, thaotac, oldValue, element) {
 function setImgLoai(idcate) {
   document.querySelector(`#file_loai_${idcate}`).click();
 }
+
+// cap nhat nhan
+async function update_nhan(id, value, oldValue, element) {}
