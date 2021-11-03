@@ -5,6 +5,9 @@ const configLoai = {
   pagingType: "full_numbers",
   pageLength: 5,
   lengthChange: false,
+  language: {
+    emptyTable: "<b style='color:red'>Không có dữ liệu</b>",
+  },
   dom: "Blfrtip",
   buttons: [
     {
