@@ -1,8 +1,7 @@
 import FormNhan from "./form/FormNhan";
 import TableNhan from "./table/TableNhan";
 import okteamAPI from "../../utils/api/okteamAPI";
-import { Fail, Success } from "../../utils/sweetalert2/alert";
-import { isOK } from "../../common/isOk";
+import { Fail, Success, Approve, isOK } from "../../utils/sweetalert2/alert";
 import { useEffect, useState } from "react";
 
 const Brand = () => {
@@ -55,8 +54,8 @@ const Brand = () => {
       Fail(message);
       return false;
     }
-    setData(result);
     setMaLoai(idcate);
+    setData(result);
     setHeight();
     return true;
   }
@@ -94,11 +93,38 @@ const Brand = () => {
     return true;
   }
 
+  // XÓA NHÃN HÀNG
+  async function delete_nhan(brand) {
+    if (brand === undefined) return;
+    Approve(
+      "Bạn đang thực hiện xóa Loại hàng này.\nTiếp tục thực hiện ?",
+      async () => {
+        const [error, resp] = await okteamAPI(
+          `/brand/delete/${brand.id}/${maLoai}`,
+          "DELETE"
+        );
+        if (error) {
+          Fail("Không thực hiện được thao tác!");
+          console.log(error);
+          return false;
+        }
+        const { result, message } = resp.data;
+        if (!isOK(message)) {
+          Fail(message);
+          return false;
+        }
+        Success("Xóa nhãn hàng thành công!");
+        setData(result);
+        return true;
+      }
+    );
+  }
+
   return (
     <div className="container">
       <h1 className="hit-the-floor">Nhãn hàng</h1>
       <FormNhan changed={onchangeLoai} add={them_nhan} options={options} />
-      <TableNhan data={data} />
+      <TableNhan data={data} deleted={delete_nhan} />
     </div>
   );
 };

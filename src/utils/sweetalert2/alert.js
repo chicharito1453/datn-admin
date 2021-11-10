@@ -23,3 +23,7 @@ export const Approve = (message, next) => {
     }
   });
 };
+
+export const isOK = (message) => {
+  return message === "OK";
+};

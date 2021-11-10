@@ -1,4 +1,4 @@
-import Menu from "../common/Menu";
+import Menu from "../components/Menu";
 import { memo } from "react";
 
 const NavMobile = () => {

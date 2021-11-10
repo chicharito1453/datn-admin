@@ -1,8 +1,7 @@
 import FormLoai from "./form/FormLoai";
 import TableLoai from "./table/TableLoai";
 import okteamAPI from "../../utils/api/okteamAPI";
-import { Fail, Success, Approve } from "../../utils/sweetalert2/alert";
-import { isOK } from "../../common/isOk";
+import { Fail, Success, Approve, isOK } from "../../utils/sweetalert2/alert";
 import Button from "react-bootstrap/Button";
 import okteam_upload from "../../utils/api/okteam_upload";
 import { useLayoutEffect, useState, useCallback } from "react";
@@ -86,12 +85,12 @@ const Categories = () => {
   }
 
   // XÓA LOẠI
-  async function delete_loai(idcate) {
+  async function delete_loai(category) {
     Approve(
       "Bạn đang thực hiện xóa Loại hàng này.\nTiếp tục thực hiện ?",
       async () => {
         const [error, resp] = await okteamAPI(
-          `/category/delete?idcate=${idcate}`,
+          `/category/delete?idcate=${category.idcate}`,
           "DELETE"
         );
         if (error) {

@@ -1,4 +1,4 @@
-import InputGroup from "../../../common/InputGroup";
+import InputGroup from "../../../components/InputGroup";
 import Button from "react-bootstrap/Button";
 import { memo, useState } from "react";
 

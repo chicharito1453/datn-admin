@@ -1,5 +1,5 @@
 import routes from "../routes/routes";
-import Loading from "../common/Loading";
+import Loading from "../components/Loading";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 

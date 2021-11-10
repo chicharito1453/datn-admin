@@ -1,4 +1,4 @@
-import Image from "../../../common/Image";
+import Image from "../../../components/Image";
 
 const ImageCtv = () => {
   return (

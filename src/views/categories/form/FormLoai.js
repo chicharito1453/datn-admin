@@ -1,6 +1,6 @@
-import InputGroup from "../../../common/InputGroup";
+import InputGroup from "../../../components/InputGroup";
 import Button from "react-bootstrap/Button";
-import Image from "../../../common/Image";
+import Image from "../../../components/Image";
 import { useState, useEffect, memo } from "react";
 
 const FormLoai = ({ add }) => {
