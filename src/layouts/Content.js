@@ -1,7 +1,7 @@
-import routes from "../routes/routes";
-import Loading from "../components/Loading";
 import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import routes from "../routes/routes";
+import Loading from "../components/Loading";
 
 const Content = () => {
   const [loading, setLoading] = useState(true);

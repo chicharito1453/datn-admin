@@ -1,9 +1,9 @@
+import { useEffect, useCallback } from "react";
 import Content from "./layouts/Content";
 import Header from "./layouts/Header";
 import NavMobile from "./layouts/NavMobile";
 import Sidebar from "./layouts/Sidebar";
 import "./App.scss";
-import { useEffect, useCallback } from "react";
 
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
