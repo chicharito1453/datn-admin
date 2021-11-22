@@ -13,42 +13,42 @@ const routes = [
   {
     path: "/",
     exact: true,
-    main: () => <Home />,
+    main: <Home />,
   },
   {
     path: "/admin/category",
     exact: true,
-    main: () => <Categories />,
+    main: <Categories />,
   },
   {
     path: "/admin/brand",
     exact: true,
-    main: () => <Brand />,
+    main: <Brand />,
   },
   {
     path: "/admin/ctv",
     exact: true,
-    main: () => <CTV />,
+    main: <CTV />,
   },
   {
     path: "/admin/ncc",
     exact: true,
-    main: () => <NCC />,
+    main: <NCC />,
   },
   {
     path: "/admin/product",
     exact: true,
-    main: () => <Product />,
+    main: <Product />,
   },
   {
     path: "/admin/order",
     exact: true,
-    main: () => <Orders />,
+    main: <Orders />,
   },
   {
     path: "/admin/report",
     exact: true,
-    main: () => <Reports />,
+    main: <Reports />,
   },
   {
     path: "",

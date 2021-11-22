@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const menuLink = [
   { to: "/", name: "Trang chủ", classIcon: "fas fa-home" },
   { to: "/admin/category", name: "Loại", classIcon: "fas fa-cogs" },
@@ -11,10 +13,10 @@ const menuLink = [
 const Menu = () => {
   return menuLink.map((link, index) => {
     return (
-      <a key={index} href={link.to}>
+      <Link key={index} to={link.to}>
         <i className={link.classIcon}></i>
         <span>{link.name}</span>
-      </a>
+      </Link>
     );
   });
 };

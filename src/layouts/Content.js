@@ -1,7 +1,7 @@
 import routes from "../routes/routes";
 import Loading from "../components/Loading";
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 const Content = () => {
   const [loading, setLoading] = useState(true);
@@ -12,24 +12,22 @@ const Content = () => {
   }, []);
 
   return (
-    <Router>
-      <div className="content">
-        {loading ? (
-          <Loading />
-        ) : (
-          <Switch>
-            {routes.map((route, index) => (
-              <Route
-                key={index}
-                path={route.path}
-                exact={route.exact}
-                component={route.main}
-              />
-            ))}
-          </Switch>
-        )}
-      </div>
-    </Router>
+    <div className="content">
+      {loading ? (
+        <Loading />
+      ) : (
+        <Routes>
+          {routes.map((route, index) => (
+            <Route
+              key={index}
+              path={route.path}
+              exact={route.exact}
+              element={route.main}
+            />
+          ))}
+        </Routes>
+      )}
+    </div>
   );
 };
 export default Content;

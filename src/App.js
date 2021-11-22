@@ -2,7 +2,7 @@ import Content from "./layouts/Content";
 import Header from "./layouts/Header";
 import NavMobile from "./layouts/NavMobile";
 import Sidebar from "./layouts/Sidebar";
-import React from "react";
+import "./App.scss";
 import { useEffect, useCallback } from "react";
 
 const $ = document.querySelector.bind(document);
@@ -32,15 +32,11 @@ function App() {
       // Thiết lập chiều cao cho content khi load trang
       function setHeight() {
         $(".content").style.height =
-          contentHeight >= browserHeight ? "auto" : browserHeight;
+          contentHeight >= browserHeight ? "auto" : browserHeight + 60;
       }
 
       // Thiết lập chiều cao cho content khi resize
-      window.onresize = function () {
-        setHeight();
-      };
-
-      setHeight();
+      window.addEventListener("resize", setHeight);
     }, 700);
   }, []);
 
@@ -49,13 +45,13 @@ function App() {
   }, [setHeightPage]);
 
   return (
-    <React.Fragment>
+    <>
       <input type="checkbox" id="check" />
       <Header />
       <NavMobile />
       <Sidebar />
       <Content />
-    </React.Fragment>
+    </>
   );
 }
 

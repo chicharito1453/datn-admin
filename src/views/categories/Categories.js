@@ -1,25 +1,15 @@
+import { useEffect, useState } from "react";
+import Button from "react-bootstrap/Button";
+import { Modal } from "react-bootstrap";
 import FormLoai from "./form/FormLoai";
 import TableLoai from "./table/TableLoai";
 import okteamAPI from "../../utils/api/okteamAPI";
 import { Fail, Success, Approve, isOK } from "../../utils/sweetalert2/alert";
-import Button from "react-bootstrap/Button";
 import okteam_upload from "../../utils/api/okteam_upload";
-import { useLayoutEffect, useState, useCallback } from "react";
 
 const Categories = () => {
   const [show, setShow] = useState(false);
   const [data, setData] = useState(list_loai);
-
-  // RESIZE KHI ĐÓNG MỞ FORM
-  const setHeight = useCallback(() => {
-    window.onresize = function () {};
-    const browserHeight = window.innerHeight;
-    const contentHeight = document.body.scrollHeight;
-    const height = contentHeight >= browserHeight ? "auto" : browserHeight + 60;
-    document.querySelector(".content").style.height = show
-      ? "auto"
-      : height + "px";
-  }, [show]);
 
   // DANH SÁCH LOẠI
   async function list_loai() {
@@ -110,10 +100,13 @@ const Categories = () => {
     );
   }
 
-  useLayoutEffect(() => {
-    if (!document.title) document.title = "Quản trị - Loại hàng";
-    setHeight();
-  }, [setHeight]);
+  useEffect(() => {
+    document.title = "Quản trị - Loại hàng";
+    const browserHeight = window.innerHeight;
+    const contentHeight = document.body.scrollHeight;
+    document.querySelector(".content").style.height =
+      contentHeight >= browserHeight ? "auto" : browserHeight + 60 + "px";
+  }, []);
 
   return (
     <div className="container">
@@ -121,14 +114,19 @@ const Categories = () => {
       <Button
         style={{ float: "right" }}
         variant="primary"
-        onClick={() => setShow(!show)}
+        onClick={() => setShow(true)}
       >
-        {!show ? "Thêm loại hàng" : "Đóng"}
+        Thêm loại hàng
       </Button>
-      {show && <FormLoai add={them_loai} />}
       <br />
       <br />
       <TableLoai data={data} deleted={delete_loai} />
+      <Modal show={show} onHide={() => setShow(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Thêm loại hàng</Modal.Title>
+        </Modal.Header>
+        <FormLoai add={them_loai} close={() => setShow(false)} />
+      </Modal>
     </div>
   );
 };

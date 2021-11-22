@@ -1,9 +1,10 @@
+import React, { useState, useEffect, memo } from "react";
+import { Modal } from "react-bootstrap";
 import InputGroup from "../../../components/InputGroup";
 import Button from "react-bootstrap/Button";
 import Image from "../../../components/Image";
-import { useState, useEffect, memo } from "react";
 
-const FormLoai = ({ add }) => {
+const FormLoai = ({ add, close }) => {
   const [temp, setTemp] = useState(null);
   const [formData, setFormData] = useState({
     idcate: "",
@@ -26,46 +27,54 @@ const FormLoai = ({ add }) => {
   });
 
   return (
-    <form id="formLoai">
-      <InputGroup
-        changed={(e) => setFormData({ ...formData, idcate: e.target.value })}
-        value={formData.idcate}
-        id="idcate"
-        text="Mã loại"
-        placeholder="Nhập mã loại"
-      />
-      <InputGroup
-        changed={(e) => setFormData({ ...formData, typename: e.target.value })}
-        value={formData.typename}
-        id="typename"
-        text="Tên loại"
-        placeholder="Nhập tên loại"
-      />
-      <InputGroup
-        changed={(e) => setFormData({ ...formData, parent: e.target.value })}
-        value={formData.parent}
-        id="parent"
-        text="Loại cha"
-        placeholder="Nhập loại cha"
-      />
-      <Image
-        styleWraper={{ marginLeft: "30%" }}
-        cssImage={{
-          marginTop: 30,
-          height: "60%",
-          width: "90%",
-        }}
-        classImg=".img-fluid"
-        classWraper="col-sm-5"
-        src={temp || "/assets/img/default.jpg"}
-        text="Chọn hình ảnh"
-        idFile="imageLoai"
-        idButton="btnImage"
-        classButton="danger"
-        changed={handleImage}
-      />
-      <br />
-      <div className="btnForm">
+    <>
+      <Modal.Body>
+        <form id="formLoai">
+          <InputGroup
+            changed={(e) =>
+              setFormData({ ...formData, idcate: e.target.value })
+            }
+            value={formData.idcate}
+            id="idcate"
+            text="Mã loại"
+            placeholder="Nhập mã loại"
+          />
+          <InputGroup
+            changed={(e) =>
+              setFormData({ ...formData, typename: e.target.value })
+            }
+            value={formData.typename}
+            id="typename"
+            text="Tên loại"
+            placeholder="Nhập tên loại"
+          />
+          <InputGroup
+            changed={(e) =>
+              setFormData({ ...formData, parent: e.target.value })
+            }
+            value={formData.parent}
+            id="parent"
+            text="Loại cha"
+            placeholder="Nhập loại cha"
+          />
+          <Image
+            cssImage={{
+              marginTop: 30,
+              height: "60%",
+              width: "100%",
+            }}
+            classImg=".img-fluid"
+            classWraper="col"
+            src={temp || "/assets/img/default.jpg"}
+            text="Chọn hình ảnh"
+            idFile="imageLoai"
+            idButton="btnImage"
+            classButton="danger"
+            changed={handleImage}
+          />
+        </form>
+      </Modal.Body>
+      <Modal.Footer>
         <Button
           variant="primary"
           onClick={() =>
@@ -82,8 +91,11 @@ const FormLoai = ({ add }) => {
         >
           Thêm
         </Button>
-      </div>
-    </form>
+        <Button variant="secondary" onClick={close}>
+          Đóng
+        </Button>
+      </Modal.Footer>
+    </>
   );
 };
 export default memo(FormLoai);

@@ -14,21 +14,25 @@ const configLoai = {
       extend: "copy",
       text: '<div><i class="fas fa-copy"></i> Copy</div>',
       className: "btn btn-primary",
+      exportOptions: { orthogonal: "export" },
     },
     {
       extend: "excelHtml5",
       text: '<div><i class="far fa-file-excel"></i> Excel</div>',
       className: "btn btn-success",
+      exportOptions: { orthogonal: "export" },
     },
     {
       extend: "csv",
       text: '<div><i class="fas fa-file-csv"></i> CSV</div>',
       className: "btn btn-secondary",
+      exportOptions: { orthogonal: "export" },
     },
     {
       extend: "print",
       text: '<div><i class="fas fa-print"></i> Print</div>',
       className: "btn btn-danger ",
+      exportOptions: { orthogonal: "export" },
     },
   ],
   columns: [

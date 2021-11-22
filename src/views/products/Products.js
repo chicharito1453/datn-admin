@@ -6,6 +6,7 @@ import { useEffect } from "react";
 const Products = () => {
   useEffect(() => {
     document.title = "Quản trị - Sản phẩm";
+    document.querySelector(".content").style.height = "auto";
   }, []);
 
   return (

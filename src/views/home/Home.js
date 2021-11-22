@@ -3,6 +3,8 @@ import { useEffect } from "react";
 const Home = () => {
   useEffect(() => {
     document.title = "Trang chủ";
+    document.querySelector(".content").style.height =
+      window.innerHeight - 60 + "px";
   }, []);
 
   return (
