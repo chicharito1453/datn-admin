@@ -11,13 +11,28 @@ const menuLink = [
   { to: "/admin/report", name: "Thống kê", classIcon: "fas fa-desktop" },
 ];
 const Menu = () => {
-  return menuLink.map((link, index) => {
-    return (
-      <Link key={index} to={link.to}>
-        <i className={link.classIcon}></i>
-        <span>{link.name}</span>
-      </Link>
-    );
-  });
+  const redirect = (e) => {
+    e.preventDefault();
+    window.location = "https://www.youtube.com/";
+  };
+
+  return (
+    <>
+      {localStorage.getItem("accessToken") ? (
+        menuLink.map((link, index) => {
+          return (
+            <Link key={index} to={link.to}>
+              <i className={link.classIcon}></i>
+              <span>{link.name}</span>
+            </Link>
+          );
+        })
+      ) : (
+        <a href="/" onClick={redirect}>
+          <i className="fas fa-shopping-cart"></i>Web Okteam
+        </a>
+      )}
+    </>
+  );
 };
 export default Menu;

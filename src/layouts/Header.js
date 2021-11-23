@@ -11,11 +11,13 @@ const Header = () => {
           Admin <span>Management</span>
         </h3>
       </div>
-      <div className="right-area">
-        <a href="/a" className="logout_btn">
-          Logout
-        </a>
-      </div>
+      {localStorage.getItem("accessToken") && (
+        <div className="right-area">
+          <a href="/a" className="logout_btn">
+            Logout
+          </a>
+        </div>
+      )}
     </header>
   );
 };

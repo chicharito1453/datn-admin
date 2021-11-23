@@ -53,7 +53,7 @@ const routes = [
   {
     path: "",
     exact: false,
-    main: () => <NotFound />,
+    main: <NotFound />,
   },
 ];
 export default routes;

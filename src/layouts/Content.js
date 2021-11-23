@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import routes from "../routes/routes";
 import Loading from "../components/Loading";
+import Login from "../components/Login";
 
 const Content = () => {
   const [loading, setLoading] = useState(true);
@@ -16,16 +17,23 @@ const Content = () => {
       {loading ? (
         <Loading />
       ) : (
-        <Routes>
+        <Switch>
+          <Route path="/login" exact={true} component={() => <Login />} />
           {routes.map((route, index) => (
             <Route
               key={index}
               path={route.path}
               exact={route.exact}
-              element={route.main}
+              render={() => {
+                return localStorage.getItem("accessToken") ? (
+                  route.main
+                ) : (
+                  <Redirect to="/login" />
+                );
+              }}
             />
           ))}
-        </Routes>
+        </Switch>
       )}
     </div>
   );
