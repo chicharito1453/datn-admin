@@ -1,6 +1,9 @@
-import { memo } from "react";
-
 const Header = () => {
+  function handleLogout() {
+    localStorage.removeItem("myData");
+    window.location.reload();
+  }
+
   return (
     <header>
       <label htmlFor="check">
@@ -13,12 +16,16 @@ const Header = () => {
       </div>
       {localStorage.getItem("myData") && (
         <div className="right-area">
-          <a href="/a" className="logout_btn">
+          <b
+            style={{ cursor: "pointer" }}
+            onClick={handleLogout}
+            className="logout_btn"
+          >
             Logout
-          </a>
+          </b>
         </div>
       )}
     </header>
   );
 };
-export default memo(Header);
+export default Header;
