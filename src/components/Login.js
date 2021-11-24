@@ -42,7 +42,7 @@ const Login = () => {
     }
     const myData = JSON.stringify(result[0]);
     localStorage.setItem("myData", myData);
-    history.goBack();
+    window.location = "http://localhost:8000/";
   }
 
   return (
