@@ -11,7 +11,7 @@ const Header = () => {
           Admin <span>Management</span>
         </h3>
       </div>
-      {localStorage.getItem("accessToken") && (
+      {localStorage.getItem("myData") && (
         <div className="right-area">
           <a href="/a" className="logout_btn">
             Logout

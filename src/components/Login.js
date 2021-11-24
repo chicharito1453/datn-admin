@@ -1,9 +1,49 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
+import callAPI from "../utils/api/callAPI";
+import { isOK } from "../utils/sweetalert2/alert";
+import { Fail } from "../utils/sweetalert2/alert";
 
 const Login = () => {
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+  });
+
+  const history = useHistory();
+
   useEffect(() => {
+    document.title = "Đăng nhập";
     document.querySelector(".content").style.height = "auto";
   }, []);
+
+  async function handleLogin() {
+    if (!user.username.trim()) {
+      Fail("Chưa nhập tên đăng nhập!");
+      return false;
+    }
+    if (!user.password) {
+      Fail("Chưa nhập mật khẩu!");
+      return false;
+    }
+    const [error, resp] = await callAPI(
+      `${process.env.REACT_APP_URL}/admin/login?username=${user.username}&password=${user.password}`,
+      "POST"
+    );
+    if (error) {
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    const { result, message } = resp.data;
+    if (!isOK(message)) {
+      Fail(message);
+      return false;
+    }
+    const myData = JSON.stringify(result[0]);
+    localStorage.setItem("myData", myData);
+    history.goBack();
+  }
 
   return (
     <section className="vh-100" style={{ backgroundColor: "#9A616D" }}>
@@ -40,9 +80,13 @@ const Login = () => {
 
                       <div className="form-outline mb-4">
                         <input
-                          type="email"
+                          type="text"
                           id="form2Example17"
                           className="form-control form-control-lg"
+                          value={user.username}
+                          onChange={(e) =>
+                            setUser({ ...user, username: e.target.value })
+                          }
                         />
                         <label className="form-label" htmlFor="form2Example17">
                           Tài khoản
@@ -54,6 +98,10 @@ const Login = () => {
                           type="password"
                           id="form2Example27"
                           className="form-control form-control-lg"
+                          value={user.password}
+                          onChange={(e) =>
+                            setUser({ ...user, password: e.target.value })
+                          }
                         />
                         <label className="form-label" htmlFor="form2Example27">
                           Mật khẩu
@@ -64,6 +112,7 @@ const Login = () => {
                         <button
                           className="btn btn-dark btn-lg btn-block"
                           type="button"
+                          onClick={handleLogin}
                         >
                           Đăng nhập
                         </button>

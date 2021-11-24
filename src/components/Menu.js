@@ -18,7 +18,7 @@ const Menu = () => {
 
   return (
     <>
-      {localStorage.getItem("accessToken") ? (
+      {localStorage.getItem("myData") ? (
         menuLink.map((link, index) => {
           return (
             <Link key={index} to={link.to}>

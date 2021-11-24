@@ -6,6 +6,7 @@ import Login from "../components/Login";
 
 const Content = () => {
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -25,10 +26,10 @@ const Content = () => {
               path={route.path}
               exact={route.exact}
               render={() => {
-                return localStorage.getItem("accessToken") ? (
+                return localStorage.getItem("myData") ? (
                   route.main
                 ) : (
-                  <Redirect to="/login" />
+                  <Redirect from={route.path} to="/login" />
                 );
               }}
             />
