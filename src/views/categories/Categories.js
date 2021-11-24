@@ -70,6 +70,7 @@ const Categories = () => {
       parent: "",
     });
     setTemp(null);
+    setShow(false);
     setData(result);
     return true;
   }
