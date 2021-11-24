@@ -1,5 +1,4 @@
 import Menu from "../components/Menu";
-import { memo } from "react";
 
 const NavMobile = () => {
   return (
@@ -18,4 +17,4 @@ const NavMobile = () => {
     </div>
   );
 };
-export default memo(NavMobile);
+export default NavMobile;
