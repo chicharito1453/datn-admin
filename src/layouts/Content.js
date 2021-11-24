@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { useHistory } from "react-router";
 import routes from "../routes/routes";
 import Loading from "../components/Loading";
 import Login from "../components/Login";
 
 const Content = () => {
   const [loading, setLoading] = useState(true);
-  const history = useHistory();
 
   useEffect(() => {
     setTimeout(() => {
