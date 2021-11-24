@@ -29,7 +29,8 @@ const Menu = () => {
         })
       ) : (
         <a href="/" onClick={redirect}>
-          <i className="fas fa-shopping-cart"></i>Web Okteam
+          <i className="fas fa-shopping-cart"></i>
+          <span>Web Okteam</span>
         </a>
       )}
     </>
