@@ -3,6 +3,18 @@ body {
   padding: 0;
   font-family: "Roboto", sans-serif;
 }
+#dataTable input {
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+}
+#dataTable input:hover {
+  border: 1px solid #c2c2c2;
+  box-shadow: 1px 1px 4px #ebebeb;
+  cursor: pointer;
+}
+#dataTable input:focus {
+  cursor: text;
+}
 /* Phần loading screen */
 .wraper-loading {
   display: flex;
@@ -89,13 +101,15 @@ table .fa {
 /* Trang products */
 #productForm #link1,
 #link2,
-#link3 {
+#link3,
+#link4 {
   display: none;
 }
 #btnLink1,
 #btnLink2,
-#btnLink3 {
-  width: 200px;
+#btnLink3,
+#btnLink4 {
+  width: 100%;
   margin-top: 10px;
 }
 #productForm img {
