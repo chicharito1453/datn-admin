@@ -1,17 +1,14 @@
+import { useEffect, useState, useCallback } from "react";
+import { connect } from "react-redux";
 import FormNhan from "./form/FormNhan";
 import TableNhan from "./table/TableNhan";
 import okteamAPI from "../../utils/api/okteamAPI";
 import { Fail, Success, Approve, isOK } from "../../utils/sweetalert2/alert";
-import { useEffect, useState } from "react";
+import { ALL_BRANDS } from "../../store/action/index";
 
-const Brand = () => {
+const Brand = ({ data, getAllBrands }) => {
   const [options, setOptions] = useState(select_loai);
-  const [data, setData] = useState(onchangeLoai);
   const [maLoai, setMaLoai] = useState("0");
-
-  useEffect(() => {
-    if (!document.title) document.title = "Quản trị - Nhãn hàng";
-  }, []);
 
   function setHeight() {
     const browserHeight = window.innerHeight;
@@ -19,6 +16,28 @@ const Brand = () => {
     document.querySelector(".content").style.height =
       contentHeight >= browserHeight ? "auto" : browserHeight + 60;
   }
+
+  // NHÃN HÀNG THEO LOẠI
+  const onchangeLoai = useCallback(
+    async (idcate = "0") => {
+      const [error, resp] = await okteamAPI(`/brand/list?idcate=${idcate}`);
+      if (error) {
+        Fail("Không thực hiện được thao tác!");
+        console.log(error);
+        return false;
+      }
+      const { result, message } = resp.data;
+      if (!isOK(message)) {
+        Fail(message);
+        return false;
+      }
+      setMaLoai(idcate);
+      getAllBrands(result);
+      setHeight();
+      return true;
+    },
+    [getAllBrands]
+  );
 
   // DANH SÁCH LOẠI
   async function select_loai() {
@@ -38,25 +57,6 @@ const Brand = () => {
       name: rs.typename,
     }));
     setOptions(newResult);
-    return true;
-  }
-
-  // NHÃN HÀNG THEO LOẠI
-  async function onchangeLoai(idcate = "0") {
-    const [error, resp] = await okteamAPI(`/brand/list?idcate=${idcate}`);
-    if (error) {
-      Fail("Không thực hiện được thao tác!");
-      console.log(error);
-      return false;
-    }
-    const { result, message } = resp.data;
-    if (!isOK(message)) {
-      Fail(message);
-      return false;
-    }
-    setMaLoai(idcate);
-    setData(result);
-    setHeight();
     return true;
   }
 
@@ -89,7 +89,7 @@ const Brand = () => {
     }
     Success("Thêm nhãn hàng thành công!");
     setFormData({ id: null, name: "" });
-    setData(result);
+    getAllBrands(result);
     return true;
   }
 
@@ -114,11 +114,16 @@ const Brand = () => {
           return false;
         }
         Success("Xóa nhãn hàng thành công!");
-        setData(result);
+        getAllBrands(result);
         return true;
       }
     );
   }
+
+  useEffect(() => {
+    if (!document.title) document.title = "Quản trị - Nhãn hàng";
+    onchangeLoai();
+  }, [onchangeLoai]);
 
   return (
     <div className="container">
@@ -128,4 +133,19 @@ const Brand = () => {
     </div>
   );
 };
-export default Brand;
+
+const mapStatetoProp = (state) => {
+  return {
+    data: state.brands,
+  };
+};
+
+const mapDispatchToProps = (dispath, props) => {
+  return {
+    getAllBrands: (list) => {
+      dispath(ALL_BRANDS(list));
+    },
+  };
+};
+
+export default connect(mapStatetoProp, mapDispatchToProps)(Brand);

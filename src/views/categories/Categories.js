@@ -1,18 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from "react-bootstrap";
+import { connect } from "react-redux";
 import FormLoai from "./form/FormLoai";
 import TableLoai from "./table/TableLoai";
 import okteamAPI from "../../utils/api/okteamAPI";
 import { Fail, Success, Approve, isOK } from "../../utils/sweetalert2/alert";
 import okteam_upload from "../../utils/api/okteam_upload";
+import { ALL_CATEGORIES } from "../../store/action/index";
 
-const Categories = () => {
+const Categories = ({ data, getAllCategories }) => {
   const [show, setShow] = useState(false);
-  const [data, setData] = useState(list_loai);
 
   // DANH SÁCH LOẠI
-  async function list_loai() {
+  const list_loai = useCallback(async () => {
     const [error, resp] = await okteamAPI("/category/list");
     if (error) {
       Fail("Không thực hiện được thao tác!");
@@ -24,9 +25,9 @@ const Categories = () => {
       Fail(message);
       return false;
     }
-    setData(result);
+    getAllCategories(result);
     return true;
-  }
+  }, [getAllCategories]);
 
   // THÊM LOẠI
   async function them_loai(formData, setTemp, setFormData) {
@@ -71,7 +72,7 @@ const Categories = () => {
     });
     setTemp(null);
     setShow(false);
-    setData(result);
+    getAllCategories(result);
     return true;
   }
 
@@ -95,7 +96,7 @@ const Categories = () => {
           return false;
         }
         Success("Loại hàng đã được xóa!");
-        setData(result);
+        getAllCategories(result);
         return true;
       }
     );
@@ -107,7 +108,8 @@ const Categories = () => {
     const contentHeight = document.body.scrollHeight;
     document.querySelector(".content").style.height =
       contentHeight >= browserHeight ? "auto" : browserHeight + 60 + "px";
-  }, []);
+    list_loai();
+  }, [list_loai]);
 
   return (
     <div className="container">
@@ -131,4 +133,19 @@ const Categories = () => {
     </div>
   );
 };
-export default Categories;
+
+const mapStatetoProp = (state) => {
+  return {
+    data: state.categories,
+  };
+};
+
+const mapDispatchToProps = (dispath, props) => {
+  return {
+    getAllCategories: (list) => {
+      dispath(ALL_CATEGORIES(list));
+    },
+  };
+};
+
+export default connect(mapStatetoProp, mapDispatchToProps)(Categories);
