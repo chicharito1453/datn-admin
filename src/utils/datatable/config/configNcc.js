@@ -58,7 +58,7 @@ const configNcc = {
       data: "password",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          data = `<input onchange="update_ncc('${row.username}', this.value, 0, '${data}', this)"  value="${data}" />`;
+          data = `<input type="password" onchange="update_ncc('${row.username}', this.value, 0, '${data}', this)"  value="${data}" />`;
         }
         return data;
       },
