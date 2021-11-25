@@ -11,7 +11,7 @@ const Header = () => {
       </label>
       <div className="left-area">
         <h3>
-          Admin <span>Management</span>
+          Admin <span>OKTEAM</span>
         </h3>
       </div>
       {localStorage.getItem("myData") && (
