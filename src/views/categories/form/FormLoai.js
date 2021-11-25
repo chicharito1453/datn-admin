@@ -1,7 +1,6 @@
 import React, { useState, useEffect, memo } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import InputGroup from "../../../components/InputGroup";
-import Button from "react-bootstrap/Button";
 import Image from "../../../components/Image";
 
 const FormLoai = ({ add, close }) => {
@@ -84,7 +83,6 @@ const FormLoai = ({ add, close }) => {
                 idcate: formData.idcate.toUpperCase(),
                 parent: formData.parent.toUpperCase(),
               },
-              setTemp,
               setFormData
             )
           }

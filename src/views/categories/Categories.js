@@ -26,16 +26,12 @@ const Categories = ({ data, getAllCategories }) => {
       return false;
     }
     getAllCategories(result);
-    const browserHeight = window.innerHeight;
-    const contentHeight = document.body.scrollHeight;
-    document.querySelector(".content").style.height =
-      contentHeight >= browserHeight ? "auto" : browserHeight + 60 + "px";
+    document.querySelector(".content").style.height = "auto";
     return true;
   }, [getAllCategories]);
 
-  // THÊM LOẠI
-  async function them_loai(formData, setTemp, setFormData) {
-    // check
+  // CHECK LỖI FORM
+  function check_form(formData) {
     if (!formData.idcate.trim()) {
       Fail("Chưa nhập mã loại!");
       return false;
@@ -44,6 +40,12 @@ const Categories = ({ data, getAllCategories }) => {
       Fail("Chưa nhập tên loại!");
       return false;
     }
+    return true;
+  }
+
+  // THÊM LOẠI
+  async function them_loai(formData, setFormData) {
+    if (!check_form(formData)) return false;
     if (!formData.parent) formData.parent = null;
     // upload hinh anh
     if (formData.img) {
@@ -74,7 +76,6 @@ const Categories = ({ data, getAllCategories }) => {
       img: null,
       parent: "",
     });
-    setTemp(null);
     setShow(false);
     getAllCategories(result);
     return true;
@@ -124,7 +125,12 @@ const Categories = ({ data, getAllCategories }) => {
       <br />
       <br />
       <TableLoai data={data} deleted={delete_loai} />
-      <Modal show={show} onHide={() => setShow(false)}>
+      <Modal
+        show={show}
+        onHide={() => setShow(false)}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Thêm loại hàng</Modal.Title>
         </Modal.Header>
