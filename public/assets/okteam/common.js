@@ -37,6 +37,16 @@ function isOK(message) {
   return message == "OK";
 }
 
+// Thao tác với localStorage
+const saveToLocalStorage = (name, value) => {
+  localStorage.setItem(name, JSON.stringify(value));
+};
+const getFromLocalStorage = (name) => JSON.parse(localStorage.getItem(name));
+
+const getToken = () => {
+  return JSON.parse(localStorage.getItem("myData")).token;
+};
+
 // upload ảnh
 async function okteam_upload(image) {
   try {
@@ -66,11 +76,13 @@ async function okteamAPI(endpoint, method = "GET", data = null) {
 
 // gọi api
 async function callAPI(url, method = "GET", data = null) {
+  const token = getToken();
   try {
     const resp = await axios({
       method,
       url,
       data,
+      headers: { Authorization: "Bearer " + token },
     });
     return [null, resp];
   } catch (error) {
