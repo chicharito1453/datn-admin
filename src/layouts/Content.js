@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import routes from "../routes/routes";
 import Loading from "../components/Loading";
-import Login from "../components/Login";
+import Login from "../views/login/Login";
 
 const Content = () => {
   const [loading, setLoading] = useState(true);
