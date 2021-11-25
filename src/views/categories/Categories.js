@@ -134,7 +134,7 @@ const Categories = ({ data, getAllCategories }) => {
   );
 };
 
-const mapStatetoProp = (state) => {
+const mapStatetoProps = (state) => {
   return {
     data: state.categories,
   };
@@ -148,4 +148,4 @@ const mapDispatchToProps = (dispath, props) => {
   };
 };
 
-export default connect(mapStatetoProp, mapDispatchToProps)(Categories);
+export default connect(mapStatetoProps, mapDispatchToProps)(Categories);

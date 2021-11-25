@@ -59,7 +59,7 @@ const NCC = ({ data, getAllNCC }) => {
   );
 };
 
-const mapStatetoProp = (state) => {
+const mapStatetoProps = (state) => {
   return {
     data: state.list_Ncc,
   };
@@ -73,4 +73,4 @@ const mapDispatchToProps = (dispath, props) => {
   };
 };
 
-export default connect(mapStatetoProp, mapDispatchToProps)(NCC);
+export default connect(mapStatetoProps, mapDispatchToProps)(NCC);

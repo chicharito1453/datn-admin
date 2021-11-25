@@ -134,7 +134,7 @@ const Brand = ({ data, getAllBrands }) => {
   );
 };
 
-const mapStatetoProp = (state) => {
+const mapStatetoProps = (state) => {
   return {
     data: state.brands,
   };
@@ -148,4 +148,4 @@ const mapDispatchToProps = (dispath, props) => {
   };
 };
 
-export default connect(mapStatetoProp, mapDispatchToProps)(Brand);
+export default connect(mapStatetoProps, mapDispatchToProps)(Brand);
