@@ -16,7 +16,7 @@ const ncc = [
 const Form = () => {
   return (
     <form style={{ width: "70%", textAlign: "left" }} id="productForm">
-      <div className="col-sm">
+      <div className="col">
         {/* Trường dữ liệu */}
         <InputGroup id="name" text="Tên sản phẩm" />
         <InputGroup id="price" text="Giá" valueD={0} type="number" min="0" />
@@ -65,6 +65,12 @@ const Form = () => {
             text="Chọn ảnh 3"
             idFile="link3"
             idButton="btnLink3"
+            classButton="danger"
+          />
+          <Image
+            text="Chọn ảnh 4"
+            idFile="link4"
+            idButton="btnLink4"
             classButton="danger"
           />
         </div>
