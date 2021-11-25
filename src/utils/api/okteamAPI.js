@@ -5,7 +5,7 @@ async function okteamAPI(endpoint, method = "GET", data = null) {
   const token = getToken();
   try {
     const resp = await axios({
-      url: process.env.REACT_APP_API + endpoint,
+      url: process.env.REACT_APP_GATE_V1 + endpoint,
       method,
       data,
       headers: { Authorization: "Bearer " + token },
