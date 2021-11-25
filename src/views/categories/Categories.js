@@ -26,6 +26,10 @@ const Categories = ({ data, getAllCategories }) => {
       return false;
     }
     getAllCategories(result);
+    const browserHeight = window.innerHeight;
+    const contentHeight = document.body.scrollHeight;
+    document.querySelector(".content").style.height =
+      contentHeight >= browserHeight ? "auto" : browserHeight + 60 + "px";
     return true;
   }, [getAllCategories]);
 
@@ -104,10 +108,6 @@ const Categories = ({ data, getAllCategories }) => {
 
   useEffect(() => {
     document.title = "Quản trị - Loại hàng";
-    const browserHeight = window.innerHeight;
-    const contentHeight = document.body.scrollHeight;
-    document.querySelector(".content").style.height =
-      contentHeight >= browserHeight ? "auto" : browserHeight + 60 + "px";
     list_loai();
   }, [list_loai]);
 

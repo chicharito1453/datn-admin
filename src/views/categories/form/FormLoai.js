@@ -24,7 +24,7 @@ const FormLoai = ({ add, close }) => {
     return () => {
       temp && URL.revokeObjectURL(temp); // hủy image tạm
     };
-  });
+  }, [temp]);
 
   return (
     <>
