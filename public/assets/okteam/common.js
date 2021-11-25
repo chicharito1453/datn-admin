@@ -1,8 +1,11 @@
 // url api okteam
-const REACT_APP_API = "http://localhost:8080/api/v1";
+const REACT_APP_GATE_V1 = "http://localhost:8080/api/v1";
 const REACT_APP_UPLOAD_PRESET = "x2qgwhlm";
 const REACT_APP_UPLOAD_URL =
   "https://api.cloudinary.com/v1_1/okteam/image/upload";
+// regex
+const regexEmail = /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
+const regexSDT = /^0(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
 
 // selector
 const $ = document.querySelector.bind(document);
@@ -53,6 +56,7 @@ async function okteam_upload(image) {
     const dataImage = new FormData();
     dataImage.append("upload_preset", REACT_APP_UPLOAD_PRESET);
     dataImage.append("file", image);
+    dataImage.append("folder", "datn");
     const resp = await axios.post(REACT_APP_UPLOAD_URL, dataImage);
     return [null, resp];
   } catch (error) {
@@ -65,7 +69,7 @@ async function okteamAPI(endpoint, method = "GET", data = null) {
   try {
     const resp = await axios({
       method,
-      url: REACT_APP_API + endpoint,
+      url: REACT_APP_GATE_V1 + endpoint,
       data,
     });
     return [null, resp];
