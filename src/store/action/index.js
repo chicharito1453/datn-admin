@@ -15,3 +15,11 @@ export const ALL_BRANDS = (payload) => {
     payload,
   };
 };
+
+// BRAND
+export const ALL_NCC = (payload) => {
+  return {
+    type: types.ALL_NCC,
+    payload,
+  };
+};
