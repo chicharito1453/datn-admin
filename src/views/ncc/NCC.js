@@ -1,15 +1,20 @@
 import { useEffect, useState, useCallback } from "react";
-import { Modal } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import FormNcc from "./form/FormNcc";
 import TableNcc from "./table/TableNcc";
-import Button from "react-bootstrap/Button";
+import { regexEmail, regexSDT } from "../../utils/regex/regex";
 import okteamAPI from "../../utils/api/okteamAPI";
 import { Fail, isOK } from "../../utils/sweetalert2/alert";
-import { ALL_NCC } from "../../store/action";
+import { ALL_NCC, SET_NCC } from "../../store/action";
 
-const NCC = ({ data, getAllNCC }) => {
+const NCC = ({ data, getAllNCC, setFormData, formData }) => {
   const [show, setShow] = useState(false);
+
+  function handleClose() {
+    setFormData();
+    setShow(false);
+  }
 
   // DANH SÁCH LOẠI
   const list_Ncc = useCallback(async () => {
@@ -25,11 +30,55 @@ const NCC = ({ data, getAllNCC }) => {
       return false;
     }
     getAllNCC(result);
-    const browserHeight = window.innerHeight;
-    const contentHeight = document.body.scrollHeight;
-    document.querySelector(".content").style.height =
-      contentHeight >= browserHeight ? "auto" : browserHeight + 60 + "px";
+    document.querySelector(".content").style.height = "auto";
   }, [getAllNCC]);
+
+  // CHECK LỖI FORM
+  function check_form() {
+    if (!formData.username.trim()) {
+      Fail("Chưa nhập tài khoản!");
+      return false;
+    }
+    if (!formData.password.trim()) {
+      Fail("Chưa nhập mật khẩu!");
+      return false;
+    }
+    if (!formData.nccname.trim()) {
+      Fail("Chưa nhập tên nhà cung cấp!");
+      return false;
+    }
+    if (!formData.email.trim()) {
+      Fail("Chưa nhập Email!");
+      return false;
+    }
+    if (!regexEmail.test(formData.email.trim())) {
+      Fail("Email chưa đúng định dạng!");
+      return false;
+    }
+    if (!formData.sdt.trim()) {
+      Fail("Chưa nhập số điện thoại!");
+      return false;
+    }
+    if (!regexSDT.test(formData.sdt.trim())) {
+      Fail("Số điện thoại chưa đúng định dạng!");
+      return false;
+    }
+    if (!formData.city.trim()) {
+      Fail("Chưa nhập thành phố");
+      return false;
+    }
+    if (!formData.address.trim()) {
+      Fail("Chưa nhập địa chỉ!");
+      return false;
+    }
+    return true;
+  }
+
+  // THÊM NHÀ CUNG CẤP
+  async function them_ncc() {
+    if (!check_form()) return false;
+    console.log("ok");
+  }
 
   useEffect(() => {
     if (!document.title) document.title = "Quản trị - Nhà cung cấp";
@@ -49,11 +98,17 @@ const NCC = ({ data, getAllNCC }) => {
       <br />
       <br />
       <TableNcc data={data} />
-      <Modal size="lg" show={show} onHide={() => setShow(false)}>
+      <Modal
+        size="lg"
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Thêm nhà cung cấp</Modal.Title>
         </Modal.Header>
-        <FormNcc close={() => setShow(false)} />
+        <FormNcc add={them_ncc} close={handleClose} />
       </Modal>
     </div>
   );
@@ -62,6 +117,7 @@ const NCC = ({ data, getAllNCC }) => {
 const mapStatetoProps = (state) => {
   return {
     data: state.list_Ncc,
+    formData: state.ncc,
   };
 };
 
@@ -69,6 +125,9 @@ const mapDispatchToProps = (dispath, props) => {
   return {
     getAllNCC: (list) => {
       dispath(ALL_NCC(list));
+    },
+    setFormData: (NCC = null) => {
+      dispath(SET_NCC(NCC));
     },
   };
 };
