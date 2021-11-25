@@ -47,7 +47,7 @@ const configNhan = {
       data: "name",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<input onchange="update_nhan('${row.id}', this.value, this)" style="border: none;background-color: rgba(0, 0, 0, 0);" value="${data}" />`;
+          return `<input onchange="update_nhan('${row.id}', this.value, this)"  value="${data}" />`;
         }
         return data;
       },

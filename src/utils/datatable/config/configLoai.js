@@ -43,7 +43,7 @@ const configLoai = {
       data: "typename",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          data = `<input onchange="update_loai('${row.idcate}', this.value, 0, '${data}', this)" style="border: none;background-color: rgba(0, 0, 0, 0);" value="${data}" />`;
+          data = `<input onchange="update_loai('${row.idcate}', this.value, 0, '${data}', this)"  value="${data}" />`;
         }
         return data;
       },
@@ -69,9 +69,7 @@ const configLoai = {
         if (type === "display") {
           data = `<input onchange="update_loai('${
             row.idcate
-          }',this.value, 2, '${data}', this)" style="border: none;background-color: rgba(0, 0, 0, 0);" value="${
-            data || ""
-          }" />`;
+          }',this.value, 2, '${data}', this)"  value="${data || ""}" />`;
         }
         return data;
       },
