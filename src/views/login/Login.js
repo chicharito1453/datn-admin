@@ -27,7 +27,7 @@ const Login = () => {
       return false;
     }
     const [error, resp] = await callAPI(
-      `${process.env.REACT_APP_URL}/admin/login?username=${user.username}&password=${user.password}`,
+      `${process.env.REACT_APP_PROXY}/admin/login?username=${user.username}&password=${user.password}`,
       "POST"
     );
     if (error) {
