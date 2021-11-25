@@ -16,10 +16,18 @@ export const ALL_BRANDS = (payload) => {
   };
 };
 
-// BRAND
+// DANH SÁCH NCC
 export const ALL_NCC = (payload) => {
   return {
     type: types.ALL_NCC,
+    payload,
+  };
+};
+
+// SET GIÁ TRỊ NCC
+export const SET_NCC = (payload) => {
+  return {
+    type: types.SET_NCC,
     payload,
   };
 };
