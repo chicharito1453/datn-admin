@@ -64,7 +64,7 @@ const NCC = ({ data, getAllNCC, setFormData, formData }) => {
       Fail("Chưa nhập địa chỉ!");
       return false;
     }
-    if (!formData.active) {
+    if (formData.active == null) {
       Fail("Chưa chọn trạng thái!");
       return false;
     }
