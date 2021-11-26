@@ -25,7 +25,7 @@ const FormNcc = ({ close, add, formData, setFormData }) => {
 
   useEffect(() => {
     return () => temp && URL.revokeObjectURL(temp); // hủy image tạm
-  }, [temp, setFormData]);
+  }, [temp]);
 
   return (
     <>
