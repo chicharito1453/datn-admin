@@ -31,7 +31,7 @@
   "Okteam upload image": {
     "prefix": "okteam_upload",
     "body": [
-      "const [error, resp] = await okteam_upload(value);",
+      "const [error, resp] = await okteam_upload(${1:image});",
       "    if (error) {",
       "      Fail(\"Không upload được ảnh!\");",
       "      console.log(error);",
