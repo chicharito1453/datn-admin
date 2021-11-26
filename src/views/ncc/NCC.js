@@ -101,7 +101,6 @@ const NCC = ({ data, getAllNCC, setFormData, formData }) => {
       return false;
     }
     Success("Thêm nhà cung cấp thành công!");
-    setFormData();
     setShow(false);
     getAllNCC(result);
     return true;
