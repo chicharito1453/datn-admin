@@ -31,3 +31,11 @@ export const SET_NCC = (payload) => {
     payload,
   };
 };
+
+// DANH SÁCH CTV
+export const ALL_CTV = (payload) => {
+  return {
+    type: types.ALL_CTV,
+    payload,
+  };
+};
