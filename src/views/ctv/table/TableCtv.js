@@ -1,4 +1,4 @@
-const Table = () => {
+const TableCtv = () => {
   return (
     <div className="table-responsive">
       <table className="table">
@@ -56,4 +56,4 @@ const Table = () => {
     </div>
   );
 };
-export default Table;
+export default TableCtv;
