@@ -17,7 +17,7 @@ const NCC = ({ data, getAllNCC, setFormData, formData }) => {
     setShow(false);
   }
 
-  // DANH SÁCH LOẠI
+  // DANH SÁCH NHÀ CUNG CẤP
   const list_Ncc = useCallback(async () => {
     const [error, resp] = await okteamAPI("/ncc/list");
     if (error) {
