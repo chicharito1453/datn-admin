@@ -1,7 +1,94 @@
 async function update_ctv(username, value, thaotac, oldValue, element) {
-  console.log(value);
+  // password
+  if (thaotac == 0) {
+    if (!value.trim()) {
+      Fail("Mật khẩu không hợp lệ!");
+      element.value = oldValue;
+      return false;
+    }
+  }
+  // fullname
+  if (thaotac == 1) {
+    if (!value.trim()) {
+      Fail("Họ tên không hợp lệ!");
+      element.value = oldValue;
+      return false;
+    }
+  }
+  // image
+  if (thaotac == 2) {
+    const [error, resp] = await okteam_upload(value);
+    if (error) {
+      Fail("Không upload được ảnh!");
+      console.log(error);
+      return false;
+    }
+    value = resp.data.secure_url;
+  }
+  // email
+  if (thaotac == 4) {
+    if (!regexEmail.test(value.trim())) {
+      Fail("Email không hợp lệ!");
+      element.value = oldValue;
+      return false;
+    }
+  }
+  // sdt
+  if (thaotac == 5) {
+    if (!regexSDT.test(value.trim())) {
+      Fail("Số điện thoại không hợp lệ!");
+      element.value = oldValue;
+      return false;
+    }
+  }
+  // address
+  if (thaotac == 6) {
+    if (!value.trim()) {
+      Fail("Địa chỉ không hợp lệ!");
+      element.value = oldValue;
+      return false;
+    }
+  }
+  // tien hanh update
+  const [error, resp] = await okteamAPI(
+    `/ctv/reform/${username}?thaotac=${thaotac}&value=${value}`,
+    "PUT"
+  );
+  if (error) {
+    Fail("Không thực hiện được thao tác!");
+    console.log(error);
+    return false;
+  }
+  const { result, message } = resp.data;
+  if (!isOK(message)) {
+    Fail(message);
+    return false;
+  }
+  if (thaotac == 2) $(`#img_ctv_${username}`).src = value;
+  Success("Cập nhật thông tin thành công!");
+  return true;
 }
-async function update_trangthai_ctv(username, isChecked, element) {}
-function setImgNcc(username) {
+async function update_trangthai_ctv(username, isChecked, element) {
+  const [error, resp] = await okteamAPI(
+    `/ctv/update-trangthai?username=${username}`,
+    "PUT"
+  );
+  if (error) {
+    Fail("Không thực hiện được thao tác!");
+    console.log(error);
+    element.checked = !isChecked;
+    return false;
+  }
+  const { message } = resp.data;
+  if (!isOK(message)) {
+    console.log("2");
+    Fail(message);
+    element.checked = !isChecked;
+    return false;
+  }
+  Success("Cập nhật thông tin thành công!");
+  return true;
+}
+function setImgCtv(username) {
   document.querySelector(`#file_ctv_${username}`).click();
 }
