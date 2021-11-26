@@ -1,20 +1,19 @@
-import Table from "./table/Table";
-import Form from "./form/Form";
-import Button from "react-bootstrap/Button";
 import { useEffect, useState } from "react";
+import { Modal, Button } from "react-bootstrap";
+import TableCtv from "./table/TableCtv";
+import FormCtv from "./form/FormCtv";
 
 const CTV = () => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (!document.title) document.title = "Quản trị - Cộng tác viên";
+    document.querySelector(".content").style.height = "auto";
+  }, []);
 
-    // Resize sử dụng show làm dependencies
-    window.onresize = function () {};
-    document.querySelector(".content").style.height = show
-      ? "auto"
-      : window.innerHeight - 60 + "px";
-  }, [show]);
+  function handleClose() {
+    setShow(false);
+  }
 
   return (
     <div className="container">
@@ -24,12 +23,23 @@ const CTV = () => {
         variant="primary"
         onClick={() => setShow(!show)}
       >
-        {!show ? "Thêm cộng tác viên" : "Đóng"}
+        Thêm cộng tác viên
       </Button>
-      {show && <Form />}
       <br />
       <br />
-      <Table />
+      <TableCtv />
+      <Modal
+        size="lg"
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Thêm cộng tác viên</Modal.Title>
+        </Modal.Header>
+        <FormCtv close={handleClose} />
+      </Modal>
     </div>
   );
 };
