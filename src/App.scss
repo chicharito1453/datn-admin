@@ -16,6 +16,10 @@ body {
   cursor: text;
 }
 
+#dataTable input[type="checkbox"]:focus {
+  cursor: pointer;
+}
+
 #dataTable select {
   border: none;
   background-color: rgba(0, 0, 0, 0);
