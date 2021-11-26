@@ -83,6 +83,16 @@ const FormCtv = ({ close }) => {
                   elementClass="form-check-input"
                   type="radio"
                 />
+                <InputGroup
+                  nameClass="form-check form-check-inline"
+                  id="khac"
+                  name="sex"
+                  text="Khác"
+                  value="Khác"
+                  labelClass="form-check-label"
+                  elementClass="form-check-input"
+                  type="radio"
+                />
               </div>
               <br />
               <div className="col">
