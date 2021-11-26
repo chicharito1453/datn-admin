@@ -19,6 +19,10 @@ const FormNcc = ({ close, add, formData, setFormData }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
+  function handleActive(e) {
+    setFormData({ ...formData, active: e.target.value === "1" });
+  }
+
   useEffect(() => {
     return () => {
       temp && URL.revokeObjectURL(temp); // hủy image tạm
@@ -112,7 +116,7 @@ const FormNcc = ({ close, add, formData, setFormData }) => {
                   labelClass="form-check-label"
                   elementClass="form-check-input"
                   type="radio"
-                  changed={handleChangeNcc}
+                  changed={handleActive}
                 />
                 <InputGroup
                   nameClass="form-check form-check-inline"
@@ -123,21 +127,20 @@ const FormNcc = ({ close, add, formData, setFormData }) => {
                   labelClass="form-check-label"
                   elementClass="form-check-input"
                   type="radio"
-                  changed={handleChangeNcc}
+                  changed={handleActive}
                 />
               </div>
               <br />
               <div className="form-floating">
                 <textarea
                   className="form-control"
-                  id="gioithieu"
-                  name="gioithieu"
+                  id="description"
+                  name="description"
                   style={{ height: 100 }}
                   onChange={handleChangeNcc}
                 ></textarea>
-                <label htmlFor="gioithieu">Giới thiệu</label>
+                <label htmlFor="description">Giới thiệu</label>
               </div>
-              <br />
             </form>
           </div>
         </div>

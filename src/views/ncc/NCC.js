@@ -5,7 +5,8 @@ import FormNcc from "./form/FormNcc";
 import TableNcc from "./table/TableNcc";
 import { regexEmail, regexSDT } from "../../utils/regex/regex";
 import okteamAPI from "../../utils/api/okteamAPI";
-import { Fail, isOK } from "../../utils/sweetalert2/alert";
+import okteam_upload from "../../utils/api/okteam_upload";
+import { Approve, Fail, isOK, Success } from "../../utils/sweetalert2/alert";
 import { ALL_NCC, SET_NCC } from "../../store/action";
 
 const NCC = ({ data, getAllNCC, setFormData, formData }) => {
@@ -71,13 +72,70 @@ const NCC = ({ data, getAllNCC, setFormData, formData }) => {
       Fail("Chưa nhập địa chỉ!");
       return false;
     }
+    if (!formData.active) {
+      Fail("Chưa chọn trạng thái!");
+      return false;
+    }
+    if (!formData.description.trim()) {
+      Fail("Chưa nhập giới thiệu!");
+      return false;
+    }
     return true;
   }
 
   // THÊM NHÀ CUNG CẤP
   async function them_ncc() {
     if (!check_form()) return false;
-    console.log("ok");
+    // upload hinh anh
+    if (formData.ncclogo) {
+      const [error, resp] = await okteam_upload(formData.ncclogo);
+      if (error) {
+        Fail("Không upload được ảnh!");
+        console.log(error);
+        return false;
+      }
+      formData.ncclogo = resp.data.secure_url;
+    }
+    // them
+    const [error, resp] = await okteamAPI("/ncc/add", "POST", formData);
+    if (error) {
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    const { result, message } = resp.data;
+    if (!isOK(message)) {
+      Fail(message);
+      return false;
+    }
+    Success("Thêm nhà cung cấp thành công!");
+    setFormData();
+    setShow(false);
+    getAllNCC(result);
+    return true;
+  }
+
+  // XÓA NHÀ CUNG CẤP
+  async function delete_ncc(Ncc) {
+    Approve(
+      "Bạn đang thực hiện xóa nhà cung cấp này.\nTiếp tục thực hiện ?",
+      async () => {
+        const [error, resp] = await okteamAPI("/ncc/delete", "DELETE", Ncc);
+        if (error) {
+          Fail("Không thực hiện được thao tác!");
+          console.log(error);
+          return false;
+        }
+        const { result, message } = resp.data;
+        if (!isOK(message)) {
+          Fail(message);
+          return false;
+        }
+        Success("Xóa nhà cung cấp thành công!");
+        getAllNCC(result);
+        return true;
+      }
+    );
   }
 
   useEffect(() => {
@@ -97,7 +155,7 @@ const NCC = ({ data, getAllNCC, setFormData, formData }) => {
       </Button>
       <br />
       <br />
-      <TableNcc data={data} />
+      <TableNcc data={data} deleted={delete_ncc} />
       <Modal
         size="lg"
         show={show}
