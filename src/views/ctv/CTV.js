@@ -5,7 +5,7 @@ import { ALL_CTV, SET_CTV } from "../../store/action/index";
 import { regexEmail, regexSDT } from "../../utils/regex/regex";
 import okteamAPI from "../../utils/api/okteamAPI";
 import okteam_upload from "../../utils/api/okteam_upload";
-import { Fail, isOK, Success } from "../../utils/sweetalert2/alert";
+import { Fail, isOK, Success, Approve } from "../../utils/sweetalert2/alert";
 import TableCtv from "./table/TableCtv";
 import FormCtv from "./form/FormCtv";
 
@@ -47,7 +47,7 @@ const CTV = ({ data, getAllCtv, formData, setFormData }) => {
       Fail("Chưa chọn giới tính!");
       return false;
     }
-    if (!formData.active) {
+    if (formData.active == null) {
       Fail("Chưa chọn trạng thái!");
       return false;
     }
@@ -102,6 +102,29 @@ const CTV = ({ data, getAllCtv, formData, setFormData }) => {
     return true;
   }
 
+  // XÓA CỘNG TÁC VIÊN
+  async function delete_ctv(Ctv) {
+    Approve(
+      "Bạn đang thực hiện xóa cộng tác viên này.\nTiếp tục thực hiện ?",
+      async () => {
+        const [error, resp] = await okteamAPI("/ctv/delete", "DELETE", Ctv);
+        if (error) {
+          Fail("Không thực hiện được thao tác!");
+          console.log(error);
+          return false;
+        }
+        const { result, message } = resp.data;
+        if (!isOK(message)) {
+          Fail(message);
+          return false;
+        }
+        Success("Xóa nhà cung cấp thành công!");
+        getAllCtv(result);
+        return true;
+      }
+    );
+  }
+
   useEffect(() => {
     document.title = "Quản trị - Cộng tác viên";
     list_Ctv();
@@ -119,7 +142,7 @@ const CTV = ({ data, getAllCtv, formData, setFormData }) => {
       </Button>
       <br />
       <br />
-      <TableCtv data={data} />
+      <TableCtv data={data} deleted={delete_ctv} />
       <Modal
         size="lg"
         show={show}
