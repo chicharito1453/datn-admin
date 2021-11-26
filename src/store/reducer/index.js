@@ -4,6 +4,7 @@ import brands from "./brands";
 import list_Ncc from "./list_Ncc";
 import ncc from "./ncc";
 import list_Ctv from "./list_Ctv";
+import ctv from "./ctv";
 
 const myReducer = combineReducers({
   categories,
@@ -11,6 +12,7 @@ const myReducer = combineReducers({
   list_Ncc,
   ncc,
   list_Ctv,
+  ctv,
 });
 
 export default myReducer;

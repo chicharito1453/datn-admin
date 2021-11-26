@@ -39,3 +39,11 @@ export const ALL_CTV = (payload) => {
     payload,
   };
 };
+
+// SET GIÁ TRỊ CTV
+export const SET_CTV = (payload) => {
+  return {
+    type: types.SET_CTV,
+    payload,
+  };
+};
