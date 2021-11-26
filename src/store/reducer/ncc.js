@@ -9,8 +9,8 @@ const initialState = {
   sdt: "",
   city: "",
   address: "",
-  active: false,
-  gioithieu: "",
+  active: null,
+  description: "",
 };
 
 const ncc = (state = initialState, action) => {
