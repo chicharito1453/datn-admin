@@ -2,7 +2,7 @@
   "Okteam api": {
     "prefix": "okteamAPI",
     "body": [
-      "const [error, resp] = await okteamAPI(${1:endpoint},\"GET/POST/PUT/DELETE\",${2:data});",
+      "const [error, resp] = await okteamAPI(${1:endpoint}, \"GET/POST/PUT/DELETE\", ${2:data});",
       "    if (error) {",
       "      Fail(\"Không thực hiện được thao tác!\");",
       "      console.log(error);",
@@ -19,7 +19,7 @@
   "Call api": {
     "prefix": "callAPI",
     "body": [
-      "const [error, resp] = await callAPI(${1:url},\"GET/POST/PUT/DELETE\",${2:data});",
+      "const [error, resp] = await callAPI(${1:url}, \"GET/POST/PUT/DELETE\", ${2:data});",
       "    if (error) {",
       "      Fail(\"Không thực hiện được thao tác!\");",
       "      console.log(error);",
