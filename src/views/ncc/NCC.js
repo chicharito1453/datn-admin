@@ -143,7 +143,7 @@ const NCC = ({ data, getAllNCC, setFormData, formData }) => {
         variant="primary"
         onClick={() => setShow(!show)}
       >
-        Thêm Nhà cung cấp
+        Thêm nhà cung cấp
       </Button>
       <br />
       <br />
