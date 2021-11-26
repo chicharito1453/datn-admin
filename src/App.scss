@@ -15,6 +15,17 @@ body {
 #dataTable input:focus {
   cursor: text;
 }
+
+#dataTable select {
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+}
+#dataTable select:hover {
+  border: 1px solid #c2c2c2;
+  box-shadow: 1px 1px 4px #ebebeb;
+  cursor: pointer;
+}
+
 /* Phần loading screen */
 .wraper-loading {
   display: flex;
