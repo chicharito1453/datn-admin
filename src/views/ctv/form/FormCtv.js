@@ -1,15 +1,25 @@
 import { useState, useEffect } from "react";
-import { Modal } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
+import { Modal, Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import { SET_CTV } from "../../../store/action/index";
 import Image from "../../../components/Image";
 import InputGroup from "../../../components/InputGroup";
 
-const FormCtv = ({ close }) => {
+const FormCtv = ({ close, add, formData, setFormData }) => {
   const [temp, setTemp] = useState(null);
 
   function handleImage(e) {
     const file = e.target.files[0];
     setTemp(URL.createObjectURL(file));
+    setFormData({ ...formData, image: file });
+  }
+
+  function handleChangeCtv(e) {
+    setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
+  }
+
+  function handleActive(e) {
+    setFormData({ ...formData, active: e.target.value === "1" });
   }
 
   useEffect(() => {
@@ -46,17 +56,44 @@ const FormCtv = ({ close }) => {
               }}
               id="ctvForm"
             >
-              <InputGroup id="username" name="username" text="Tài khoản" />
+              <InputGroup
+                id="username"
+                name="username"
+                text="Tài khoản"
+                changed={handleChangeCtv}
+              />
               <InputGroup
                 id="password"
                 name="password"
                 text="Mật khẩu"
                 type="password"
+                changed={handleChangeCtv}
               />
-              <InputGroup id="fullname" name="fullname" text="Họ tên" />
-              <InputGroup id="email" name="email" text="Email" type="email" />
-              <InputGroup id="sdt" name="sdt" text="SĐT" />
-              <InputGroup id="diachi" name="username" text="Địa chỉ" />
+              <InputGroup
+                id="fullname"
+                name="fullname"
+                text="Họ tên"
+                changed={handleChangeCtv}
+              />
+              <InputGroup
+                id="email"
+                name="email"
+                text="Email"
+                type="email"
+                changed={handleChangeCtv}
+              />
+              <InputGroup
+                id="sdt"
+                name="sdt"
+                text="SĐT"
+                changed={handleChangeCtv}
+              />
+              <InputGroup
+                id="address"
+                name="address"
+                text="Địa chỉ"
+                changed={handleChangeCtv}
+              />
               <br />
               <div className="col">
                 <label htmlFor="nam" className="form-label">
@@ -72,6 +109,7 @@ const FormCtv = ({ close }) => {
                   labelClass="form-check-label"
                   elementClass="form-check-input"
                   type="radio"
+                  changed={handleChangeCtv}
                 />
                 <InputGroup
                   nameClass="form-check form-check-inline"
@@ -82,6 +120,7 @@ const FormCtv = ({ close }) => {
                   labelClass="form-check-label"
                   elementClass="form-check-input"
                   type="radio"
+                  changed={handleChangeCtv}
                 />
                 <InputGroup
                   nameClass="form-check form-check-inline"
@@ -92,6 +131,7 @@ const FormCtv = ({ close }) => {
                   labelClass="form-check-label"
                   elementClass="form-check-input"
                   type="radio"
+                  changed={handleChangeCtv}
                 />
               </div>
               <br />
@@ -109,6 +149,7 @@ const FormCtv = ({ close }) => {
                   labelClass="form-check-label"
                   elementClass="form-check-input"
                   type="radio"
+                  changed={handleActive}
                 />
                 <InputGroup
                   nameClass="form-check form-check-inline"
@@ -119,6 +160,7 @@ const FormCtv = ({ close }) => {
                   labelClass="form-check-label"
                   elementClass="form-check-input"
                   type="radio"
+                  changed={handleActive}
                 />
               </div>
             </form>
@@ -126,7 +168,9 @@ const FormCtv = ({ close }) => {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary">Thêm</Button>
+        <Button variant="primary" onClick={add}>
+          Thêm
+        </Button>
         <Button variant="secondary" onClick={close}>
           Đóng
         </Button>
@@ -134,4 +178,19 @@ const FormCtv = ({ close }) => {
     </>
   );
 };
-export default FormCtv;
+
+const mapStatetoProps = (state) => {
+  return {
+    formData: state.ctv,
+  };
+};
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    setFormData: (CTV = null) => {
+      dispatch(SET_CTV(CTV));
+    },
+  };
+};
+
+export default connect(mapStatetoProps, mapDispatchToProps)(FormCtv);
