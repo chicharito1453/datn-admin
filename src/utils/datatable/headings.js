@@ -10,10 +10,25 @@ export const headingNcc = [
   "Mật khẩu",
   "Tên",
   "Logo",
-  "Tiền",
+  "Số dư",
   "Email",
   "SĐT",
   "Thành phố",
+  "Địa chỉ",
+  "Ngày tạo",
+];
+// nhà cung cấp
+export const headingCtv = [
+  "#",
+  "Trạng thái",
+  "Tài khoản",
+  "Mật khẩu",
+  "Tên",
+  "Avatar",
+  "Số dư",
+  "Giới tính",
+  "Email",
+  "SĐT",
   "Địa chỉ",
   "Ngày tạo",
 ];
