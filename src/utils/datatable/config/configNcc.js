@@ -46,7 +46,14 @@ const configNcc = {
       data: "active",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<input type="checkbox" onchange="update_trangthai_ncc('${row.username}', this.checked, this)" style="width: 100px;" checked="${data}" />`;
+          return `<input type="checkbox" onchange="update_trangthai_ncc('${
+            row.username
+          }', this.checked, this)" style="width: 100px;" ${
+            data && "checked"
+          } />`;
+        }
+        if (type === "export") {
+          return data ? "Đã kích hoạt" : "Vô hiệu hóa";
         }
         return data;
       },
@@ -57,10 +64,7 @@ const configNcc = {
     {
       data: "password",
       render: (data, type, row, meta) => {
-        if (type === "display") {
-          data = `<input type="password" onchange="update_ncc('${row.username}', this.value, 0, '${data}', this)"  value="${data}" />`;
-        }
-        return data;
+        return `<input type="password" onchange="update_ncc('${row.username}', this.value, 0, '${data}', this)"  value="${data}" />`;
       },
     },
     {
@@ -77,7 +81,7 @@ const configNcc = {
       render: (data, type, row, meta) => {
         const src = data || "/assets/img/default.jpg";
         return ` <img
-            id="img_loai_${row.username}"
+            id="img_ncc_${row.username}"
             src=${src}
             onclick="setImgNcc('${row.username}')"
             width="50"
@@ -90,9 +94,9 @@ const configNcc = {
     {
       data: "money",
       render: (data, type, row, meta) => {
-        return `<div style="width: 200px;">${new Intl.NumberFormat(
-          "en-IN"
-        ).format(data)} đ</div>`;
+        return `<div style="width: 250px;">${data
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")} VNĐ</div>`;
       },
     },
     {
