@@ -81,7 +81,7 @@ const configCtv = {
       render: (data, type, row, meta) => {
         const src = data || "/assets/img/default.jpg";
         return ` <img
-              id="img_ncc_${row.username}"
+              id="img_ctv_${row.username}"
               src=${src}
               onclick="setImgCtv('${row.username}')"
               width="60"
