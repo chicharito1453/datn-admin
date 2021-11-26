@@ -140,10 +140,10 @@ const mapStatetoProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispath, props) => {
+const mapDispatchToProps = (dispatch, props) => {
   return {
     getAllBrands: (list) => {
-      dispath(ALL_BRANDS(list));
+      dispatch(ALL_BRANDS(list));
     },
   };
 };

@@ -146,10 +146,10 @@ const mapStatetoProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispath, props) => {
+const mapDispatchToProps = (dispatch, props) => {
   return {
     getAllCategories: (list) => {
-      dispath(ALL_CATEGORIES(list));
+      dispatch(ALL_CATEGORIES(list));
     },
   };
 };

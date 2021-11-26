@@ -171,13 +171,13 @@ const mapStatetoProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispath, props) => {
+const mapDispatchToProps = (dispatch, props) => {
   return {
     getAllNCC: (list) => {
-      dispath(ALL_NCC(list));
+      dispatch(ALL_NCC(list));
     },
     setFormData: (NCC = null) => {
-      dispath(SET_NCC(NCC));
+      dispatch(SET_NCC(NCC));
     },
   };
 };
