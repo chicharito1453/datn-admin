@@ -88,10 +88,18 @@ const configNcc = {
       },
     },
     {
+      data: "money",
+      render: (data, type, row, meta) => {
+        return `<div style="width: 200px;">${new Intl.NumberFormat(
+          "en-IN"
+        ).format(data)} đ</div>`;
+      },
+    },
+    {
       data: "email",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<input onchange="update_ncc('${row.username}', this.value, 3, '${data}', this)"  value="${data}" />`;
+          return `<input onchange="update_ncc('${row.username}', this.value, 3, '${data}', this)" style="width: 300px;"  value="${data}" />`;
         }
         return data;
       },
@@ -127,7 +135,7 @@ const configNcc = {
       data: "createdate",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<div style="width: 100px;">${data}</div>`;
+          return `<div style="width: 150px;">${data}</div>`;
         }
         return data;
       },
@@ -136,6 +144,7 @@ const configNcc = {
   columnDefs: [
     // { targets: [0], width: "10px" },
     // { targets: "_all", width: "130px" },
+    { className: "text-center", targets: [6] },
   ],
 };
 export default configNcc;

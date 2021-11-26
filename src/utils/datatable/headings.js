@@ -10,6 +10,7 @@ export const headingNcc = [
   "Mật khẩu",
   "Tên",
   "Logo",
+  "Tiền",
   "Email",
   "SĐT",
   "Thành phố",
