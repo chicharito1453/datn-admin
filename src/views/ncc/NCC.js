@@ -41,27 +41,19 @@ const NCC = ({ data, getAllNCC, setFormData, formData }) => {
       return false;
     }
     if (!formData.password.trim()) {
-      Fail("Chưa nhập mật khẩu!");
+      Fail("Mật khẩu không hợp lệ!");
       return false;
     }
     if (!formData.nccname.trim()) {
       Fail("Chưa nhập tên nhà cung cấp!");
       return false;
     }
-    if (!formData.email.trim()) {
-      Fail("Chưa nhập Email!");
-      return false;
-    }
     if (!regexEmail.test(formData.email.trim())) {
-      Fail("Email chưa đúng định dạng!");
-      return false;
-    }
-    if (!formData.sdt.trim()) {
-      Fail("Chưa nhập số điện thoại!");
+      Fail("Email không hợp lệ!");
       return false;
     }
     if (!regexSDT.test(formData.sdt.trim())) {
-      Fail("Số điện thoại chưa đúng định dạng!");
+      Fail("Số điện thoại không hợp lệ!");
       return false;
     }
     if (!formData.city.trim()) {
