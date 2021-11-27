@@ -41,6 +41,7 @@ const InputGroup = ({
         <Select
           id={id}
           name={name}
+          value={value}
           styles={inputStyle}
           onChange={(e) => changed(e.value)}
           options={options}
