@@ -79,6 +79,7 @@ async function update_ncc(username, value, thaotac, oldValue, element) {
     return false;
   }
   if (thaotac == 2) getE(`#img_ncc_${username}`).src = value;
+  if (thaotac == 0) element.value = "";
   fetchingOff();
   Success("Cập nhật thông tin thành công!");
   return true;

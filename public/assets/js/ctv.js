@@ -3,7 +3,6 @@ async function update_ctv(username, value, thaotac, oldValue, element) {
   if (thaotac == 0) {
     if (!value.trim()) {
       Fail("Mật khẩu không hợp lệ!");
-      element.value = oldValue;
       return false;
     }
   }
@@ -65,13 +64,14 @@ async function update_ctv(username, value, thaotac, oldValue, element) {
     console.log(error);
     return false;
   }
-  const { result, message } = resp.data;
+  const { message } = resp.data;
   if (!isOK(message)) {
     fetchingOff();
     Fail(message);
     return false;
   }
   if (thaotac == 2) getE(`#img_ctv_${username}`).src = value;
+  if (thaotac == 0) element.value = "";
   fetchingOff();
   Success("Cập nhật thông tin thành công!");
   return true;

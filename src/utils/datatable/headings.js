@@ -5,9 +5,9 @@ export const headingNhan = ["STT", "Tên nhãn ", ""];
 // nhà cung cấp
 export const headingNcc = [
   "#",
-  "Trạng thái",
   "Tài khoản",
-  "Mật khẩu",
+  "Trạng thái",
+  "Mật khẩu mới",
   "Tên",
   "Logo",
   "Số dư",
@@ -20,9 +20,9 @@ export const headingNcc = [
 // nhà cung cấp
 export const headingCtv = [
   "#",
-  "Trạng thái",
   "Tài khoản",
-  "Mật khẩu",
+  "Trạng thái",
+  "Mật khẩu mới",
   "Tên",
   "Avatar",
   "Số dư",

@@ -43,6 +43,15 @@ const configNcc = {
       },
     },
     {
+      data: "username",
+      render: (data, type, row, meta) => {
+        if (type === "display") {
+          return `<div style="width: 150px;">${data}</div>`;
+        }
+        return data;
+      },
+    },
+    {
       data: "active",
       render: (data, type, row, meta) => {
         if (type === "display") {
@@ -60,11 +69,8 @@ const configNcc = {
     },
     {
       data: "username",
-    },
-    {
-      data: "password",
       render: (data, type, row, meta) => {
-        return `<input type="password" onchange="update_ncc('${row.username}', this.value, 0, '${data}', this)"  value="${data}" />`;
+        return `<input type="password" placeholder="Cập nhật mật khẩu mới" onchange="update_ncc('${row.username}', this.value, 0, '', this)"  />`;
       },
     },
     {
@@ -149,7 +155,7 @@ const configNcc = {
   columnDefs: [
     // { targets: [0], width: "10px" },
     // { targets: "_all", width: "130px" },
-    { className: "text-center", targets: [6] },
+    { className: "text-center", targets: [1, 6] },
   ],
 };
 export default configNcc;
