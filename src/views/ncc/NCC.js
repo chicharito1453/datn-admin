@@ -17,7 +17,6 @@ const NCC = ({ data, getAllNCC, setFormData, formData }) => {
   const [show, setShow] = useState(false);
 
   function handleClose() {
-    setFormData();
     setShow(false);
   }
 
