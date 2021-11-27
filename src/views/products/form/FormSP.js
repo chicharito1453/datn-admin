@@ -1,18 +1,72 @@
+import { useCallback, useEffect, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
+// import { connect } from "react-redux";
+import okteamAPI from "../../../utils/api/okteamAPI";
+import { Fail, isOK } from "../../../utils/sweetalert2/alert";
+import {
+  fetchingOn,
+  fetchingOff,
+} from "../../../utils/loading-overlay/loading-overlay";
 import Image from "../../../components/Image";
 import InputGroup from "../../../components/InputGroup";
 
-const categoties = [
-  { id: "LT", name: "Laptop" },
-  { id: "TV", name: "Tivi" },
-];
-
-const ncc = [
-  { id: "gg123", name: "Google" },
-  { id: "ap123", name: "Apple" },
-];
-
 const FormSP = ({ close }) => {
+  const [Loais, setLoais] = useState(null);
+  const [Nccs, setNccs] = useState(null);
+
+  // FILL SELECT NCC
+  const select_ncc = useCallback(async () => {
+    const [error, resp] = await okteamAPI("/ncc/list");
+    if (error) {
+      fetchingOff();
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    const { result, message } = resp.data;
+    if (!isOK(message)) {
+      fetchingOff();
+      Fail(message);
+      return false;
+    }
+    setNccs([
+      { value: "", label: "Tất cả" },
+      ...result.map((ncc) => ({ value: ncc.username, label: ncc.nccname })),
+    ]);
+    fetchingOff();
+    return true;
+  }, []);
+
+  // FILL SELECT LOẠI
+  const select_category = useCallback(async () => {
+    fetchingOn();
+    // lay danh sach loai
+    const [error, resp] = await okteamAPI("/category/list");
+    if (error) {
+      fetchingOff();
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    const { result, message } = resp.data;
+    if (!isOK(message)) {
+      fetchingOff();
+      Fail(message);
+      return false;
+    }
+    setLoais([
+      { value: "", label: "Tất cả" },
+      ...result.map((cate) => ({ value: cate.idcate, label: cate.typename })),
+    ]);
+    if (!select_ncc()) fetchingOff();
+    return true;
+  }, [select_ncc]);
+
+  useEffect(() => {
+    select_category();
+    return () => {};
+  }, [select_category]);
+
   return (
     <>
       <Modal.Body>
@@ -38,18 +92,22 @@ const FormSP = ({ close }) => {
             <div className="row">
               <div className="col">
                 <InputGroup
-                  id="category"
+                  id="loai"
                   type="select"
+                  name="loai"
                   text="Loại hàng"
-                  options={categoties}
+                  placeholder="Tên loại"
+                  options={Loais}
                 />
               </div>
               <div className="col">
                 <InputGroup
                   id="ncc"
                   type="select"
+                  name="ncc"
                   text="Nhà cung cấp"
-                  options={ncc}
+                  placeholder="Tên nhà cung cấp"
+                  options={Nccs}
                 />
               </div>
             </div>
@@ -133,4 +191,13 @@ const FormSP = ({ close }) => {
     </>
   );
 };
+
+// const mapStatetoProps = (state) => {
+//   return {};
+// };
+
+// const mapDispatchToProps = (dispatch, props) => {
+//   return {};
+// };
+
 export default FormSP;
