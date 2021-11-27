@@ -1,12 +1,23 @@
 import { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { connect } from "react-redux";
-import { SET_CTV } from "../../../store/action/index";
+// import { connect } from "react-redux";
+// import { SET_CTV } from "../../../store/action/index";
 import Image from "../../../components/Image";
 import InputGroup from "../../../components/InputGroup";
 
-const FormCtv = ({ close, add, formData, setFormData }) => {
+const FormCtv = ({ close, add }) => {
   const [temp, setTemp] = useState(null);
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+    fullname: "",
+    image: null,
+    email: "",
+    sdt: "",
+    address: "",
+    active: null,
+    sex: null,
+  });
 
   function handleImage(e) {
     const file = e.target.files[0];
@@ -168,7 +179,7 @@ const FormCtv = ({ close, add, formData, setFormData }) => {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={add}>
+        <Button variant="primary" onClick={() => add(formData)}>
           Thêm
         </Button>
         <Button variant="secondary" onClick={close}>
@@ -179,18 +190,18 @@ const FormCtv = ({ close, add, formData, setFormData }) => {
   );
 };
 
-const mapStatetoProps = (state) => {
-  return {
-    formData: state.ctv,
-  };
-};
+// const mapStatetoProps = (state) => {
+//   return {
+//     formData: state.ctv,
+//   };
+// };
 
-const mapDispatchToProps = (dispatch, props) => {
-  return {
-    setFormData: (CTV = null) => {
-      dispatch(SET_CTV(CTV));
-    },
-  };
-};
+// const mapDispatchToProps = (dispatch, props) => {
+//   return {
+//     setFormData: (CTV = null) => {
+//       dispatch(SET_CTV(CTV));
+//     },
+//   };
+// };
 
-export default connect(mapStatetoProps, mapDispatchToProps)(FormCtv);
+export default FormCtv;

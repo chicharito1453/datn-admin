@@ -51,7 +51,7 @@ const Categories = ({ data, getAllCategories }) => {
   }
 
   // THÊM LOẠI
-  async function them_loai(formData, setFormData) {
+  async function them_loai(formData) {
     if (!check_form(formData)) return false;
     if (!formData.parent) formData.parent = null;
     fetchingOn();
@@ -82,12 +82,6 @@ const Categories = ({ data, getAllCategories }) => {
     }
     fetchingOff();
     Success("Thêm loại thành công!");
-    setFormData({
-      idcate: "",
-      typename: "",
-      img: null,
-      parent: "",
-    });
     setShow(false);
     getAllCategories(result);
     return true;

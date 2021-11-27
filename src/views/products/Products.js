@@ -1,19 +1,49 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Modal, Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import { ALL_PRODUCTS } from "../../store/action/index";
+import { Fail, isOK } from "../../utils/sweetalert2/alert";
+import {
+  fetchingOn,
+  fetchingOff,
+} from "../../utils/loading-overlay/loading-overlay";
+import okteamAPI from "../../utils/api/okteamAPI";
 import FormSP from "./form/FormSP";
 import TableSP from "./table/TableSP";
 
-const Products = () => {
+const Products = ({ data, getAllProducts }) => {
   const [show, setShow] = useState(false);
 
   function handleClose() {
     setShow(false);
   }
 
+  // DANH SÁCH SẢN PHẨM
+  const list_products = useCallback(async () => {
+    fetchingOn();
+    const [error, resp] = await okteamAPI("/products/list");
+    if (error) {
+      fetchingOff();
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    const { result, message } = resp.data;
+    if (!isOK(message)) {
+      fetchingOff();
+      Fail(message);
+      return false;
+    }
+    fetchingOff();
+    getAllProducts(result);
+    document.querySelector(".content").style.height = "auto";
+    return true;
+  }, [getAllProducts]);
+
   useEffect(() => {
     document.title = "Quản trị - Sản phẩm";
-    document.querySelector(".content").style.height = "auto";
-  }, []);
+    list_products();
+  }, [list_products]);
 
   return (
     <div className="container">
@@ -43,4 +73,19 @@ const Products = () => {
     </div>
   );
 };
-export default Products;
+
+const mapStateToProps = (state) => {
+  return {
+    data: state.list_product,
+  };
+};
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    getAllProducts: (list) => {
+      dispatch(ALL_PRODUCTS(list));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Products);

@@ -11,7 +11,7 @@ import {
   fetchingOn,
   fetchingOff,
 } from "../../utils/loading-overlay/loading-overlay";
-import { ALL_NCC, SET_NCC } from "../../store/action";
+import { ALL_NCC } from "../../store/action";
 
 const NCC = ({ data, getAllNCC, setFormData, formData }) => {
   const [show, setShow] = useState(false);
@@ -43,7 +43,7 @@ const NCC = ({ data, getAllNCC, setFormData, formData }) => {
   }, [getAllNCC]);
 
   // CHECK LỖI FORM
-  function check_form() {
+  function check_form(formData) {
     if (!formData.username.trim()) {
       Fail("Chưa nhập tài khoản!");
       return false;
@@ -84,8 +84,8 @@ const NCC = ({ data, getAllNCC, setFormData, formData }) => {
   }
 
   // THÊM NHÀ CUNG CẤP
-  async function them_ncc() {
-    if (!check_form()) return false;
+  async function them_ncc(formData) {
+    if (!check_form(formData)) return false;
     fetchingOn();
     // upload hinh anh
     if (formData.ncclogo) {
@@ -183,7 +183,6 @@ const NCC = ({ data, getAllNCC, setFormData, formData }) => {
 const mapStatetoProps = (state) => {
   return {
     data: state.list_Ncc,
-    formData: state.ncc,
   };
 };
 
@@ -191,9 +190,6 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     getAllNCC: (list) => {
       dispatch(ALL_NCC(list));
-    },
-    setFormData: (NCC = null) => {
-      dispatch(SET_NCC(NCC));
     },
   };
 };

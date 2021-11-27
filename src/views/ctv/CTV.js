@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { connect } from "react-redux";
-import { ALL_CTV, SET_CTV } from "../../store/action/index";
+import { ALL_CTV } from "../../store/action/index";
 import { regexEmail, regexSDT } from "../../utils/regex/regex";
 import okteamAPI from "../../utils/api/okteamAPI";
 import okteam_upload from "../../utils/api/okteam_upload";
@@ -17,12 +17,11 @@ const CTV = ({ data, getAllCtv, formData, setFormData }) => {
   const [show, setShow] = useState(false);
 
   function handleClose() {
-    setFormData();
     setShow(false);
   }
 
   // CHECK LỖI FORM
-  function check_form() {
+  function check_form(formData) {
     if (!formData.username.trim()) {
       Fail("Chưa nhập tài khoản!");
       return false;
@@ -80,8 +79,8 @@ const CTV = ({ data, getAllCtv, formData, setFormData }) => {
   }, [getAllCtv]);
 
   // THÊM CỘNG TÁC VIÊN
-  async function them_ctv() {
-    if (!check_form()) return false;
+  async function them_ctv(formData) {
+    if (!check_form(formData)) return false;
     fetchingOn();
     // upload hinh anh
     if (formData.image) {
@@ -179,7 +178,6 @@ const CTV = ({ data, getAllCtv, formData, setFormData }) => {
 const mapStatetoProps = (state) => {
   return {
     data: state.list_Ctv,
-    formData: state.ctv,
   };
 };
 
@@ -187,9 +185,6 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     getAllCtv: (list) => {
       dispatch(ALL_CTV(list));
-    },
-    setFormData: (CTV = null) => {
-      dispatch(SET_CTV(CTV));
     },
   };
 };

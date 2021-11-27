@@ -19,6 +19,10 @@ const FormLoai = ({ add, close }) => {
     setFormData({ ...formData, img: file });
   }
 
+  function handleChangeLoai(e) {
+    setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
+  }
+
   useEffect(() => {
     return () => {
       temp && URL.revokeObjectURL(temp); // hủy image tạm
@@ -30,31 +34,28 @@ const FormLoai = ({ add, close }) => {
       <Modal.Body>
         <form id="formLoai">
           <InputGroup
-            changed={(e) =>
-              setFormData({ ...formData, idcate: e.target.value })
-            }
+            name="idcate"
             value={formData.idcate}
             id="idcate"
             text="Mã loại"
             placeholder="Nhập mã loại"
+            changed={handleChangeLoai}
           />
           <InputGroup
-            changed={(e) =>
-              setFormData({ ...formData, typename: e.target.value })
-            }
             value={formData.typename}
             id="typename"
+            name="typename"
             text="Tên loại"
             placeholder="Nhập tên loại"
+            changed={handleChangeLoai}
           />
           <InputGroup
-            changed={(e) =>
-              setFormData({ ...formData, parent: e.target.value })
-            }
             value={formData.parent}
             id="parent"
+            name="parent"
             text="Loại cha"
             placeholder="Nhập loại cha"
+            changed={handleChangeLoai}
           />
           <Image
             cssImage={{
@@ -77,14 +78,11 @@ const FormLoai = ({ add, close }) => {
         <Button
           variant="primary"
           onClick={() =>
-            add(
-              {
-                ...formData,
-                idcate: formData.idcate.toUpperCase(),
-                parent: formData.parent.toUpperCase(),
-              },
-              setFormData
-            )
+            add({
+              ...formData,
+              idcate: formData.idcate.toUpperCase(),
+              parent: formData.parent.toUpperCase(),
+            })
           }
         >
           Thêm
