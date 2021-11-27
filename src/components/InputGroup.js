@@ -42,7 +42,7 @@ const InputGroup = ({
           id={id}
           name={name}
           styles={inputStyle}
-          onChange={(e) => changed(e)}
+          onChange={(e) => changed(e.value)}
           options={options}
           placeholder={placeholder}
         />
