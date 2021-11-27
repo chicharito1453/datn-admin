@@ -12,11 +12,37 @@ import InputGroup from "../../../components/InputGroup";
 
 const FormSP = ({ close }) => {
   const [Loais, setLoais] = useState(null);
+  const [maLoai, setMaLoai] = useState("");
   const [Nccs, setNccs] = useState(null);
+  const [Nhans, setNhans] = useState(null);
 
   // FILL SELECT NCC
   const select_ncc = useCallback(async () => {
     const [error, resp] = await okteamAPI("/ncc/list");
+    if (error) {
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    const { result, message } = resp.data;
+    if (!isOK(message)) {
+      Fail(message);
+      return false;
+    }
+    setNccs([
+      { value: "", label: "Tất cả" },
+      ...result.map((ncc) => ({ value: ncc.username, label: ncc.nccname })),
+    ]);
+    return true;
+  }, []);
+
+  //FILL SELECT NHÃN
+  const onchangeLoai = useCallback(async (select, isFetch) => {
+    const idcate = select ? select.value : "";
+    if (isFetch) fetchingOn();
+    const [error, resp] = await okteamAPI(
+      `/brand/list${idcate && `?idcate=${idcate}`}`
+    );
     if (error) {
       fetchingOff();
       Fail("Không thực hiện được thao tác!");
@@ -29,11 +55,12 @@ const FormSP = ({ close }) => {
       Fail(message);
       return false;
     }
-    setNccs([
-      { value: "", label: "Tất cả" },
-      ...result.map((ncc) => ({ value: ncc.username, label: ncc.nccname })),
-    ]);
     fetchingOff();
+    setMaLoai(idcate);
+    setNhans([
+      { value: "", label: "Tất cả" },
+      ...result.map((nhan) => ({ value: nhan.id, label: nhan.name })),
+    ]);
     return true;
   }, []);
 
@@ -58,14 +85,15 @@ const FormSP = ({ close }) => {
       { value: "", label: "Tất cả" },
       ...result.map((cate) => ({ value: cate.idcate, label: cate.typename })),
     ]);
-    if (!select_ncc()) fetchingOff();
+    onchangeLoai();
     return true;
-  }, [select_ncc]);
+  }, [onchangeLoai]);
 
   useEffect(() => {
+    select_ncc();
     select_category();
     return () => {};
-  }, [select_category]);
+  }, [select_category, select_ncc]);
 
   return (
     <>
@@ -73,43 +101,38 @@ const FormSP = ({ close }) => {
         <form id="productForm">
           <div className="col">
             <InputGroup id="name" text="Tên sản phẩm" />
-            <InputGroup
-              id="price"
-              text="Giá"
-              valueD={0}
-              type="number"
-              min="0"
-            />
-            <InputGroup
-              id="soluong"
-              text="Số lượng"
-              valueD={0}
-              type="number"
-              min="0"
-            />
+            <InputGroup id="price" text="Giá" type="number" min="0" />
+            <InputGroup id="soluong" text="Số lượng" type="number" min="0" />
             <InputGroup id="origin" text="Xuất xứ" />
             <InputGroup id="origin" text="Thuộc tính phụ" />
             <div className="row">
-              <div className="col">
-                <InputGroup
-                  id="loai"
-                  type="select"
-                  name="loai"
-                  text="Loại hàng"
-                  placeholder="Tên loại"
-                  options={Loais}
-                />
-              </div>
-              <div className="col">
-                <InputGroup
-                  id="ncc"
-                  type="select"
-                  name="ncc"
-                  text="Nhà cung cấp"
-                  placeholder="Tên nhà cung cấp"
-                  options={Nccs}
-                />
-              </div>
+              <InputGroup
+                id="loai"
+                type="select"
+                name="loai"
+                text="Loại hàng"
+                placeholder="Tên loại"
+                options={Loais}
+                changed={(e) => {
+                  onchangeLoai(e, true);
+                }}
+              />
+              <InputGroup
+                id="nhan"
+                type="select"
+                name="nhan"
+                text="Nhãn hàng"
+                placeholder="Tên nhãn"
+                options={Nhans}
+              />
+              <InputGroup
+                id="ncc"
+                type="select"
+                name="ncc"
+                text="Nhà cung cấp"
+                placeholder="Tên nhà cung cấp"
+                options={Nccs}
+              />
             </div>
             <br />
             <div className="col">
