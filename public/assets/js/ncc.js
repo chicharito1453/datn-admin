@@ -16,8 +16,10 @@ async function update_ncc(username, value, thaotac, oldValue, element) {
   }
   // ncclogo
   if (thaotac == 2) {
+    fetchingOn();
     const [error, resp] = await okteam_upload(value);
     if (error) {
+      fetchingOff();
       Fail("Không upload được ảnh!");
       console.log(error);
       return false;
@@ -56,31 +58,39 @@ async function update_ncc(username, value, thaotac, oldValue, element) {
       return false;
     }
   }
+  if (thaotac != 2) {
+    fetchingOn();
+  }
   // tien hanh update
   const [error, resp] = await okteamAPI(
     `/ncc/update/${username}?thaotac=${thaotac}&value=${value}`,
     "PUT"
   );
   if (error) {
+    fetchingOff();
     Fail("Không thực hiện được thao tác!");
     console.log(error);
     return false;
   }
   const { message } = resp.data;
   if (!isOK(message)) {
+    fetchingOff();
     Fail(message);
     return false;
   }
-  if (thaotac == 2) $(`#img_ncc_${username}`).src = value;
+  if (thaotac == 2) getE(`#img_ncc_${username}`).src = value;
+  fetchingOff();
   Success("Cập nhật thông tin thành công!");
   return true;
 }
 async function update_trangthai_ncc(username, isChecked, element) {
+  fetchingOn();
   const [error, resp] = await okteamAPI(
     `/ncc/update-trangthai?username=${username}`,
     "PUT"
   );
   if (error) {
+    fetchingOff();
     Fail("Không thực hiện được thao tác!");
     console.log(error);
     element.checked = !isChecked;
@@ -88,10 +98,12 @@ async function update_trangthai_ncc(username, isChecked, element) {
   }
   const { message } = resp.data;
   if (!isOK(message)) {
+    fetchingOff();
     Fail(message);
     element.checked = !isChecked;
     return false;
   }
+  fetchingOff();
   Success("Cập nhật thông tin thành công!");
   return true;
 }
