@@ -6,6 +6,10 @@ import { regexEmail, regexSDT } from "../../utils/regex/regex";
 import okteamAPI from "../../utils/api/okteamAPI";
 import okteam_upload from "../../utils/api/okteam_upload";
 import { Fail, isOK, Success, Approve } from "../../utils/sweetalert2/alert";
+import {
+  fetchingOn,
+  fetchingOff,
+} from "../../utils/loading-overlay/loading-overlay";
 import TableCtv from "./table/TableCtv";
 import FormCtv from "./form/FormCtv";
 
@@ -56,17 +60,21 @@ const CTV = ({ data, getAllCtv, formData, setFormData }) => {
 
   // DANH SÁCH CỘNG TÁC VIÊN
   const list_Ctv = useCallback(async () => {
+    fetchingOn();
     const [error, resp] = await okteamAPI("/ctv/list");
     if (error) {
+      fetchingOff();
       Fail("Không thực hiện được thao tác!");
       console.log(error);
       return false;
     }
     const { result, message } = resp.data;
     if (!isOK(message)) {
+      fetchingOff();
       Fail(message);
       return false;
     }
+    fetchingOff();
     getAllCtv(result);
     document.querySelector(".content").style.height = "auto";
   }, [getAllCtv]);
@@ -74,10 +82,12 @@ const CTV = ({ data, getAllCtv, formData, setFormData }) => {
   // THÊM CỘNG TÁC VIÊN
   async function them_ctv() {
     if (!check_form()) return false;
+    fetchingOn();
     // upload hinh anh
     if (formData.image) {
       const [error, resp] = await okteam_upload(formData.image);
       if (error) {
+        fetchingOff();
         Fail("Không upload được ảnh!");
         console.log(error);
         return false;
@@ -87,15 +97,18 @@ const CTV = ({ data, getAllCtv, formData, setFormData }) => {
     // them
     const [error, resp] = await okteamAPI("/ctv/add", "POST", formData);
     if (error) {
+      fetchingOff();
       Fail("Không thực hiện được thao tác!");
       console.log(error);
       return false;
     }
     const { result, message } = resp.data;
     if (!isOK(message)) {
+      fetchingOff();
       Fail(message);
       return false;
     }
+    fetchingOff();
     Success("Thêm cộng tác viên thành công!");
     setShow(false);
     getAllCtv(result);
@@ -107,17 +120,21 @@ const CTV = ({ data, getAllCtv, formData, setFormData }) => {
     Approve(
       "Bạn đang thực hiện xóa cộng tác viên này.\nTiếp tục thực hiện ?",
       async () => {
+        fetchingOn();
         const [error, resp] = await okteamAPI("/ctv/delete", "DELETE", Ctv);
         if (error) {
+          fetchingOff();
           Fail("Không thực hiện được thao tác!");
           console.log(error);
           return false;
         }
         const { result, message } = resp.data;
         if (!isOK(message)) {
+          fetchingOff();
           Fail(message);
           return false;
         }
+        fetchingOff();
         Success("Xóa nhà cung cấp thành công!");
         getAllCtv(result);
         return true;

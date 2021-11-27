@@ -4,36 +4,37 @@ import FormNhan from "./form/FormNhan";
 import TableNhan from "./table/TableNhan";
 import okteamAPI from "../../utils/api/okteamAPI";
 import { Fail, Success, Approve, isOK } from "../../utils/sweetalert2/alert";
+import {
+  fetchingOn,
+  fetchingOff,
+} from "../../utils/loading-overlay/loading-overlay";
 import { ALL_BRANDS } from "../../store/action/index";
 
 const Brand = ({ data, getAllBrands }) => {
   const [options, setOptions] = useState(select_loai);
   const [maLoai, setMaLoai] = useState("0");
 
-  function setHeight() {
-    const browserHeight = window.innerHeight;
-    const contentHeight = document.body.scrollHeight;
-    document.querySelector(".content").style.height =
-      contentHeight >= browserHeight ? "auto" : browserHeight + 60;
-  }
-
   // NHÃN HÀNG THEO LOẠI
   const onchangeLoai = useCallback(
     async (idcate = "0") => {
+      fetchingOn();
       const [error, resp] = await okteamAPI(`/brand/list?idcate=${idcate}`);
       if (error) {
+        fetchingOff();
         Fail("Không thực hiện được thao tác!");
         console.log(error);
         return false;
       }
       const { result, message } = resp.data;
       if (!isOK(message)) {
+        fetchingOff();
         Fail(message);
         return false;
       }
+      fetchingOff();
       setMaLoai(idcate);
       getAllBrands(result);
-      setHeight();
+      document.querySelector(".content").style.height = "auto";
       return true;
     },
     [getAllBrands]
@@ -72,21 +73,25 @@ const Brand = ({ data, getAllBrands }) => {
       return false;
     }
     // them
+    fetchingOn();
     const [error, resp] = await okteamAPI(
       `/brand/addTo/${maLoai}`,
       "POST",
       formData
     );
     if (error) {
+      fetchingOff();
       Fail("Không thực hiện được thao tác!");
       console.log(error);
       return false;
     }
     const { result, message } = resp.data;
     if (!isOK(message)) {
+      fetchingOff();
       Fail(message);
       return false;
     }
+    fetchingOff();
     Success("Thêm nhãn hàng thành công!");
     setFormData({ id: null, name: "" });
     getAllBrands(result);
@@ -99,20 +104,24 @@ const Brand = ({ data, getAllBrands }) => {
     Approve(
       "Bạn đang thực hiện xóa Loại hàng này.\nTiếp tục thực hiện ?",
       async () => {
+        fetchingOn();
         const [error, resp] = await okteamAPI(
           `/brand/delete/${brand.id}/${maLoai}`,
           "DELETE"
         );
         if (error) {
+          fetchingOff();
           Fail("Không thực hiện được thao tác!");
           console.log(error);
           return false;
         }
         const { result, message } = resp.data;
         if (!isOK(message)) {
+          fetchingOff();
           Fail(message);
           return false;
         }
+        fetchingOff();
         Success("Xóa nhãn hàng thành công!");
         getAllBrands(result);
         return true;

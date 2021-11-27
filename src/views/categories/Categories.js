@@ -1,12 +1,15 @@
 import { useEffect, useState, useCallback } from "react";
-import Button from "react-bootstrap/Button";
-import { Modal } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import FormLoai from "./form/FormLoai";
 import TableLoai from "./table/TableLoai";
 import okteamAPI from "../../utils/api/okteamAPI";
-import { Fail, Success, Approve, isOK } from "../../utils/sweetalert2/alert";
 import okteam_upload from "../../utils/api/okteam_upload";
+import { Fail, Success, Approve, isOK } from "../../utils/sweetalert2/alert";
+import {
+  fetchingOn,
+  fetchingOff,
+} from "../../utils/loading-overlay/loading-overlay";
 import { ALL_CATEGORIES } from "../../store/action/index";
 
 const Categories = ({ data, getAllCategories }) => {
@@ -14,6 +17,7 @@ const Categories = ({ data, getAllCategories }) => {
 
   // DANH SÁCH LOẠI
   const list_loai = useCallback(async () => {
+    fetchingOn();
     const [error, resp] = await okteamAPI("/category/list");
     if (error) {
       Fail("Không thực hiện được thao tác!");
@@ -25,6 +29,7 @@ const Categories = ({ data, getAllCategories }) => {
       Fail(message);
       return false;
     }
+    fetchingOff();
     getAllCategories(result);
     document.querySelector(".content").style.height = "auto";
     return true;
@@ -47,6 +52,7 @@ const Categories = ({ data, getAllCategories }) => {
   async function them_loai(formData, setFormData) {
     if (!check_form(formData)) return false;
     if (!formData.parent) formData.parent = null;
+    fetchingOn();
     // upload hinh anh
     if (formData.img) {
       const [error, resp] = await okteam_upload(formData.img);
@@ -60,15 +66,18 @@ const Categories = ({ data, getAllCategories }) => {
     // them
     const [error, resp] = await okteamAPI("/category/add", "POST", formData);
     if (error) {
+      fetchingOff();
       Fail("Không thực hiện được thao tác!");
       console.log(error);
       return false;
     }
     const { result, message } = resp.data;
     if (!isOK(message)) {
+      fetchingOff();
       Fail(message);
       return false;
     }
+    fetchingOff();
     Success("Thêm loại thành công!");
     setFormData({
       idcate: "",
@@ -86,20 +95,24 @@ const Categories = ({ data, getAllCategories }) => {
     Approve(
       "Bạn đang thực hiện xóa Loại hàng này.\nTiếp tục thực hiện ?",
       async () => {
+        fetchingOn();
         const [error, resp] = await okteamAPI(
           `/category/delete?idcate=${category.idcate}`,
           "DELETE"
         );
         if (error) {
+          fetchingOff();
           Fail("Không thực hiện được thao tác!");
           console.log(error);
           return false;
         }
         const { result, message } = resp.data;
         if (!isOK(message)) {
+          fetchingOff();
           Fail(message);
           return false;
         }
+        fetchingOff();
         Success("Loại hàng đã được xóa!");
         getAllCategories(result);
         return true;

@@ -7,6 +7,10 @@ import { regexEmail, regexSDT } from "../../utils/regex/regex";
 import okteamAPI from "../../utils/api/okteamAPI";
 import okteam_upload from "../../utils/api/okteam_upload";
 import { Approve, Fail, isOK, Success } from "../../utils/sweetalert2/alert";
+import {
+  fetchingOn,
+  fetchingOff,
+} from "../../utils/loading-overlay/loading-overlay";
 import { ALL_NCC, SET_NCC } from "../../store/action";
 
 const NCC = ({ data, getAllNCC, setFormData, formData }) => {
@@ -19,17 +23,21 @@ const NCC = ({ data, getAllNCC, setFormData, formData }) => {
 
   // DANH SÁCH NHÀ CUNG CẤP
   const list_Ncc = useCallback(async () => {
+    fetchingOn();
     const [error, resp] = await okteamAPI("/ncc/list");
     if (error) {
+      fetchingOff();
       Fail("Không thực hiện được thao tác!");
       console.log(error);
       return false;
     }
     const { result, message } = resp.data;
     if (!isOK(message)) {
+      fetchingOff();
       Fail(message);
       return false;
     }
+    fetchingOff();
     getAllNCC(result);
     document.querySelector(".content").style.height = "auto";
   }, [getAllNCC]);
@@ -78,10 +86,12 @@ const NCC = ({ data, getAllNCC, setFormData, formData }) => {
   // THÊM NHÀ CUNG CẤP
   async function them_ncc() {
     if (!check_form()) return false;
+    fetchingOn();
     // upload hinh anh
     if (formData.ncclogo) {
       const [error, resp] = await okteam_upload(formData.ncclogo);
       if (error) {
+        fetchingOff();
         Fail("Không upload được ảnh!");
         console.log(error);
         return false;
@@ -91,15 +101,18 @@ const NCC = ({ data, getAllNCC, setFormData, formData }) => {
     // them
     const [error, resp] = await okteamAPI("/ncc/add", "POST", formData);
     if (error) {
+      fetchingOff();
       Fail("Không thực hiện được thao tác!");
       console.log(error);
       return false;
     }
     const { result, message } = resp.data;
     if (!isOK(message)) {
+      fetchingOff();
       Fail(message);
       return false;
     }
+    fetchingOff();
     Success("Thêm nhà cung cấp thành công!");
     setShow(false);
     getAllNCC(result);
@@ -111,17 +124,21 @@ const NCC = ({ data, getAllNCC, setFormData, formData }) => {
     Approve(
       "Bạn đang thực hiện xóa nhà cung cấp này.\nTiếp tục thực hiện ?",
       async () => {
+        fetchingOn();
         const [error, resp] = await okteamAPI("/ncc/delete", "DELETE", Ncc);
         if (error) {
+          fetchingOff();
           Fail("Không thực hiện được thao tác!");
           console.log(error);
           return false;
         }
         const { result, message } = resp.data;
         if (!isOK(message)) {
+          fetchingOff();
           Fail(message);
           return false;
         }
+        fetchingOff();
         Success("Xóa nhà cung cấp thành công!");
         getAllNCC(result);
         return true;
