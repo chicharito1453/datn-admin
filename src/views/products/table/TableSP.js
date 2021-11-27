@@ -1,4 +1,4 @@
-const Table = () => {
+const TableSP = () => {
   return (
     <div style={{ height: "100vh" }} className="table-responsive">
       <table className="table">
@@ -31,4 +31,4 @@ const Table = () => {
     </div>
   );
 };
-export default Table;
+export default TableSP;
