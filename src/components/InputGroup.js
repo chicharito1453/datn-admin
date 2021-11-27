@@ -1,3 +1,5 @@
+import Select from "react-select";
+
 const InputGroup = ({
   id,
   text,
@@ -36,21 +38,14 @@ const InputGroup = ({
         />
       )}
       {type === "select" && (
-        <select
+        <Select
           id={id}
-          className={elementClass}
           name={name}
-          style={inputStyle}
-          onChange={(e) => changed(e.target.value)}
-        >
-          <option value="0">Tất cả</option>
-          {Array.isArray(options) &&
-            options.map((opt) => (
-              <option value={opt.id} key={opt.id}>
-                {opt.name}
-              </option>
-            ))}
-        </select>
+          styles={inputStyle}
+          onChange={(e) => changed(e)}
+          options={options}
+          placeholder={placeholder}
+        />
       )}
     </div>
   );
