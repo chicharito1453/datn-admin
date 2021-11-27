@@ -12,13 +12,16 @@ import { ALL_BRANDS } from "../../store/action/index";
 
 const Brand = ({ data, getAllBrands }) => {
   const [options, setOptions] = useState(select_loai);
-  const [maLoai, setMaLoai] = useState("0");
+  const [maLoai, setMaLoai] = useState("");
 
   // NHÃN HÀNG THEO LOẠI
   const onchangeLoai = useCallback(
-    async (idcate = "0") => {
+    async (select) => {
+      const idcate = select ? select.value : "";
       fetchingOn();
-      const [error, resp] = await okteamAPI(`/brand/list?idcate=${idcate}`);
+      const [error, resp] = await okteamAPI(
+        `/brand/list${idcate && `?idcate=${idcate}`}`
+      );
       if (error) {
         fetchingOff();
         Fail("Không thực hiện được thao tác!");
@@ -54,17 +57,17 @@ const Brand = ({ data, getAllBrands }) => {
       return false;
     }
     const newResult = result.map((rs) => ({
-      id: rs.idcate,
-      name: rs.typename,
+      value: rs.idcate,
+      label: rs.typename,
     }));
-    setOptions(newResult);
+    setOptions([{ value: "", label: "Tất cả" }, ...newResult]);
     return true;
   }
 
   // THÊM NHÃN HÀNG
   async function them_nhan(formData, setFormData) {
     // check
-    if (maLoai === "0") {
+    if (!maLoai) {
       Fail("Chưa chọn mã loại");
       return false;
     }
