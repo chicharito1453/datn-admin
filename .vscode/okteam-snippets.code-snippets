@@ -2,42 +2,52 @@
   "Okteam api": {
     "prefix": "okteamAPI",
     "body": [
+      "fetchingOn();",
       "const [error, resp] = await okteamAPI(${1:endpoint}, \"GET/POST/PUT/DELETE\", ${2:data});",
       "    if (error) {",
+      "      fetchingOff();",
       "      Fail(\"Không thực hiện được thao tác!\");",
       "      console.log(error);",
       "      return false;",
       "    }",
       "    const { result, message } = resp.data;",
       "    if (!isOK(message)) {",
+      "      fetchingOff();",
       "      Fail(message);",
       "      return false;",
-      "    }"
+      "    }",
+      "    fetchingOff();"
     ],
     "description": "Okteam api method get"
   },
   "Call api": {
     "prefix": "callAPI",
     "body": [
+      "fetchingOn();",
       "const [error, resp] = await callAPI(${1:url}, \"GET/POST/PUT/DELETE\", ${2:data});",
       "    if (error) {",
+      "      fetchingOff();",
       "      Fail(\"Không thực hiện được thao tác!\");",
       "      console.log(error);",
       "      return false;",
-      "    }"
+      "    }",
+      "    fetchingOff();"
     ],
     "description": "Call api"
   },
   "Okteam upload image": {
     "prefix": "okteam_upload",
     "body": [
+      "fetchingOn();",
       "const [error, resp] = await okteam_upload(${1:image});",
       "    if (error) {",
+      "      fetchingOff();",
       "      Fail(\"Không upload được ảnh!\");",
       "      console.log(error);",
       "      return false;",
       "    }",
-      "    resp.data.secure_url;"
+      "    resp.data.secure_url;",
+      "    fetchingOff();"
     ],
     "description": "Okteam upload image"
   }
