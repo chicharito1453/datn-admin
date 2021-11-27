@@ -4,3 +4,4 @@ export const ALL_NCC = "ALL_NCC";
 export const SET_NCC = "SET_NCC";
 export const ALL_CTV = "ALL_CTV";
 export const SET_CTV = "SET_CTV";
+export const ALL_PRODUCTS = "SET_CTV";

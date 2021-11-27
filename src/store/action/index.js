@@ -47,3 +47,11 @@ export const SET_CTV = (payload) => {
     payload,
   };
 };
+
+// DANH SÁCH PRODUCT
+export const ALL_PRODUCTS = (payload) => {
+  return {
+    type: types.ALL_PRODUCTS,
+    payload,
+  };
+};
