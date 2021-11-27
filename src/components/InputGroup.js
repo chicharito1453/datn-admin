@@ -10,7 +10,7 @@ const InputGroup = ({
   min,
   name,
   placeholder,
-  nameClass = "mb3",
+  nameClass = "col",
   labelClass = "form-label",
   elementClass = "form-control",
   inputStyle,
