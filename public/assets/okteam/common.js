@@ -8,7 +8,7 @@ const regexEmail = /^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$/;
 const regexSDT = /^0(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
 
 // selector
-const $ = document.querySelector.bind(document);
+const getE = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
 //thông báo
@@ -39,6 +39,19 @@ const Approve = (message, next) => {
 function isOK(message) {
   return message == "OK";
 }
+
+// loading screen khi fetching
+const fetchingOn = () =>
+  $.LoadingOverlay("show", {
+    image: "",
+    background: "rgba(0, 0, 0, 0.4)",
+    fontawesomeAnimation: "2000ms",
+    fontawesome: "fas fa-sync-alt fa-spin",
+    fontawesomeColor: "rgb(79, 79, 248)",
+    fade: false,
+  });
+
+const fetchingOff = () => $.LoadingOverlay("hide");
 
 // Thao tác với localStorage
 const saveToLocalStorage = (name, value) => {
