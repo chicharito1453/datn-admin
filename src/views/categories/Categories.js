@@ -20,12 +20,14 @@ const Categories = ({ data, getAllCategories }) => {
     fetchingOn();
     const [error, resp] = await okteamAPI("/category/list");
     if (error) {
+      fetchingOff();
       Fail("Không thực hiện được thao tác!");
       console.log(error);
       return false;
     }
     const { result, message } = resp.data;
     if (!isOK(message)) {
+      fetchingOff();
       Fail(message);
       return false;
     }
@@ -57,6 +59,7 @@ const Categories = ({ data, getAllCategories }) => {
     if (formData.img) {
       const [error, resp] = await okteam_upload(formData.img);
       if (error) {
+        fetchingOff();
         Fail("Không upload được ảnh!");
         console.log(error);
         return false;
