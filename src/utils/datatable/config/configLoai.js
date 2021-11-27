@@ -38,6 +38,12 @@ const configLoai = {
   columns: [
     {
       data: "idcate",
+      render: (data, type, row, meta) => {
+        return `<i style="cursor:pointer" class="far fa-trash-alt"></i>`;
+      },
+    },
+    {
+      data: "idcate",
     },
     {
       data: "typename",
@@ -73,12 +79,6 @@ const configLoai = {
           }',this.value, 2, '${data}', this)"  value="${data || ""}" />`;
         }
         return data;
-      },
-    },
-    {
-      data: "idcate",
-      render: (data, type, row, meta) => {
-        return `<i style="cursor:pointer" class="far fa-trash-alt"></i>`;
       },
     },
   ],

@@ -1,5 +1,5 @@
 // loại
-export const headingLoai = ["Mã loại", "Tên loại", "Ảnh", "Loại cha", ""];
+export const headingLoai = ["#", "Mã loại", "Tên loại", "Ảnh", "Loại cha"];
 // nhãn
 export const headingNhan = ["STT", "Tên nhãn ", ""];
 // nhà cung cấp

@@ -17,7 +17,7 @@ const Datatable = ({ id, headings, data, config, deleted }) => {
     var table = $("#" + id).DataTable(config);
     table.clear().draw();
     table.rows.add(data).draw();
-    table.on("click", "tbody td i", function () {
+    table.on("click", "tbody td .fa-trash-alt", function () {
       deleted(table.row($(this).parents("tr")).data());
     });
     document.querySelector(".table-responsive").style.display = "block";
