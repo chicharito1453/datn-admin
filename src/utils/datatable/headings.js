@@ -32,3 +32,20 @@ export const headingCtv = [
   "Địa chỉ",
   "Ngày tạo",
 ];
+// nhà cung cấp
+export const headingSP = [
+  "#",
+  "Sản phẩm",
+  "Mở bán",
+  "Giá",
+  "Số lượng",
+  "Nơi sản xuất",
+  "Đơn vị tính",
+  "Loại hàng",
+  "Nhãn hàng",
+  "Nhà cung cấp",
+  "Ảnh 1",
+  "Ảnh 2",
+  "Ảnh 3",
+  "Ảnh 4",
+];

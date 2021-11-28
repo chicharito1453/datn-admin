@@ -16,7 +16,8 @@ const Brand = ({ data, getAllBrands }) => {
 
   // NHÃN HÀNG THEO LOẠI
   const onchangeLoai = useCallback(
-    async (idcate = "") => {
+    async (select) => {
+      const idcate = select ? select.value : "";
       fetchingOn();
       const [error, resp] = await okteamAPI(
         `/brand/list${idcate && `?idcate=${idcate}`}`

@@ -7,6 +7,7 @@ const InputGroup = ({
   valueD,
   type = "text",
   disabled,
+  isChecked,
   min,
   name,
   placeholder,
@@ -33,6 +34,7 @@ const InputGroup = ({
           style={inputStyle}
           className={elementClass}
           id={id}
+          checked={isChecked}
           disabled={disabled || false}
           onChange={changed}
         />
@@ -43,9 +45,8 @@ const InputGroup = ({
           name={name}
           value={value}
           styles={inputStyle}
-          onChange={(e) => changed(e.value)}
+          onChange={(e) => changed(e)}
           options={options}
-          placeholder={placeholder}
         />
       )}
     </div>

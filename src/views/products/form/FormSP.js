@@ -12,15 +12,15 @@ import InputGroup from "../../../components/InputGroup";
 
 const initialState = {
   name: "",
-  pricetv: "",
+  pricectv: "",
   qty: "",
   origin: "",
   dvt: "",
   tags: "",
-  category: { idcate: "" },
-  p_brand: { id: "" },
-  ncc: { username: "" },
-  active: null,
+  category: { idcate: "", typename: "Tất cả" },
+  p_brand: { id: "", name: "Tất cả" },
+  ncc: { username: "", nccname: "Tất cả" },
+  active: false,
   image0: null,
   image1: null,
   image2: null,
@@ -28,7 +28,7 @@ const initialState = {
   description: "",
 };
 
-const FormSP = ({ close }) => {
+const FormSP = ({ close, add }) => {
   const [Loais, setLoais] = useState(null);
   const [Nccs, setNccs] = useState(null);
   const [Nhans, setNhans] = useState(null);
@@ -59,7 +59,8 @@ const FormSP = ({ close }) => {
   }, []);
 
   //FILL SELECT NHÃN
-  const onchangeLoai = useCallback(async (idcate = "", isFetch) => {
+  const onchangeLoai = useCallback(async (select, isFetch) => {
+    const idcate = select ? select.value : "";
     if (isFetch) fetchingOn();
     const [error, resp] = await okteamAPI(
       `/brand/list${idcate && `?idcate=${idcate}`}`
@@ -111,8 +112,7 @@ const FormSP = ({ close }) => {
 
   // SET PRODUCT
   function handleChangeProduct(e) {
-    console.log(e.target.value, typeof e.target.value);
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
   }
 
   // SET IMAGE
@@ -137,13 +137,19 @@ const FormSP = ({ close }) => {
   }
 
   // SET SELECT
-  function handleSelect(value, thaotac) {
+  function handleSelect(e, thaotac) {
     if (thaotac === "0") {
-      setFormData({ ...formData, category: { idcate: value } });
+      setFormData({
+        ...formData,
+        category: { idcate: e.value, typename: e.label },
+      });
     } else if (thaotac === "1") {
-      setFormData({ ...formData, p_brand: { id: value } });
+      setFormData({ ...formData, p_brand: { id: e.value, name: e.label } });
     } else {
-      setFormData({ ...formData, ncc: { username: value } });
+      setFormData({
+        ...formData,
+        ncc: { username: e.value, nccname: e.label },
+      });
     }
   }
 
@@ -172,14 +178,16 @@ const FormSP = ({ close }) => {
               id="name"
               name="name"
               text="Tên sản phẩm"
+              value={formData.name}
               changed={handleChangeProduct}
             />
             <InputGroup
-              id="pricetv"
-              name="pricetv"
+              id="pricectv"
+              name="pricectv"
               text="Giá"
               type="number"
               min="0"
+              value={formData.pricectv}
               changed={handleChangeProduct}
             />
             <InputGroup
@@ -188,24 +196,28 @@ const FormSP = ({ close }) => {
               text="Số lượng"
               type="number"
               min="0"
+              value={formData.number}
               changed={handleChangeProduct}
             />
             <InputGroup
               id="origin"
               name="origin"
               text="Xuất xứ"
+              value={formData.origin}
               changed={handleChangeProduct}
             />
             <InputGroup
               id="dvt"
               name="dvt"
               text="Đơn vị tính"
+              value={formData.dvt}
               changed={handleChangeProduct}
             />
             <InputGroup
               id="tags"
               name="tags"
               text="Tags"
+              value={formData.tags}
               changed={handleChangeProduct}
             />
             <div className="row">
@@ -216,9 +228,18 @@ const FormSP = ({ close }) => {
                 text="Loại hàng"
                 placeholder="Tên loại"
                 options={Loais}
-                changed={(value) => {
-                  handleSelect(value, "0");
-                  if (onchangeLoai(value, true)) handleSelect("", "1");
+                value={{
+                  value: formData.category.idcate,
+                  label: formData.category.typename,
+                }}
+                changed={(e) => {
+                  handleSelect(e, "0");
+                  if (onchangeLoai(e, true)) {
+                    setFormData({
+                      ...formData,
+                      p_brand: { id: "", name: "Tất cả" },
+                    });
+                  }
                 }}
               />
               <InputGroup
@@ -228,8 +249,12 @@ const FormSP = ({ close }) => {
                 text="Nhãn hàng"
                 placeholder="Tên nhãn"
                 options={Nhans}
-                changed={(value) => {
-                  handleSelect(value, "1");
+                value={{
+                  value: formData.p_brand.id,
+                  label: formData.p_brand.name,
+                }}
+                changed={(e) => {
+                  handleSelect(e, "1");
                 }}
               />
               <InputGroup
@@ -239,8 +264,12 @@ const FormSP = ({ close }) => {
                 text="Nhà cung cấp"
                 placeholder="Tên nhà cung cấp"
                 options={Nccs}
-                changed={(value) => {
-                  handleSelect(value, "2");
+                value={{
+                  value: formData.ncc.username,
+                  label: formData.ncc.nccname,
+                }}
+                changed={(e) => {
+                  handleSelect(e, "2");
                 }}
               />
             </div>
@@ -254,22 +283,24 @@ const FormSP = ({ close }) => {
                 nameClass="form-check form-check-inline"
                 id="active"
                 name="active"
-                text="Kích hoạt"
+                text="Mở bán"
                 value="1"
                 labelClass="form-check-label"
                 elementClass="form-check-input"
                 type="radio"
+                isChecked={formData.active && "checked"}
                 changed={handletActive}
               />
               <InputGroup
                 nameClass="form-check form-check-inline"
                 id="nonactive"
                 name="active"
-                text="Vô hiệu"
+                text="Không mở bán"
                 value="0"
                 labelClass="form-check-label"
                 elementClass="form-check-input"
                 type="radio"
+                isChecked={!formData.active && "checked"}
                 changed={handletActive}
               />
             </div>
@@ -316,6 +347,7 @@ const FormSP = ({ close }) => {
                 id="description"
                 name="description"
                 style={{ height: 150 }}
+                value={formData.description}
                 onChange={handleChangeProduct}
               ></textarea>
               <label htmlFor="description">Giới thiệu</label>

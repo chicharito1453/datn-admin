@@ -11,7 +11,7 @@ import { useLayoutEffect, memo } from "react";
 const jzip = require("jzip");
 window.JSZip = jzip;
 
-const Datatable = ({ id, headings, data, config, deleted }) => {
+const Datatable = ({ id, headings, data, config, deleted, update }) => {
   useLayoutEffect(() => {
     if (!Array.isArray(data)) return;
     var table = $("#" + id).DataTable(config);
@@ -20,8 +20,11 @@ const Datatable = ({ id, headings, data, config, deleted }) => {
     table.on("click", "tbody td .fa-trash-alt", function () {
       deleted(table.row($(this).parents("tr")).data());
     });
+    table.on("click", "tbody td .fa-edit", function () {
+      update(table.row($(this).parents("tr")).data());
+    });
     document.querySelector(".table-responsive").style.display = "block";
-  }, [id, data, config, deleted]);
+  }, [id, data, config, deleted, update]);
 
   return (
     <div

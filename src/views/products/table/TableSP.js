@@ -1,34 +1,18 @@
-const TableSP = () => {
+import { memo } from "react";
+import Datatable from "../../../utils/datatable/Datatable";
+import { headingSP } from "../../../utils/datatable/headings";
+import configSP from "../../../utils/datatable/config/configSP";
+
+const TableSP = ({ data, deleted, update }) => {
   return (
-    <div style={{ height: "100vh" }} className="table-responsive">
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Tên</th>
-            <th>Giá</th>
-            <th>SL</th>
-            <th>Xuất xứ</th>
-            <th>Loại</th>
-            <th>NCC</th>
-            <th>Ngày ĐK</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Surface Laptop 4 Ryzen 5</td>
-            <td>27.000.000 đ</td>
-            <td>3</td>
-            <td>Trung Quốc</td>
-            <td>Laptop</td>
-            <td>Apple</td>
-            <td>
-              <i className="fas fa-edit"></i>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <Datatable
+      id="dataTable"
+      headings={headingSP}
+      data={data}
+      deleted={deleted}
+      update={update}
+      config={configSP}
+    />
   );
 };
-export default TableSP;
+export default memo(TableSP);

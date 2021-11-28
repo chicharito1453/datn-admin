@@ -40,6 +40,19 @@ const Products = ({ data, getAllProducts }) => {
     return true;
   }, [getAllProducts]);
 
+  // THÊM SẢN PHẨM
+  async function them_sp(formData) {}
+
+  // XÓA SẢN PHẨM
+  async function delete_sp(row) {
+    console.log("Xóa", row);
+  }
+
+  // CẬP NHẬT SẢN PHẨM
+  async function update_sp(row) {
+    console.log("Cập nhật", row);
+  }
+
   useEffect(() => {
     document.title = "Quản trị - Sản phẩm";
     list_products();
@@ -57,7 +70,7 @@ const Products = ({ data, getAllProducts }) => {
       </Button>
       <br />
       <br />
-      <TableSP />
+      <TableSP data={data} deleted={delete_sp} update={update_sp} />
       <Modal
         size="lg"
         show={show}
