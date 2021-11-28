@@ -134,6 +134,7 @@ const Brand = ({ data, getAllBrands }) => {
 
   useEffect(() => {
     if (!document.title) document.title = "Quản trị - Nhãn hàng";
+    document.querySelector(".content").style.height = "100vh";
     onchangeLoai();
   }, [onchangeLoai]);
 

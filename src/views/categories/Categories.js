@@ -47,6 +47,10 @@ const Categories = ({ data, getAllCategories }) => {
       Fail("Chưa nhập tên loại!");
       return false;
     }
+    if (!formData.lv.value) {
+      Fail("Chưa chọn cấp menu!");
+      return false;
+    }
     return true;
   }
 
@@ -54,6 +58,7 @@ const Categories = ({ data, getAllCategories }) => {
   async function them_loai(formData) {
     if (!check_form(formData)) return false;
     if (!formData.parent) formData.parent = null;
+    formData.lv = formData.lv.value;
     fetchingOn();
     // upload hinh anh
     if (formData.img) {
@@ -119,6 +124,7 @@ const Categories = ({ data, getAllCategories }) => {
 
   useEffect(() => {
     document.title = "Quản trị - Loại hàng";
+    document.querySelector(".content").style.height = "100vh";
     list_loai();
   }, [list_loai]);
 

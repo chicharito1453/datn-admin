@@ -49,7 +49,7 @@ const configLoai = {
       data: "typename",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          data = `<input onchange="update_loai('${row.idcate}', this.value, 0, '${data}', this)"  value="${data}" />`;
+          return `<input onchange="update_loai('${row.idcate}', this.value, 0, '${data}', this)"  value="${data}" />`;
         }
         return data;
       },
@@ -62,12 +62,26 @@ const configLoai = {
         id="img_loai_${row.idcate}"
         src=${src}
         onclick="setImgLoai('${row.idcate}')"
-        width="60"
-        height="60"
+        width="70"
+        height="70"
         alt=""
         style="cursor:pointer"
         className="img img-thumbnail pull-left"
       /><input id="file_loai_${row.idcate}" type="file" style="display: none" onchange="update_loai('${row.idcate}', this.files[0], 1, '${data}', this)" />`;
+      },
+    },
+    {
+      data: "lv",
+      render: (data, type, row, meta) => {
+        if (type === "display") {
+          return `<select onchange="update_loai('${
+            row.idcate
+          }', this.value, 3, '${data}', this)" style="width: 100px;">
+                      <option value="1" ${data === 1 && "selected"} >1</option>
+                      <option value="2" ${data === 2 && "selected"} >2</option>
+                  </select>`;
+        }
+        return data;
       },
     },
     {

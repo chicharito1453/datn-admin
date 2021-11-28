@@ -147,6 +147,7 @@ const NCC = ({ data, getAllNCC, setFormData, formData }) => {
 
   useEffect(() => {
     document.title = "Quản trị - Nhà cung cấp";
+    document.querySelector(".content").style.height = "100vh";
     list_Ncc();
   }, [list_Ncc]);
 

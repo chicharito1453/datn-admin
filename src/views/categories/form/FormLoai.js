@@ -3,11 +3,18 @@ import { Modal, Button } from "react-bootstrap";
 import InputGroup from "../../../components/InputGroup";
 import Image from "../../../components/Image";
 
+const level = [
+  { value: "", label: "Tất cả" },
+  { value: 1, label: "Cấp 1" },
+  { value: 2, label: "Cấp 2" },
+];
+
 const FormLoai = ({ add, close }) => {
   const [temp, setTemp] = useState(null);
   const [formData, setFormData] = useState({
     idcate: "",
     typename: "",
+    lv: { value: "", label: "Tất cả" },
     img: null,
     parent: "",
   });
@@ -50,10 +57,24 @@ const FormLoai = ({ add, close }) => {
             changed={handleChangeLoai}
           />
           <InputGroup
+            value={formData.lv}
+            id="lv"
+            name="lv"
+            type="select"
+            text="Cấp Menu"
+            options={level}
+            changed={(e) =>
+              setFormData({
+                ...formData,
+                lv: { value: e.value, label: e.label },
+              })
+            }
+          />
+          <InputGroup
             value={formData.parent}
             id="parent"
             name="parent"
-            text="Loại cha"
+            text="Menu cha"
             placeholder="Nhập loại cha"
             changed={handleChangeLoai}
           />

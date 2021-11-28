@@ -143,6 +143,7 @@ const CTV = ({ data, getAllCtv, formData, setFormData }) => {
 
   useEffect(() => {
     document.title = "Quản trị - Cộng tác viên";
+    document.querySelector(".content").style.height = "100vh";
     list_Ctv();
   }, [list_Ctv]);
 

@@ -1,5 +1,6 @@
 // CẬP NHẬT LOẠI
 async function update_loai(idcate, value, thaotac, oldValue, element) {
+  console.log(value, typeof value);
   fetchingOn();
   if (thaotac == "1") {
     const [error, resp] = await okteam_upload(value);
@@ -32,6 +33,7 @@ async function update_loai(idcate, value, thaotac, oldValue, element) {
     return false;
   }
   if (thaotac == "1") getE(`#img_loai_${idcate}`).src = value;
+  if (thaotac == "2") element.value = value.toUpperCase();
   fetchingOff();
   Success("Cập nhật thành công!");
   return true;

@@ -11,6 +11,7 @@ import Image from "../../../components/Image";
 import InputGroup from "../../../components/InputGroup";
 
 const initialState = {
+  idpro: "",
   name: "",
   pricectv: "",
   qty: "",
@@ -174,6 +175,13 @@ const FormSP = ({ close, add }) => {
       <Modal.Body>
         <form id="productForm">
           <div className="col">
+            <InputGroup
+              id="idpro"
+              name="idpro"
+              text="Mã sản phẩm"
+              value={formData.idpro}
+              changed={handleChangeProduct}
+            />
             <InputGroup
               id="name"
               name="name"
@@ -357,7 +365,7 @@ const FormSP = ({ close, add }) => {
         </form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={() => console.log(formData)}>
+        <Button variant="primary" onClick={() => add(formData)}>
           Thêm
         </Button>
         <Button variant="secondary" onClick={close}>

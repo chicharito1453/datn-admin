@@ -41,7 +41,9 @@ const Products = ({ data, getAllProducts }) => {
   }, [getAllProducts]);
 
   // THÊM SẢN PHẨM
-  async function them_sp(formData) {}
+  async function them_sp(formData) {
+    console.log(formData);
+  }
 
   // XÓA SẢN PHẨM
   async function delete_sp(row) {
@@ -55,6 +57,7 @@ const Products = ({ data, getAllProducts }) => {
 
   useEffect(() => {
     document.title = "Quản trị - Sản phẩm";
+    document.querySelector(".content").style.height = "100vh";
     list_products();
   }, [list_products]);
 
