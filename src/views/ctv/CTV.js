@@ -13,7 +13,7 @@ import {
 import TableCtv from "./table/TableCtv";
 import FormCtv from "./form/FormCtv";
 
-const CTV = ({ data, getAllCtv, formData, setFormData }) => {
+const CTV = ({ data, getAllCtv }) => {
   const [show, setShow] = useState(false);
 
   function handleClose() {

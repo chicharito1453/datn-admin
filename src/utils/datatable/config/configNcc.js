@@ -143,6 +143,26 @@ const configNcc = {
       },
     },
     {
+      data: "idghn",
+      render: (data, type, row, meta) => {
+        if (type === "display") {
+          return `<input onchange="update_ncc('${
+            row.username
+          }', this.value, 7, '${data}', this)"  value="${data || ""}" />`;
+        }
+        return data;
+      },
+    },
+    {
+      data: "description",
+      render: (data, type, row, meta) => {
+        if (type === "display") {
+          return `<textarea onchange="update_ncc('${row.username}', this.value, 8, '${data}', this)">${data}</textarea>`;
+        }
+        return data;
+      },
+    },
+    {
       data: "createdate",
       render: (data, type, row, meta) => {
         if (type === "display") {
@@ -155,7 +175,7 @@ const configNcc = {
   columnDefs: [
     // { targets: [0], width: "10px" },
     // { targets: "_all", width: "130px" },
-    { className: "text-center", targets: [1, 6] },
+    { className: "text-center", targets: [1, 6, 12] },
   ],
 };
 export default configNcc;

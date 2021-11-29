@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { ALL_PRODUCTS } from "../../store/action/index";
-import { Fail, isOK, Success } from "../../utils/sweetalert2/alert";
+import { Fail, isOK, Success, Approve } from "../../utils/sweetalert2/alert";
 import {
   fetchingOn,
   fetchingOff,
@@ -83,10 +83,6 @@ const Products = ({ data, getAllProducts }) => {
       Fail("Chưa chọn nhà cung cấp cho sản phẩm!");
       return false;
     }
-    if (!formData.description) {
-      Fail("Chưa nhập mô tả sản phẩm!");
-      return false;
-    }
     return true;
   }
 
@@ -120,13 +116,39 @@ const Products = ({ data, getAllProducts }) => {
   }
 
   // XÓA SẢN PHẨM
-  async function delete_sp(row) {
-    console.log("Xóa", row);
+  async function delete_sp(product) {
+    Approve(
+      "Bạn đang thực hiện xóa sản phẩm này.\nTiếp tục thực hiện ?",
+      async () => {
+        fetchingOn();
+        const [error, resp] = await okteamAPI(
+          "/products/delete",
+          "DELETE",
+          product
+        );
+        if (error) {
+          fetchingOff();
+          Fail("Không thực hiện được thao tác!");
+          console.log(error);
+          return false;
+        }
+        const { result, message } = resp.data;
+        if (!isOK(message)) {
+          fetchingOff();
+          Fail(message);
+          return false;
+        }
+        fetchingOff();
+        Success("Xóa sản phẩm thành công!");
+        getAllProducts(result);
+        return true;
+      }
+    );
   }
 
   // CẬP NHẬT SẢN PHẨM
-  async function update_sp(row) {
-    console.log("Cập nhật", row);
+  async function update_sp(product) {
+    console.log("Cập nhật", product);
   }
 
   useEffect(() => {

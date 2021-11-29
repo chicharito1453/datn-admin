@@ -13,7 +13,7 @@ import {
 } from "../../utils/loading-overlay/loading-overlay";
 import { ALL_NCC } from "../../store/action";
 
-const NCC = ({ data, getAllNCC, setFormData, formData }) => {
+const NCC = ({ data, getAllNCC }) => {
   const [show, setShow] = useState(false);
 
   function handleClose() {
@@ -73,10 +73,6 @@ const NCC = ({ data, getAllNCC, setFormData, formData }) => {
     }
     if (formData.active == null) {
       Fail("Chưa chọn trạng thái!");
-      return false;
-    }
-    if (!formData.description.trim()) {
-      Fail("Chưa nhập giới thiệu!");
       return false;
     }
     return true;

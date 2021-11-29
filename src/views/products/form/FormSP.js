@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-// import { connect } from "react-redux";
 import okteamAPI from "../../../utils/api/okteamAPI";
 import { Fail, isOK } from "../../../utils/sweetalert2/alert";
 import {
@@ -387,13 +386,4 @@ const FormSP = ({ close, add }) => {
     </>
   );
 };
-
-// const mapStatetoProps = (state) => {
-//   return {};
-// };
-
-// const mapDispatchToProps = (dispatch, props) => {
-//   return {};
-// };
-
 export default FormSP;

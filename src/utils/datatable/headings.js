@@ -22,6 +22,8 @@ export const headingNcc = [
   "SĐT",
   "Thành phố",
   "Địa chỉ",
+  "ID giao hàng",
+  "Giới thiệu",
   "Ngày tạo",
 ];
 // nhà cung cấp
@@ -51,6 +53,7 @@ export const headingSP = [
   "Loại hàng",
   "Nhãn hiệu",
   "Nhà cung cấp",
+  "Mô tả",
   "Ảnh 1",
   "Ảnh 2",
   "Ảnh 3",

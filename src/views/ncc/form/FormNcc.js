@@ -119,6 +119,13 @@ const FormNcc = ({ close, add }) => {
                 value={formData.address}
                 changed={handleChangeNcc}
               />
+              <InputGroup
+                id="idghn"
+                name="idghn"
+                text="ID giao hàng nhanh (nếu có)"
+                value={formData.idghn}
+                changed={handleChangeNcc}
+              />
               <br />
               <div className="col">
                 <label htmlFor="active" className="form-label">

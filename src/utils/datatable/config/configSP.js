@@ -128,6 +128,14 @@ const configSP = {
       },
     },
     {
+      data: "description",
+      render: (data, type, row, meta) => {
+        if (type === "display" || type === "export")
+          return `<textarea onchange="update_sp('${row.idpro}', this.value, 5, '${data}', this)" >${data}</textarea>`;
+        return data;
+      },
+    },
+    {
       data: "image0",
       render: (data, type, row, meta) => {
         const src = data || "/assets/img/default.jpg";
@@ -195,7 +203,7 @@ const configSP = {
   columnDefs: [
     // { targets: [0], width: "10px" },
     // { targets: "_all", width: "130px" },
-    //   { className: "text-center", targets: [1, 6] },
+    { className: "text-center", targets: [2, 10] },
   ],
 };
 export default configSP;

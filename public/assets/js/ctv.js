@@ -55,7 +55,7 @@ async function update_ctv(username, value, thaotac, oldValue, element) {
   }
   // tien hanh update
   const [error, resp] = await okteamAPI(
-    `/ctv/reform/${username}?thaotac=${thaotac}&value=${value}`,
+    `/ctv/reform/${username}?thaotac=${thaotac}&value=${value.trim()}`,
     "PUT"
   );
   if (error) {
@@ -74,6 +74,7 @@ async function update_ctv(username, value, thaotac, oldValue, element) {
   if (thaotac == 0) element.value = "";
   fetchingOff();
   Success("Cập nhật thông tin thành công!");
+  element.value = value.trim();
   return true;
 }
 async function update_trangthai_ctv(username, isChecked, element) {
