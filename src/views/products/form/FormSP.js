@@ -18,9 +18,9 @@ const initialState = {
   origin: "",
   dvt: "",
   tags: "",
-  category: { idcate: "", typename: "Tất cả" },
-  p_brand: { id: "", name: "Tất cả" },
-  ncc: { username: "", nccname: "Tất cả" },
+  idcate: { idcate: "", typename: "Tất cả" },
+  idbrand: { id: "", name: "Tất cả" },
+  username: { username: "", nccname: "Tất cả" },
   active: false,
   image0: null,
   image1: null,
@@ -113,7 +113,7 @@ const FormSP = ({ close, add }) => {
 
   // SET PRODUCT
   function handleChangeProduct(e) {
-    setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
   // SET IMAGE
@@ -142,14 +142,16 @@ const FormSP = ({ close, add }) => {
     if (thaotac === "0") {
       setFormData({
         ...formData,
-        category: { idcate: e.value, typename: e.label },
+        idcate: { idcate: e.value, typename: e.label },
+        idbrand: { id: "", name: "Tất cả" },
       });
+      onchangeLoai(e, true);
     } else if (thaotac === "1") {
-      setFormData({ ...formData, p_brand: { id: e.value, name: e.label } });
+      setFormData({ ...formData, idbrand: { id: e.value, name: e.label } });
     } else {
       setFormData({
         ...formData,
-        ncc: { username: e.value, nccname: e.label },
+        username: { username: e.value, nccname: e.label },
       });
     }
   }
@@ -210,7 +212,7 @@ const FormSP = ({ close, add }) => {
             <InputGroup
               id="origin"
               name="origin"
-              text="Xuất xứ"
+              text="Nơi sản xuất"
               value={formData.origin}
               changed={handleChangeProduct}
             />
@@ -230,51 +232,45 @@ const FormSP = ({ close, add }) => {
             />
             <div className="row">
               <InputGroup
-                id="category"
+                id="idcate"
                 type="select"
-                name="category"
+                name="idcate"
                 text="Loại hàng"
                 placeholder="Tên loại"
                 options={Loais}
                 value={{
-                  value: formData.category.idcate,
-                  label: formData.category.typename,
+                  value: formData.idcate.idcate,
+                  label: formData.idcate.typename,
                 }}
                 changed={(e) => {
                   handleSelect(e, "0");
-                  if (onchangeLoai(e, true)) {
-                    setFormData({
-                      ...formData,
-                      p_brand: { id: "", name: "Tất cả" },
-                    });
-                  }
                 }}
               />
               <InputGroup
-                id="p_brand"
+                id="idbrand"
                 type="select"
-                name="p_brand"
-                text="Nhãn hàng"
+                name="idbrand"
+                text="Nhãn hiệu"
                 placeholder="Tên nhãn"
                 options={Nhans}
                 value={{
-                  value: formData.p_brand.id,
-                  label: formData.p_brand.name,
+                  value: formData.idbrand.id,
+                  label: formData.idbrand.name,
                 }}
                 changed={(e) => {
                   handleSelect(e, "1");
                 }}
               />
               <InputGroup
-                id="ncc"
+                id="username"
                 type="select"
-                name="ncc"
+                name="username"
                 text="Nhà cung cấp"
                 placeholder="Tên nhà cung cấp"
                 options={Nccs}
                 value={{
-                  value: formData.ncc.username,
-                  label: formData.ncc.nccname,
+                  value: formData.username.username,
+                  label: formData.username.nccname,
                 }}
                 changed={(e) => {
                   handleSelect(e, "2");
@@ -358,14 +354,30 @@ const FormSP = ({ close, add }) => {
                 value={formData.description}
                 onChange={handleChangeProduct}
               ></textarea>
-              <label htmlFor="description">Giới thiệu</label>
+              <label htmlFor="description">Mô tả</label>
             </div>
             <br />
           </div>
         </form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={() => add(formData)}>
+        <Button
+          variant="primary"
+          onClick={() =>
+            add({
+              ...formData,
+              idpro: formData.idpro.trim(),
+              name: formData.name.trim(),
+              origin: formData.origin.trim(),
+              dvt: formData.dvt.trim(),
+              tags: formData.tags.trim(),
+              idcate: formData.idcate.idcate,
+              idbrand: formData.idbrand.id,
+              username: formData.username.username,
+              description: formData.description.trim(),
+            })
+          }
+        >
           Thêm
         </Button>
         <Button variant="secondary" onClick={close}>

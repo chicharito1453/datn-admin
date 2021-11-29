@@ -5,15 +5,15 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="profile_info">
-        <img
-          src={
-            getFromLocalStorage("myData")
-              ? getFromLocalStorage("myData").image
-              : "/assets/img/avatar.png"
-          }
-          className="profile_image"
-          alt=""
-        />
+        {!getFromLocalStorage("myData") || (
+          <img
+            src={
+              getFromLocalStorage("myData").image || "/assets/img/avatar.png"
+            }
+            className="profile_image"
+            alt=""
+          />
+        )}
         <h4>
           {getFromLocalStorage("myData")
             ? getFromLocalStorage("myData").username

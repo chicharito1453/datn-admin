@@ -49,7 +49,7 @@ export const headingSP = [
   "Nơi sản xuất",
   "Đơn vị tính",
   "Loại hàng",
-  "Nhãn hàng",
+  "Nhãn hiệu",
   "Nhà cung cấp",
   "Ảnh 1",
   "Ảnh 2",

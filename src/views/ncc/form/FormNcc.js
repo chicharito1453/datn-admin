@@ -19,6 +19,7 @@ const FormNcc = ({ close, add }) => {
     address: "",
     active: null,
     description: "",
+    idghn: "",
   });
 
   function handleImage(e) {
@@ -28,7 +29,7 @@ const FormNcc = ({ close, add }) => {
   }
 
   function handleChangeNcc(e) {
-    setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
   function handleActive(e) {
@@ -164,7 +165,21 @@ const FormNcc = ({ close, add }) => {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={() => add(formData)}>
+        <Button
+          variant="primary"
+          onClick={() =>
+            add({
+              ...formData,
+              username: formData.username.trim(),
+              nccname: formData.nccname.trim(),
+              email: formData.email.trim(),
+              sdt: formData.sdt.trim(),
+              city: formData.city.trim(),
+              address: formData.address.trim(),
+              description: formData.description.trim(),
+            })
+          }
+        >
           Lưu
         </Button>
         <Button variant="secondary" onClick={close}>

@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { ALL_PRODUCTS } from "../../store/action/index";
-import { Fail, isOK } from "../../utils/sweetalert2/alert";
+import { Fail, isOK, Success } from "../../utils/sweetalert2/alert";
 import {
   fetchingOn,
   fetchingOff,
@@ -40,9 +40,83 @@ const Products = ({ data, getAllProducts }) => {
     return true;
   }, [getAllProducts]);
 
+  // CHECK FORM
+  function check_form(formData) {
+    // idpro
+    if (!formData.idpro) {
+      Fail("Chưa nhập mã sản phẩm!");
+      return false;
+    }
+    if (!formData.name) {
+      Fail("Chưa nhập tên sản phẩm!");
+      return false;
+    }
+    if (!formData.pricectv) {
+      Fail("Giá sản phẩm không hợp lệ!");
+      return false;
+    }
+    if (!formData.qty) {
+      Fail("Số lượng sản phẩm không hợp lệ!");
+      return false;
+    }
+    if (!formData.origin) {
+      Fail("Chưa nhập nơi sản xuất sản phẩm!");
+      return false;
+    }
+    if (!formData.dvt) {
+      Fail("Chưa nhập đơn vị tính sản phẩm!");
+      return false;
+    }
+    if (!formData.tags) {
+      Fail("Chưa nhập tags sản phẩm!");
+      return false;
+    }
+    if (!formData.idcate) {
+      Fail("Chưa chọn loại hàng cho sản phẩm!");
+      return false;
+    }
+    if (!formData.idbrand) {
+      Fail("Chưa chọn nhãn hiệu cho sản phẩm!");
+      return false;
+    }
+    if (!formData.username) {
+      Fail("Chưa chọn nhà cung cấp cho sản phẩm!");
+      return false;
+    }
+    if (!formData.description) {
+      Fail("Chưa nhập mô tả sản phẩm!");
+      return false;
+    }
+    return true;
+  }
+
   // THÊM SẢN PHẨM
   async function them_sp(formData) {
-    console.log(formData);
+    if (!check_form(formData)) return false;
+    formData = {
+      ...formData,
+      pricectv: Number(formData.pricectv),
+      qty: Number(formData.qty),
+    };
+    fetchingOn();
+    const [error, resp] = await okteamAPI("/products/add", "POST", formData);
+    if (error) {
+      fetchingOff();
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    const { result, message } = resp.data;
+    if (!isOK(message)) {
+      fetchingOff();
+      Fail(message);
+      return false;
+    }
+    fetchingOff();
+    Success("Thêm sản phẩm thành công!");
+    setShow(false);
+    getAllProducts(result);
+    return true;
   }
 
   // XÓA SẢN PHẨM
@@ -67,7 +141,7 @@ const Products = ({ data, getAllProducts }) => {
       <Button
         style={{ float: "right" }}
         variant="primary"
-        onClick={() => setShow(!show)}
+        onClick={() => setShow(true)}
       >
         Thêm sản phẩm
       </Button>
@@ -84,7 +158,7 @@ const Products = ({ data, getAllProducts }) => {
         <Modal.Header closeButton>
           <Modal.Title>Thêm nhà cung cấp</Modal.Title>
         </Modal.Header>
-        <FormSP close={handleClose} />
+        <FormSP close={handleClose} add={them_sp} />
       </Modal>
     </div>
   );

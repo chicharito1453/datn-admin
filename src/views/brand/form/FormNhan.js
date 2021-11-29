@@ -12,7 +12,7 @@ const FormNhan = ({ options, changed, add }) => {
           id="select-loai"
           type="select"
           text="Loại hàng"
-          placeholder="Tên loại"
+          placeholder="Nhập tên loại cần tìm"
           options={options}
           changed={changed}
         />
@@ -23,7 +23,7 @@ const FormNhan = ({ options, changed, add }) => {
           text="Tên nhãn hàng"
           value={formData.name}
           changed={(e) => setFormData({ ...formData, name: e.target.value })}
-          placeholder="Nhập tên nhãn hàng"
+          placeholder="Nhập tên nhãn hiệu"
         />
       </div>
       <div className="col-12">

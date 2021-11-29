@@ -45,6 +45,7 @@ const InputGroup = ({
           name={name}
           value={value}
           styles={inputStyle}
+          placeholder={placeholder}
           onChange={(e) => changed(e)}
           options={options}
         />

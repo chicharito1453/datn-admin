@@ -71,7 +71,7 @@ const configSP = {
       data: "pricectv",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<input type="number" onchange="update_sp('${row.idpro}', this.value, 1, '${data}', this)" value="${data}" />`;
+          return `<input type="number" style="width: 200px" onchange="update_sp('${row.idpro}', this.value, 1, '${data}', this)" value="${data}" />`;
         }
         return data;
       },
@@ -80,7 +80,7 @@ const configSP = {
       data: "qty",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<input type="number" onchange="update_sp('${row.idpro}', this.value, 2, '${data}', this)" value="${data}" />`;
+          return `<input type="number" style="width: 100px" onchange="update_sp('${row.idpro}', this.value, 2, '${data}', this)" value="${data}" />`;
         }
         return data;
       },

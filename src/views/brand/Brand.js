@@ -36,6 +36,7 @@ const Brand = ({ data, getAllBrands }) => {
       }
       fetchingOff();
       setMaLoai(idcate);
+      console.log(result);
       getAllBrands(result);
       document.querySelector(".content").style.height = "auto";
       return true;
@@ -140,7 +141,7 @@ const Brand = ({ data, getAllBrands }) => {
 
   return (
     <div className="container">
-      <h1 className="hit-the-floor">Nhãn hàng</h1>
+      <h1 className="hit-the-floor">Nhãn hiệu</h1>
       <FormNhan changed={onchangeLoai} add={them_nhan} options={options} />
       <TableNhan data={data} deleted={delete_nhan} />
     </div>
