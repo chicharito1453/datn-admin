@@ -50,10 +50,6 @@ const CTV = ({ data, getAllCtv }) => {
       Fail("Chưa chọn giới tính!");
       return false;
     }
-    if (formData.active == null) {
-      Fail("Chưa chọn trạng thái!");
-      return false;
-    }
     return true;
   }
 
@@ -81,6 +77,21 @@ const CTV = ({ data, getAllCtv }) => {
   // THÊM CỘNG TÁC VIÊN
   async function them_ctv(formData) {
     if (!check_form(formData)) return false;
+    // check username truoc khi upload anh
+    if (formData.image) {
+      const [error, resp] = await okteamAPI(
+        `/ctv/check-id/${formData.username}`
+      );
+      if (error) {
+        Fail("Không thực hiện được thao tác!");
+        console.log(error);
+        return false;
+      }
+      if (resp.data) {
+        Fail("Tài đã tồn tại, vui lòng chọn tên khác!");
+        return false;
+      }
+    }
     fetchingOn();
     // upload hinh anh
     if (formData.image) {

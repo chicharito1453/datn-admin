@@ -15,7 +15,7 @@ const FormCtv = ({ close, add }) => {
     email: "",
     sdt: "",
     address: "",
-    active: null,
+    active: false,
     sex: null,
   });
 
@@ -26,7 +26,7 @@ const FormCtv = ({ close, add }) => {
   }
 
   function handleChangeCtv(e) {
-    setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
   function handleActive(e) {
@@ -45,7 +45,7 @@ const FormCtv = ({ close, add }) => {
             cssImage={{
               marginTop: 30,
               height: "45%",
-              width: "90%",
+              width: "95%",
               float: "right",
             }}
             classImg=".img-fluid"
@@ -71,6 +71,7 @@ const FormCtv = ({ close, add }) => {
                 id="username"
                 name="username"
                 text="Tài khoản"
+                value={formData.username}
                 changed={handleChangeCtv}
               />
               <InputGroup
@@ -78,12 +79,14 @@ const FormCtv = ({ close, add }) => {
                 name="password"
                 text="Mật khẩu"
                 type="password"
+                value={formData.password}
                 changed={handleChangeCtv}
               />
               <InputGroup
                 id="fullname"
                 name="fullname"
                 text="Họ tên"
+                value={formData.fullname}
                 changed={handleChangeCtv}
               />
               <InputGroup
@@ -91,18 +94,21 @@ const FormCtv = ({ close, add }) => {
                 name="email"
                 text="Email"
                 type="email"
+                value={formData.email}
                 changed={handleChangeCtv}
               />
               <InputGroup
                 id="sdt"
                 name="sdt"
                 text="SĐT"
+                value={formData.sdt}
                 changed={handleChangeCtv}
               />
               <InputGroup
                 id="address"
                 name="address"
                 text="Địa chỉ"
+                value={formData.address}
                 changed={handleChangeCtv}
               />
               <br />
@@ -120,6 +126,7 @@ const FormCtv = ({ close, add }) => {
                   labelClass="form-check-label"
                   elementClass="form-check-input"
                   type="radio"
+                  isChecked={formData.sex === "Nam" && "checked"}
                   changed={handleChangeCtv}
                 />
                 <InputGroup
@@ -131,6 +138,7 @@ const FormCtv = ({ close, add }) => {
                   labelClass="form-check-label"
                   elementClass="form-check-input"
                   type="radio"
+                  isChecked={formData.sex === "Nữ" && "checked"}
                   changed={handleChangeCtv}
                 />
                 <InputGroup
@@ -142,6 +150,7 @@ const FormCtv = ({ close, add }) => {
                   labelClass="form-check-label"
                   elementClass="form-check-input"
                   type="radio"
+                  isChecked={formData.sex === "Khác" && "checked"}
                   changed={handleChangeCtv}
                 />
               </div>
@@ -160,6 +169,7 @@ const FormCtv = ({ close, add }) => {
                   labelClass="form-check-label"
                   elementClass="form-check-input"
                   type="radio"
+                  isChecked={formData.active && "checked"}
                   changed={handleActive}
                 />
                 <InputGroup
@@ -171,6 +181,7 @@ const FormCtv = ({ close, add }) => {
                   labelClass="form-check-label"
                   elementClass="form-check-input"
                   type="radio"
+                  isChecked={!formData.active && "checked"}
                   changed={handleActive}
                 />
               </div>
@@ -179,7 +190,20 @@ const FormCtv = ({ close, add }) => {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="primary" onClick={() => add(formData)}>
+        <Button
+          variant="primary"
+          onClick={() =>
+            add({
+              ...formData,
+              username: formData.username.trim(),
+              password: formData.password.trim(),
+              fullname: formData.fullname.trim(),
+              email: formData.email.trim(),
+              sdt: formData.sdt.trim(),
+              address: formData.address.trim(),
+            })
+          }
+        >
           Thêm
         </Button>
         <Button variant="secondary" onClick={close}>

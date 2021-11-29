@@ -57,6 +57,21 @@ const Categories = ({ data, getAllCategories }) => {
   // THÊM LOẠI
   async function them_loai(formData) {
     if (!check_form(formData)) return false;
+    // check idcate truoc khi upload anh
+    if (formData.img) {
+      const [error, resp] = await okteamAPI(
+        `/category/check-id/${formData.idcate}`
+      );
+      if (error) {
+        Fail("Không thực hiện được thao tác!");
+        console.log(error);
+        return false;
+      }
+      if (resp.data) {
+        Fail("Mã loại đã tồn tại, vui lòng chọn mã khác!");
+        return false;
+      }
+    }
     if (!formData.parent) formData.parent = null;
     formData.lv = formData.lv.value;
     fetchingOn();

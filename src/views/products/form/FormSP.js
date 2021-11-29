@@ -9,34 +9,15 @@ import {
 import Image from "../../../components/Image";
 import InputGroup from "../../../components/InputGroup";
 
-const initialState = {
-  idpro: "",
-  name: "",
-  pricectv: "",
-  qty: "",
-  origin: "",
-  dvt: "",
-  tags: "",
-  idcate: { idcate: "", typename: "Tất cả" },
-  idbrand: { id: "", name: "Tất cả" },
-  username: { username: "", nccname: "Tất cả" },
-  active: false,
-  image0: null,
-  image1: null,
-  image2: null,
-  image3: null,
-  description: "",
-};
-
-const FormSP = ({ close, add }) => {
+const FormSP = ({ close, saveAll, initValue }) => {
   const [Loais, setLoais] = useState(null);
   const [Nccs, setNccs] = useState(null);
   const [Nhans, setNhans] = useState(null);
-  const [formData, setFormData] = useState(initialState);
-  const [temp0, setTemp0] = useState(null);
-  const [temp1, setTemp1] = useState(null);
-  const [temp2, setTemp2] = useState(null);
-  const [temp3, setTemp3] = useState(null);
+  const [formData, setFormData] = useState(initValue);
+  const [temp0, setTemp0] = useState(initValue.image0 || null);
+  const [temp1, setTemp1] = useState(initValue.image1 || null);
+  const [temp2, setTemp2] = useState(initValue.image2 || null);
+  const [temp3, setTemp3] = useState(initValue.image3 || null);
 
   // FILL SELECT NCC
   const select_ncc = useCallback(async () => {
@@ -205,7 +186,7 @@ const FormSP = ({ close, add }) => {
               text="Số lượng"
               type="number"
               min="0"
-              value={formData.number}
+              value={formData.qty}
               changed={handleChangeProduct}
             />
             <InputGroup
@@ -360,28 +341,57 @@ const FormSP = ({ close, add }) => {
         </form>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          variant="primary"
-          onClick={() =>
-            add({
-              ...formData,
-              idpro: formData.idpro.trim(),
-              name: formData.name.trim(),
-              origin: formData.origin.trim(),
-              dvt: formData.dvt.trim(),
-              tags: formData.tags.trim(),
-              idcate: formData.idcate.idcate,
-              idbrand: formData.idbrand.id,
-              username: formData.username.username,
-              description: formData.description.trim(),
-            })
-          }
-        >
-          Thêm
-        </Button>
-        <Button variant="secondary" onClick={close}>
-          Đóng
-        </Button>
+        <div className="btnForm">
+          <Button
+            variant="primary"
+            onClick={() =>
+              saveAll(
+                {
+                  ...formData,
+                  idpro: formData.idpro.trim(),
+                  name: formData.name.trim(),
+                  origin: formData.origin.trim(),
+                  dvt: formData.dvt.trim(),
+                  tags: formData.tags.trim(),
+                  idcate: formData.idcate.idcate,
+                  idbrand: formData.idbrand.id,
+                  username: formData.username.username,
+                  description: formData.description.trim(),
+                },
+                "/products/add",
+                "POST"
+              )
+            }
+          >
+            Thêm
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() =>
+              saveAll(
+                {
+                  ...formData,
+                  idpro: formData.idpro.trim(),
+                  name: formData.name.trim(),
+                  origin: formData.origin.trim(),
+                  dvt: formData.dvt.trim(),
+                  tags: formData.tags.trim(),
+                  idcate: formData.idcate.idcate,
+                  idbrand: formData.idbrand.id,
+                  username: formData.username.username,
+                  description: formData.description.trim(),
+                },
+                "/products/update-all",
+                "PUT"
+              )
+            }
+          >
+            Sửa
+          </Button>
+          <Button variant="secondary" onClick={close}>
+            Đóng
+          </Button>
+        </div>
       </Modal.Footer>
     </>
   );

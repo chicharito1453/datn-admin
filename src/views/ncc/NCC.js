@@ -81,6 +81,21 @@ const NCC = ({ data, getAllNCC }) => {
   // THÊM NHÀ CUNG CẤP
   async function them_ncc(formData) {
     if (!check_form(formData)) return false;
+    // check username truoc khi upload anh
+    if (formData.ncclogo) {
+      const [error, resp] = await okteamAPI(
+        `/ncc/check-id/${formData.username}`
+      );
+      if (error) {
+        Fail("Không thực hiện được thao tác!");
+        console.log(error);
+        return false;
+      }
+      if (resp.data) {
+        Fail("Tài đã tồn tại, vui lòng chọn tên khác!");
+        return false;
+      }
+    }
     fetchingOn();
     // upload hinh anh
     if (formData.ncclogo) {

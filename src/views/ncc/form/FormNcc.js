@@ -17,7 +17,7 @@ const FormNcc = ({ close, add }) => {
     sdt: "",
     city: "",
     address: "",
-    active: null,
+    active: false,
     description: "",
     idghn: "",
   });
@@ -47,7 +47,7 @@ const FormNcc = ({ close, add }) => {
           <Image
             cssImage={{
               marginTop: 30,
-              height: "45%",
+              height: "35%",
               width: "90%",
               float: "right",
             }}
@@ -141,6 +141,7 @@ const FormNcc = ({ close, add }) => {
                   labelClass="form-check-label"
                   elementClass="form-check-input"
                   type="radio"
+                  isChecked={formData.active && "checked"}
                   changed={handleActive}
                 />
                 <InputGroup
@@ -152,6 +153,7 @@ const FormNcc = ({ close, add }) => {
                   labelClass="form-check-label"
                   elementClass="form-check-input"
                   type="radio"
+                  isChecked={!formData.active && "checked"}
                   changed={handleActive}
                 />
               </div>
