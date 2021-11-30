@@ -309,7 +309,7 @@ const Products = ({ data, getAllProducts }) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Thêm, cập nhật sản phẩm</Modal.Title>
+          <Modal.Title>Thêm sản phẩm</Modal.Title>
         </Modal.Header>
         <FormSP close={handleClose} initValue={initValue} saveAll={saveAll} />
       </Modal>

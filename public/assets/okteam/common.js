@@ -9,7 +9,7 @@ const regexSDT = /^0(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
 
 // selector
 const getE = document.querySelector.bind(document);
-const getEs = document.querySelectorAll.bind(document);
+const $$ = document.querySelectorAll.bind(document);
 
 //thông báo
 const Success = (message, title = "Thông báo") => {
