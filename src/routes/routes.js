@@ -8,6 +8,7 @@ import Reports from "../views/reports/Reports";
 import Home from "../views/home/Home";
 import NotFound from "../views/notFound/NotFound";
 import Brand from "../views/brand/Brand";
+import Admin from "../views/admin/Admin";
 
 const routes = [
   {
@@ -26,14 +27,19 @@ const routes = [
     main: <Brand />,
   },
   {
+    path: "/admin/ncc",
+    exact: true,
+    main: <NCC />,
+  },
+  {
     path: "/admin/ctv",
     exact: true,
     main: <CTV />,
   },
   {
-    path: "/admin/ncc",
+    path: "/admin/qtv",
     exact: true,
-    main: <NCC />,
+    main: <Admin />,
   },
   {
     path: "/admin/product",

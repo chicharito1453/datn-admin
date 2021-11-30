@@ -168,7 +168,7 @@ const NCC = ({ data, getAllNCC }) => {
       <Button
         style={{ float: "right" }}
         variant="primary"
-        onClick={() => setShow(!show)}
+        onClick={() => setShow(true)}
       >
         Thêm nhà cung cấp
       </Button>
