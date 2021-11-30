@@ -29,7 +29,11 @@ const FormNcc = ({ close, add }) => {
   }
 
   function handleChangeNcc(e) {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]:
+        e.target.name === "username" ? e.target.value.trim() : e.target.value,
+    });
   }
 
   function handleActive(e) {
@@ -179,7 +183,6 @@ const FormNcc = ({ close, add }) => {
           onClick={() =>
             add({
               ...formData,
-              username: formData.username.trim(),
               nccname: formData.nccname.trim(),
               email: formData.email.trim(),
               sdt: formData.sdt.trim(),

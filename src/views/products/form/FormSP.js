@@ -93,7 +93,11 @@ const FormSP = ({ close, saveAll, initValue }) => {
 
   // SET PRODUCT
   function handleChangeProduct(e) {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]:
+        e.target.name === "idpro" ? e.target.value.trim() : e.target.value,
+    });
   }
 
   // SET IMAGE
@@ -348,7 +352,6 @@ const FormSP = ({ close, saveAll, initValue }) => {
               saveAll(
                 {
                   ...formData,
-                  idpro: formData.idpro.trim(),
                   name: formData.name.trim(),
                   origin: formData.origin.trim(),
                   dvt: formData.dvt.trim(),

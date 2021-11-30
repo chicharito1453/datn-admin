@@ -36,8 +36,8 @@ const Products = ({ data, getAllProducts }) => {
   const [initValue, setInitValue] = useState(initialState);
 
   function handleClose() {
-    setShow(false);
     setInitValue(initialState);
+    setShow(false);
   }
 
   // DANH SÁCH SẢN PHẨM
@@ -120,7 +120,7 @@ const Products = ({ data, getAllProducts }) => {
   // THÊM VÀ CẬP NHẬT SẢN PHẨM
   async function saveAll(formData, endpoint, method) {
     if (!check_form(formData)) return false;
-    // check idpro truoc khi upload anh
+    // check idpro khi co anh can upload
     if (
       formData.image0 ||
       formData.image1 ||
@@ -135,20 +135,13 @@ const Products = ({ data, getAllProducts }) => {
         console.log(error);
         return false;
       }
-      var check;
-      if (method === "POST") {
-        if (resp.data) {
-          Fail("Mã sản phẩm đã tồn tại, vui lòng chọn mã khác!");
-        }
-        check = !resp.data;
-        return check;
+      if (method === "POST" && resp.data) {
+        Fail("Mã sản phẩm đã tồn tại, vui lòng chọn mã khác!");
+        return false;
       }
-      if (method === "PUT") {
-        if (!resp.data) {
-          Fail("Không tìm thấy sản phẩm!");
-          return check;
-        }
-        check = resp.data;
+      if (method === "PUT" && !resp.data) {
+        Fail("Không tìm thấy sản phẩm!");
+        return false;
       }
     }
 
@@ -159,7 +152,7 @@ const Products = ({ data, getAllProducts }) => {
     };
     fetchingOn();
     // upload image 0
-    if (formData.image0) {
+    if (formData.image0 && typeof formData.image0 !== "string") {
       const [error, resp] = await okteam_upload(formData.image0);
       if (error) {
         fetchingOff();
@@ -170,7 +163,7 @@ const Products = ({ data, getAllProducts }) => {
       formData.image0 = resp.data.secure_url;
     }
     // upload image 1
-    if (formData.image1) {
+    if (formData.image1 && typeof formData.image1 !== "string") {
       const [error, resp] = await okteam_upload(formData.image1);
       if (error) {
         fetchingOff();
@@ -181,7 +174,7 @@ const Products = ({ data, getAllProducts }) => {
       formData.image1 = resp.data.secure_url;
     }
     // upload image 2
-    if (formData.image2) {
+    if (formData.image2 && typeof formData.image2 !== "string") {
       const [error, resp] = await okteam_upload(formData.image2);
       if (error) {
         fetchingOff();
@@ -192,7 +185,7 @@ const Products = ({ data, getAllProducts }) => {
       formData.image2 = resp.data.secure_url;
     }
     // upload image 3
-    if (formData.image3) {
+    if (formData.image3 && typeof formData.image3 !== "string") {
       const [error, resp] = await okteam_upload(formData.image3);
       if (error) {
         fetchingOff();
@@ -223,6 +216,7 @@ const Products = ({ data, getAllProducts }) => {
         : "Cập nhật thông tin thành công!"
     );
     setShow(false);
+    setInitValue(initialState);
     getAllProducts(result);
     return true;
   }

@@ -26,7 +26,11 @@ const FormCtv = ({ close, add }) => {
   }
 
   function handleChangeCtv(e) {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]:
+        e.target.name === "username" ? e.target.value.trim() : e.target.value,
+    });
   }
 
   function handleActive(e) {
@@ -195,7 +199,6 @@ const FormCtv = ({ close, add }) => {
           onClick={() =>
             add({
               ...formData,
-              username: formData.username.trim(),
               password: formData.password.trim(),
               fullname: formData.fullname.trim(),
               email: formData.email.trim(),

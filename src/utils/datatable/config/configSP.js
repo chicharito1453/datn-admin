@@ -140,15 +140,15 @@ const configSP = {
       render: (data, type, row, meta) => {
         const src = data || "/assets/img/default.jpg";
         return ` <img
-              id="img_sp0_${row.idpro}"
+              id="img_6_sp_${row.idpro}"
               src=${src}
-              onclick="setImgSP0('${row.idpro}')"
+              onclick="setImgSP('${row.idpro}', 6)"
               width="70"
               height="70"
               alt=""
               style="cursor:pointer"
               className="img img-thumbnail pull-left"
-            /><input id="file_sp0_${row.idpro}" type="file" style="display: none" onchange="update_sp('${row.idpro}', this.files[0], 5, '${data}', this)" />`;
+            /><input id="file_6_sp_${row.idpro}" type="file" style="display: none" onchange="update_sp('${row.idpro}', this.files[0], 6, '${data}', this)" />`;
       },
     },
     {
@@ -156,15 +156,15 @@ const configSP = {
       render: (data, type, row, meta) => {
         const src = data || "/assets/img/default.jpg";
         return ` <img
-                id="img_sp1_${row.idpro}"
+                id="img_7_sp_${row.idpro}"
                 src=${src}
-                onclick="setImgSP1('${row.idpro}')"
+                onclick="setImgSP('${row.idpro}', 7)"
                 width="70"
                 height="70"
                 alt=""
                 style="cursor:pointer"
                 className="img img-thumbnail pull-left"
-              /><input id="file_sp1_${row.idpro}" type="file" style="display: none" onchange="update_sp('${row.idpro}', this.files[0], 6, '${data}', this)" />`;
+              /><input id="file_7_sp_${row.idpro}" type="file" style="display: none" onchange="update_sp('${row.idpro}', this.files[0], 7, '${data}', this)" />`;
       },
     },
     {
@@ -172,15 +172,15 @@ const configSP = {
       render: (data, type, row, meta) => {
         const src = data || "/assets/img/default.jpg";
         return ` <img
-                id="img_sp2_${row.idpro}"
+                id="img_8_sp_${row.idpro}"
                 src=${src}
-                onclick="setImgSP2('${row.idpro}')"
+                onclick="setImgSP('${row.idpro}', 8)"
                 width="70"
                 height="70"
                 alt=""
                 style="cursor:pointer"
                 className="img img-thumbnail pull-left"
-              /><input id="file_sp2_${row.idpro}" type="file" style="display: none" onchange="update_sp('${row.idpro}', this.files[0], 7, '${data}', this)" />`;
+              /><input id="file_8_sp_${row.idpro}" type="file" style="display: none" onchange="update_sp('${row.idpro}', this.files[0], 8, '${data}', this)" />`;
       },
     },
     {
@@ -188,15 +188,15 @@ const configSP = {
       render: (data, type, row, meta) => {
         const src = data || "/assets/img/default.jpg";
         return ` <img
-                id="img_sp3_${row.idpro}"
+                id="img_9_sp_${row.idpro}"
                 src=${src}
-                onclick="setImgSP3('${row.idpro}')"
+                onclick="setImgSP('${row.idpro}', 9)"
                 width="70"
                 height="70"
                 alt=""
                 style="cursor:pointer"
                 className="img img-thumbnail pull-left"
-              /><input id="file_sp3_${row.idpro}" type="file" style="display: none" onchange="update_sp('${row.idpro}', this.files[0], 8, '${data}', this)" />`;
+              /><input id="file_9_sp_${row.idpro}" type="file" style="display: none" onchange="update_sp('${row.idpro}', this.files[0], 9, '${data}', this)" />`;
       },
     },
   ],

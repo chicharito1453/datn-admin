@@ -1,6 +1,5 @@
-// CẬP NHẬT LOẠI
+// cap nhat loai
 async function update_loai(idcate, value, thaotac, oldValue, element) {
-  console.log(value, typeof value);
   fetchingOn();
   if (thaotac == "1") {
     const [error, resp] = await okteam_upload(value);
@@ -22,13 +21,13 @@ async function update_loai(idcate, value, thaotac, oldValue, element) {
     console.log(error);
     return false;
   }
-  const { message } = resp.data;
+  const { object, message } = resp.data;
   if (!isOK(message)) {
     fetchingOff();
     Fail(message);
-    if (thaotac == "0") element.value = oldValue;
+    if (thaotac == "0") element.value = object.typename;
     if (thaotac == "2") {
-      element.value = oldValue == "null" ? "" : oldValue;
+      element.value = object.parent;
     }
     return false;
   }
@@ -40,5 +39,5 @@ async function update_loai(idcate, value, thaotac, oldValue, element) {
 }
 // chon anh
 function setImgLoai(idcate) {
-  document.querySelector(`#file_loai_${idcate}`).click();
+  getE(`#file_loai_${idcate}`).click();
 }

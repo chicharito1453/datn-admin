@@ -1,3 +1,4 @@
+// cap nhat ctv
 async function update_ctv(username, value, thaotac, oldValue, element) {
   // password
   if (thaotac == 0) {
@@ -72,11 +73,14 @@ async function update_ctv(username, value, thaotac, oldValue, element) {
   }
   if (thaotac == 2) getE(`#img_ctv_${username}`).src = value;
   if (thaotac == 0) element.value = "";
+  if (![0, 2, 3].includes(thaotac)) {
+    element.outerHTML = `<input onchange="update_ctv('${username}', this.value, ${thaotac}, '${value.trim()}', this)" value="${value.trim()}">`;
+  }
   fetchingOff();
   Success("Cập nhật thông tin thành công!");
-  element.value = value.trim();
   return true;
 }
+// cap nhat trang thai ctv
 async function update_trangthai_ctv(username, isChecked, element) {
   fetchingOn();
   const [error, resp] = await okteamAPI(
@@ -101,6 +105,7 @@ async function update_trangthai_ctv(username, isChecked, element) {
   Success("Cập nhật thông tin thành công!");
   return true;
 }
+// chon anh
 function setImgCtv(username) {
-  document.querySelector(`#file_ctv_${username}`).click();
+  getE(`#file_ctv_${username}`).click();
 }

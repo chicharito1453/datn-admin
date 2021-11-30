@@ -27,7 +27,11 @@ const FormLoai = ({ add, close }) => {
   }
 
   function handleChangeLoai(e) {
-    setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
+    setFormData({
+      ...formData,
+      [e.target.name]:
+        e.target.name === "typename" ? e.target.value : e.target.value.trim(),
+    });
   }
 
   useEffect(() => {
@@ -103,6 +107,7 @@ const FormLoai = ({ add, close }) => {
               ...formData,
               idcate: formData.idcate.toUpperCase(),
               parent: formData.parent.toUpperCase(),
+              typename: formData.typename.trim(),
             })
           }
         >

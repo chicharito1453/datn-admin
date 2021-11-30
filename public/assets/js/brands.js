@@ -1,4 +1,4 @@
-// CẬP NHẬT NHÃN
+// cap nhat nhan
 async function update_nhan(id, value, element) {
   value = value.toString();
   fetchingOn();
@@ -12,11 +12,11 @@ async function update_nhan(id, value, element) {
     console.log(error);
     return false;
   }
-  const { result, message } = resp.data;
+  const { object, message } = resp.data;
   if (!isOK(message)) {
     fetchingOff();
     Fail(message);
-    element.value = result[0].name;
+    element.value = object.name;
     return false;
   }
   fetchingOff();

@@ -131,7 +131,7 @@ const configCtv = {
       data: "email",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<input onchange="update_ctv('${row.username}', this.value, 4, '${data}', this)" style="width: 300px;"  value="${data}" />`;
+          return `<input onchange="update_ctv('${row.username}', this.value, 4, '${data}', this)" style="width: 350px;"  value="${data}" />`;
         }
         return data;
       },

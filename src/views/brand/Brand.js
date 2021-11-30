@@ -36,7 +36,6 @@ const Brand = ({ data, getAllBrands }) => {
       }
       fetchingOff();
       setMaLoai(idcate);
-      console.log(result);
       getAllBrands(result);
       document.querySelector(".content").style.height = "auto";
       return true;
@@ -110,7 +109,7 @@ const Brand = ({ data, getAllBrands }) => {
       async () => {
         fetchingOn();
         const [error, resp] = await okteamAPI(
-          `/brand/delete/${brand.id}/${maLoai}`,
+          `/brand/delete/${brand.id}/${!maLoai ? true : false}`,
           "DELETE"
         );
         if (error) {

@@ -1,3 +1,4 @@
+// cap nhat ncc
 async function update_ncc(username, value, thaotac, oldValue, element) {
   // password
   if (thaotac == 0) {
@@ -80,11 +81,14 @@ async function update_ncc(username, value, thaotac, oldValue, element) {
   }
   if (thaotac == 2) getE(`#img_ncc_${username}`).src = value;
   if (thaotac == 0) element.value = "";
+  if (![0, 2, 8].includes(thaotac)) {
+    element.outerHTML = `<input onchange="update_ncc('${username}', this.value, ${thaotac}, '${value.trim()}', this)" value="${value.trim()}">`;
+  }
   fetchingOff();
   Success("Cập nhật thông tin thành công!");
-  element.value = value.trim();
   return true;
 }
+// cap nhat trang thai ncc
 async function update_trangthai_ncc(username, isChecked, element) {
   fetchingOn();
   const [error, resp] = await okteamAPI(
@@ -109,6 +113,7 @@ async function update_trangthai_ncc(username, isChecked, element) {
   Success("Cập nhật thông tin thành công!");
   return true;
 }
+// chon anh
 function setImgNcc(username) {
-  document.querySelector(`#file_ncc_${username}`).click();
+  getE(`#file_ncc_${username}`).click();
 }
