@@ -26,7 +26,7 @@ export const headingNcc = [
   "Giới thiệu",
   "Ngày tạo",
 ];
-// nhà cung cấp
+// cộng tác viên
 export const headingCtv = [
   "#",
   "Tài khoản",
@@ -41,7 +41,7 @@ export const headingCtv = [
   "Địa chỉ",
   "Ngày tạo",
 ];
-// nhà cung cấp
+// sản phẩm
 export const headingSP = [
   "#",
   "Sản phẩm",
@@ -58,4 +58,18 @@ export const headingSP = [
   "Ảnh 2",
   "Ảnh 3",
   "Ảnh 4",
+];
+// admin
+export const headingAdmin = [
+  "#",
+  "Tài khoản",
+  "Trạng thái",
+  "Mật khẩu mới",
+  "Tên",
+  "Avatar",
+  "Giới tính",
+  "Email",
+  "SĐT",
+  "Địa chỉ",
+  "Ngày tạo",
 ];

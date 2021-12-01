@@ -34,9 +34,11 @@ const initialState = {
 const Products = ({ data, getAllProducts }) => {
   const [show, setShow] = useState(false);
   const [initValue, setInitValue] = useState(initialState);
+  const [isUpdate, setIsUpdate] = useState(false);
 
   function handleClose() {
     setInitValue(initialState);
+    setIsUpdate(false);
     setShow(false);
   }
 
@@ -217,6 +219,7 @@ const Products = ({ data, getAllProducts }) => {
     );
     setShow(false);
     setInitValue(initialState);
+    setIsUpdate(false);
     getAllProducts(result);
     return true;
   }
@@ -255,6 +258,7 @@ const Products = ({ data, getAllProducts }) => {
   // CẬP NHẬT SẢN PHẨM
   async function mapRowtoForm(product) {
     if (!product) return false;
+    setIsUpdate(true);
     setInitValue({
       idpro: product.idpro,
       name: product.name,
@@ -309,9 +313,14 @@ const Products = ({ data, getAllProducts }) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Thêm sản phẩm</Modal.Title>
+          <Modal.Title>{!isUpdate ? "Thêm" : "Sửa"} sản phẩm</Modal.Title>
         </Modal.Header>
-        <FormSP close={handleClose} initValue={initValue} saveAll={saveAll} />
+        <FormSP
+          close={handleClose}
+          initValue={initValue}
+          saveAll={saveAll}
+          isUpdate={isUpdate}
+        />
       </Modal>
     </div>
   );

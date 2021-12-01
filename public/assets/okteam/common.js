@@ -13,14 +13,14 @@ const getEs = document.querySelectorAll.bind(document);
 
 //thông báo
 const Success = (message, title = "Thông báo") => {
-  Swal.fire({ icon: "success", title: title, text: message });
+  Swal.fire({ icon: "success", title: title, text: message || title });
 };
 
 const Fail = (message, title = "Có lỗi xảy ra!") => {
-  Swal.fire({ icon: "error", title: title, text: message });
+  Swal.fire({ icon: "error", title: title, text: message || title });
 };
 
-const Approve = (message, next) => {
+const Approve = (message = "Vui lòng xác nhận", next) => {
   Swal.fire({
     icon: "warning",
     title: "Xác nhận",
@@ -34,6 +34,10 @@ const Approve = (message, next) => {
       next();
     }
   });
+};
+
+const Info = (message, title = "Thông báo") => {
+  Swal.fire({ icon: "info", title: title, text: message || title });
 };
 
 function isOK(message) {
@@ -57,7 +61,8 @@ const fetchingOff = () => $.LoadingOverlay("hide");
 const saveToLocalStorage = (name, value) => {
   localStorage.setItem(name, JSON.stringify(value));
 };
-const getFromLocalStorage = (name) => JSON.parse(localStorage.getItem(name));
+const getFromLocalStorage = (name = "myData") =>
+  JSON.parse(localStorage.getItem(name));
 
 const getToken = () => {
   return JSON.parse(localStorage.getItem("myData")).token;

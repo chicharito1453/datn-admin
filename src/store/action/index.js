@@ -55,3 +55,11 @@ export const ALL_PRODUCTS = (payload) => {
     payload,
   };
 };
+
+// DANH SÁCH PRODUCT
+export const ALL_ADMIN = (payload) => {
+  return {
+    type: types.ALL_ADMIN,
+    payload,
+  };
+};

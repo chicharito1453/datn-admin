@@ -9,7 +9,7 @@ import {
 import Image from "../../../components/Image";
 import InputGroup from "../../../components/InputGroup";
 
-const FormSP = ({ close, saveAll, initValue }) => {
+const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
   const [Loais, setLoais] = useState(null);
   const [Nccs, setNccs] = useState(null);
   const [Nhans, setNhans] = useState(null);
@@ -346,51 +346,54 @@ const FormSP = ({ close, saveAll, initValue }) => {
       </Modal.Body>
       <Modal.Footer>
         <div className="btnForm">
-          <Button
-            variant="primary"
-            onClick={() =>
-              saveAll(
-                {
-                  ...formData,
-                  name: formData.name.trim(),
-                  origin: formData.origin.trim(),
-                  dvt: formData.dvt.trim(),
-                  tags: formData.tags.trim(),
-                  idcate: formData.idcate.idcate,
-                  idbrand: formData.idbrand.id,
-                  username: formData.username.username,
-                  description: formData.description.trim(),
-                },
-                "/products/add",
-                "POST"
-              )
-            }
-          >
-            Thêm
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() =>
-              saveAll(
-                {
-                  ...formData,
-                  idpro: formData.idpro.trim(),
-                  name: formData.name.trim(),
-                  origin: formData.origin.trim(),
-                  dvt: formData.dvt.trim(),
-                  tags: formData.tags.trim(),
-                  idcate: formData.idcate.idcate,
-                  idbrand: formData.idbrand.id,
-                  username: formData.username.username,
-                  description: formData.description.trim(),
-                },
-                "/products/update-all",
-                "PUT"
-              )
-            }
-          >
-            Sửa
-          </Button>
+          {!isUpdate ? (
+            <Button
+              variant="primary"
+              onClick={() =>
+                saveAll(
+                  {
+                    ...formData,
+                    name: formData.name.trim(),
+                    origin: formData.origin.trim(),
+                    dvt: formData.dvt.trim(),
+                    tags: formData.tags.trim(),
+                    idcate: formData.idcate.idcate,
+                    idbrand: formData.idbrand.id,
+                    username: formData.username.username,
+                    description: formData.description.trim(),
+                  },
+                  "/products/add",
+                  "POST"
+                )
+              }
+            >
+              Thêm
+            </Button>
+          ) : (
+            <Button
+              variant="primary"
+              onClick={() =>
+                saveAll(
+                  {
+                    ...formData,
+                    idpro: formData.idpro.trim(),
+                    name: formData.name.trim(),
+                    origin: formData.origin.trim(),
+                    dvt: formData.dvt.trim(),
+                    tags: formData.tags.trim(),
+                    idcate: formData.idcate.idcate,
+                    idbrand: formData.idbrand.id,
+                    username: formData.username.username,
+                    description: formData.description.trim(),
+                  },
+                  "/products/update-all",
+                  "PUT"
+                )
+              }
+            >
+              Sửa
+            </Button>
+          )}
           <Button variant="secondary" onClick={close}>
             Đóng
           </Button>

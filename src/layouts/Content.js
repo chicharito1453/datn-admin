@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
+import { isExpired } from "react-jwt";
+import {
+  getToken,
+  getFromLocalStorage,
+} from "../utils/localStorage/localStorage";
+import { Info } from "../utils/sweetalert2/alert";
 import routes from "../routes/routes";
 import Loading from "../components/Loading";
 import Login from "../views/login/Login";
@@ -26,13 +32,27 @@ const Content = () => {
               path={route.path}
               exact={route.exact}
               render={() => {
-                return localStorage.getItem("myData") ? (
-                  route.main
-                ) : (
-                  <Redirect
-                    to={{ pathname: "/login", state: { next: route.path } }}
-                  />
-                );
+                if (!getFromLocalStorage()) {
+                  return (
+                    <Redirect
+                      to={{ pathname: "/login", state: { next: route.path } }}
+                    />
+                  );
+                } else {
+                  if (!isExpired(getToken())) {
+                    return route.main;
+                  } else {
+                    localStorage.removeItem("myData");
+                    Info(
+                      "Phiếu xác nhận đã hết hạn, vui lòng đăng nhập lại để tiếp tục!"
+                    );
+                    return (
+                      <Redirect
+                        to={{ pathname: "/login", state: { next: route.path } }}
+                      />
+                    );
+                  }
+                }
               }}
             />
           ))}
