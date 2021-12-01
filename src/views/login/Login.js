@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import callAPI from "../../utils/api/callAPI";
 import { Fail, isOK } from "../../utils/sweetalert2/alert";
-import { saveToLocalStorage } from "../../utils/localStorage/localStorage";
+import { saveToLS } from "../../utils/localStorage/localStorage";
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -40,7 +40,7 @@ const Login = () => {
       Fail(message);
       return false;
     }
-    saveToLocalStorage("myData", result[0]);
+    saveToLS("myData", result[0]);
     const { location } = history;
     window.location = `http://localhost:8000${
       location.state ? location.state.next : "/"

@@ -58,12 +58,11 @@ const fetchingOn = () =>
 const fetchingOff = () => $.LoadingOverlay("hide");
 
 // Thao tác với localStorage
-const saveToLocalStorage = (name, value) => {
+const saveToLS = (name, value) => {
   localStorage.setItem(name, JSON.stringify(value));
 };
-const getFromLocalStorage = (name = "myData") =>
-  JSON.parse(localStorage.getItem(name));
-
+const getFromLS = (name = "myData") => JSON.parse(localStorage.getItem(name));
+const removeFromLS = (name = "myData") => localStorage.removeItem(name);
 const getToken = () => {
   return JSON.parse(localStorage.getItem("myData")).token;
 };
@@ -84,11 +83,13 @@ async function okteam_upload(image) {
 
 //gọi api okteam
 async function okteamAPI(endpoint, method = "GET", data = null) {
+  const token = getToken();
   try {
     const resp = await axios({
       method,
       url: REACT_APP_GATE_V1 + endpoint,
       data,
+      headers: { Authorization: "Bearer " + token },
     });
     return [null, resp];
   } catch (error) {
@@ -98,13 +99,11 @@ async function okteamAPI(endpoint, method = "GET", data = null) {
 
 // gọi api
 async function callAPI(url, method = "GET", data = null) {
-  const token = getToken();
   try {
     const resp = await axios({
       method,
       url,
       data,
-      headers: { Authorization: "Bearer " + token },
     });
     return [null, resp];
   } catch (error) {

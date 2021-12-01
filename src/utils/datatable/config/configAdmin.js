@@ -159,7 +159,7 @@ const configAdmin = {
   columnDefs: [
     // { targets: [0], width: "10px" },
     // { targets: "_all", width: "130px" },
-    { className: "text-center", targets: [1, 6, 7] },
+    { className: "text-center", targets: [1, 6] },
   ],
 };
 export default configAdmin;
