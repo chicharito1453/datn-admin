@@ -77,6 +77,7 @@ async function update_ncc(username, value, thaotac, oldValue, element) {
   if (!isOK(message)) {
     fetchingOff();
     Fail(message);
+    element.value = oldValue;
     return false;
   }
   if (thaotac == 2) getE(`#img_ncc_${username}`).src = value;

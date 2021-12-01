@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import FormNhan from "./form/FormNhan";
 import TableNhan from "./table/TableNhan";
@@ -15,33 +15,30 @@ const Brand = ({ data, getAllBrands }) => {
   const [maLoai, setMaLoai] = useState("");
 
   // NHÃN HÀNG THEO LOẠI
-  const onchangeLoai = useCallback(
-    async (select) => {
-      const idcate = select ? select.value : "";
-      fetchingOn();
-      const [error, resp] = await okteamAPI(
-        `/brand/list${idcate && `?idcate=${idcate}`}`
-      );
-      if (error) {
-        fetchingOff();
-        Fail("Không thực hiện được thao tác!");
-        console.log(error);
-        return false;
-      }
-      const { result, message } = resp.data;
-      if (!isOK(message)) {
-        fetchingOff();
-        Fail(message);
-        return false;
-      }
+  async function onchangeLoai(select) {
+    const idcate = select ? select.value : "";
+    fetchingOn();
+    const [error, resp] = await okteamAPI(
+      `/brand/list${idcate && `?idcate=${idcate}`}`
+    );
+    if (error) {
       fetchingOff();
-      setMaLoai(idcate);
-      getAllBrands(result);
-      document.querySelector(".content").style.height = "auto";
-      return true;
-    },
-    [getAllBrands]
-  );
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    const { result, message } = resp.data;
+    if (!isOK(message)) {
+      fetchingOff();
+      Fail(message);
+      return false;
+    }
+    fetchingOff();
+    setMaLoai(idcate);
+    getAllBrands(result);
+    document.querySelector(".content").style.height = "auto";
+    return true;
+  }
 
   // DANH SÁCH LOẠI
   async function select_loai() {
@@ -61,6 +58,7 @@ const Brand = ({ data, getAllBrands }) => {
       label: rs.typename,
     }));
     setOptions([{ value: "", label: "Tất cả" }, ...newResult]);
+    onchangeLoai();
     return true;
   }
 
@@ -68,7 +66,7 @@ const Brand = ({ data, getAllBrands }) => {
   async function them_nhan(formData, setFormData) {
     // check
     if (!maLoai) {
-      Fail("Chưa chọn mã loại");
+      Fail("Chưa chọn loại hàng!");
       return false;
     }
     if (!formData.name.trim()) {
@@ -103,7 +101,7 @@ const Brand = ({ data, getAllBrands }) => {
 
   // XÓA NHÃN HÀNG
   async function delete_nhan(brand) {
-    if (brand === undefined) return;
+    if (!brand) return;
     Approve(
       "Bạn đang thực hiện xóa Loại hàng này.\nTiếp tục thực hiện ?",
       async () => {
@@ -133,10 +131,9 @@ const Brand = ({ data, getAllBrands }) => {
   }
 
   useEffect(() => {
-    if (!document.title) document.title = "Quản trị - Nhãn hàng";
+    document.title = "Quản trị - Nhãn hàng";
     document.querySelector(".content").style.height = "100vh";
-    onchangeLoai();
-  }, [onchangeLoai]);
+  }, []);
 
   return (
     <div className="container">

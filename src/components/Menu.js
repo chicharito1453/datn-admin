@@ -8,6 +8,11 @@ const menuLink = [
   { to: "/admin/ctv", name: "Cộng tác viên", classIcon: "fas fa-users" },
   { to: "/admin/qtv", name: "Quản trị viên", classIcon: "fas fa-user-shield" },
   { to: "/admin/product", name: "Sản phẩm", classIcon: "fas fa-shopping-cart" },
+  {
+    to: "/admin/property",
+    name: "Thuộc tính sp",
+    classIcon: "fas fa-book-medical",
+  },
   { to: "/admin/order", name: "Đơn hàng", classIcon: "fas fa-box-open" },
   { to: "/admin/report", name: "Thống kê", classIcon: "fas fa-desktop" },
 ];

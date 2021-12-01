@@ -34,7 +34,7 @@ async function update_loai(idcate, value, thaotac, oldValue, element) {
   if (thaotac == "1") getE(`#img_loai_${idcate}`).src = value;
   if (thaotac == "2") element.value = value.toUpperCase();
   fetchingOff();
-  Success("Cập nhật thành công!");
+  Success("Cập nhật thông tin thành công!");
   return true;
 }
 // chon anh

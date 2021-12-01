@@ -9,6 +9,7 @@ import Home from "../views/home/Home";
 import NotFound from "../views/notFound/NotFound";
 import Brand from "../views/brand/Brand";
 import Admin from "../views/admin/Admin";
+import Properties from "../views/properties/Properties";
 
 const routes = [
   {
@@ -45,6 +46,11 @@ const routes = [
     path: "/admin/product",
     exact: true,
     main: <Product />,
+  },
+  {
+    path: "/admin/property",
+    exact: true,
+    main: <Properties />,
   },
   {
     path: "/admin/order",

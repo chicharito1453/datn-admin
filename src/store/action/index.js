@@ -63,3 +63,10 @@ export const ALL_ADMIN = (payload) => {
     payload,
   };
 };
+// DANH SÁCH PRODUCT
+export const ALL_PROPERTIES = (payload) => {
+  return {
+    type: types.ALL_PROPERTIES,
+    payload,
+  };
+};

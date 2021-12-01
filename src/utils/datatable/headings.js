@@ -8,7 +8,7 @@ export const headingLoai = [
   "Menu cha",
 ];
 // nhãn
-export const headingNhan = ["STT", "Tên nhãn ", ""];
+export const headingNhan = ["STT", "Tên nhãn", ""];
 // nhà cung cấp
 export const headingNcc = [
   "#",
@@ -73,3 +73,5 @@ export const headingAdmin = [
   "Địa chỉ",
   "Ngày tạo",
 ];
+// thuộc tính
+export const headingTT = ["STT", "Thuộc tính", "Giá trị", ""];

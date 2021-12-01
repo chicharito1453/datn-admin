@@ -69,6 +69,7 @@ async function update_ctv(username, value, thaotac, oldValue, element) {
   if (!isOK(message)) {
     fetchingOff();
     Fail(message);
+    element.value = oldValue;
     return false;
   }
   if (thaotac == 2) getE(`#img_ctv_${username}`).src = value;

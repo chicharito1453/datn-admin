@@ -69,6 +69,7 @@ async function update_admin(username, value, thaotac, oldValue, element) {
   if (!isOK(message)) {
     fetchingOff();
     Fail(message);
+    element.value = oldValue;
     return false;
   }
   if (thaotac == 2) {
@@ -110,7 +111,7 @@ async function update_trangthai_admin(username, isChecked, element) {
     return false;
   }
   fetchingOff();
-  Success("Cập nhật thôn tin thành công!");
+  Success("Cập nhật thông tin thành công!");
   return true;
 }
 // chon anh

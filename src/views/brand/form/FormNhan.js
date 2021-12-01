@@ -1,6 +1,6 @@
-import { memo, useState } from "react";
+import { useState } from "react";
+import { Button } from "react-bootstrap";
 import InputGroup from "../../../components/InputGroup";
-import Button from "react-bootstrap/Button";
 
 const FormNhan = ({ options, changed, add }) => {
   const [formData, setFormData] = useState({ id: null, name: "" });
@@ -41,4 +41,4 @@ const FormNhan = ({ options, changed, add }) => {
     </form>
   );
 };
-export default memo(FormNhan);
+export default FormNhan;

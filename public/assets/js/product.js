@@ -71,6 +71,7 @@ async function update_sp(idpro, value, thaotac, oldValue, element) {
   if (!isOK(message)) {
     fetchingOff();
     Fail(message);
+    element.value = oldValue;
     return false;
   }
   if (![5, 6, 7, 8, 9].includes(thaotac)) {
@@ -80,7 +81,7 @@ async function update_sp(idpro, value, thaotac, oldValue, element) {
     getE(`#img_${thaotac}_sp_${idpro}`).src = value;
   }
   fetchingOff();
-  Success("Cập nhật thành công!");
+  Success("Cập nhật thông tin thành công!");
   return true;
 }
 // cap nhat trang thai sp

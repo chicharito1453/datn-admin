@@ -1,8 +1,8 @@
-// cap nhat nhan
-async function update_nhan(id, value, element) {
+// cap nhat thuoc tinh
+async function update_tt(id, value, thaotac, element) {
   fetchingOn();
   const [error, resp] = await okteamAPI(
-    `/brand/update?id=${id}&value=${value.trim()}`,
+    `/properties/reform/${id}?thaotac=${thaotac}&value=${value.trim()}`,
     "PUT"
   );
   if (error) {
@@ -15,10 +15,9 @@ async function update_nhan(id, value, element) {
   if (!isOK(message)) {
     fetchingOff();
     Fail(message);
-    element.value = object.name;
+    element.value = thaotac == 0 ? object.keyp : object.valuep;
     return false;
   }
   fetchingOff();
   Success("Cập nhật thông tin thành công!");
-  return true;
 }
