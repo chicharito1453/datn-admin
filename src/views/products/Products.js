@@ -38,7 +38,6 @@ const Products = ({ data, getAllProducts }) => {
 
   function handleClose() {
     setInitValue(initialState);
-    setIsUpdate(false);
     setShow(false);
   }
 
@@ -255,18 +254,12 @@ const Products = ({ data, getAllProducts }) => {
     );
   }
 
-  // CẬP NHẬT SẢN PHẨM
-  async function mapRowtoForm(product) {
-    if (!product) return false;
+  // SET DATA LÊN FORM
+  function mapRowtoForm(product) {
+    if (!product) return;
     setIsUpdate(true);
     setInitValue({
-      idpro: product.idpro,
-      name: product.name,
-      pricectv: product.pricectv,
-      qty: product.qty,
-      origin: product.origin,
-      dvt: product.dvt,
-      tags: product.tags,
+      ...product,
       idcate: {
         idcate: product.category.idcate,
         typename: product.category.typename,
@@ -276,12 +269,10 @@ const Products = ({ data, getAllProducts }) => {
         username: product.ncc.username,
         nccname: product.ncc.nccname,
       },
-      active: product.active,
       image0: product.image0 || null,
       image1: product.image1 || null,
       image2: product.image2 || null,
       image3: product.image3 || null,
-      description: product.description,
     });
     setShow(true);
   }
@@ -298,7 +289,10 @@ const Products = ({ data, getAllProducts }) => {
       <Button
         style={{ float: "right" }}
         variant="primary"
-        onClick={() => setShow(true)}
+        onClick={() => {
+          setIsUpdate(false);
+          setShow(true);
+        }}
       >
         Thêm sản phẩm
       </Button>
