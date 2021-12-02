@@ -224,7 +224,6 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
                 type="select"
                 name="idcate"
                 text="Loại hàng"
-                placeholder="Tên loại"
                 options={Loais}
                 value={{
                   value: formData.idcate.idcate,
@@ -239,7 +238,6 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
                 type="select"
                 name="idbrand"
                 text="Nhãn hiệu"
-                placeholder="Tên nhãn"
                 options={Nhans}
                 value={{
                   value: formData.idbrand.id,
@@ -254,7 +252,6 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
                 type="select"
                 name="username"
                 text="Nhà cung cấp"
-                placeholder="Tên nhà cung cấp"
                 options={Nccs}
                 value={{
                   value: formData.username.username,

@@ -1,7 +1,6 @@
 const configNcc = {
   info: false,
   ordering: false,
-  destroy: true,
   pagingType: "full_numbers",
   pageLength: 5,
   lengthChange: false,

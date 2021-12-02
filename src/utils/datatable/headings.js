@@ -74,4 +74,4 @@ export const headingAdmin = [
   "Ngày tạo",
 ];
 // thuộc tính
-export const headingTT = ["STT", "Thuộc tính", "Giá trị", ""];
+export const headingTT = ["STT", "Thuộc tính", "Giá trị", "#"];

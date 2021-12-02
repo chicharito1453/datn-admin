@@ -15,6 +15,7 @@ const menuLink = [
   },
   { to: "/admin/order", name: "Đơn hàng", classIcon: "fas fa-box-open" },
   { to: "/admin/report", name: "Thống kê", classIcon: "fas fa-desktop" },
+  { to: "", name: "", classIcon: "" },
 ];
 const Menu = () => {
   const redirect = (e) => {

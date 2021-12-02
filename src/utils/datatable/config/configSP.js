@@ -1,7 +1,6 @@
 const configSP = {
   info: false,
   ordering: false,
-  destroy: true,
   pagingType: "full_numbers",
   pageLength: 5,
   lengthChange: false,
@@ -39,7 +38,7 @@ const configSP = {
     {
       data: "idpro",
       render: (data, type, row, meta) => {
-        return `<div style="width:50px;"><i style="cursor:pointer" class="far fa-trash-alt"></i>&emsp;<i style="cursor:pointer" class="far fa-edit"></i></div>`;
+        return `<i style="cursor:pointer" class="far fa-trash-alt"></i>`;
       },
     },
     {
@@ -107,7 +106,7 @@ const configSP = {
       data: "category",
       render: (data, type, row, meta) => {
         if (type === "display" || type === "export")
-          return `<div style="width: 150px;">${data.typename}</div>`;
+          return `<div style="width: 200px;">${data.typename}&emsp;<i style="cursor:pointer" class="far fa-edit"></i></div>`;
         return data;
       },
     },
@@ -115,7 +114,7 @@ const configSP = {
       data: "p_brand",
       render: (data, type, row, meta) => {
         if (type === "display" || type === "export")
-          return `<div style="width: 150px;">${data.name}</div>`;
+          return `<div style="width: 200px;">${data.name}&emsp;<i style="cursor:pointer" class="far fa-edit"></i></div>`;
         return data;
       },
     },
@@ -123,7 +122,7 @@ const configSP = {
       data: "ncc",
       render: (data, type, row, meta) => {
         if (type === "display" || type === "export")
-          return `<div style="width: 150px;">${data.fullname}</div>`;
+          return `<div style="width: 200px;">${data.nccname}&emsp;<i style="cursor:pointer" class="far fa-edit"></i></div>`;
         return data;
       },
     },
