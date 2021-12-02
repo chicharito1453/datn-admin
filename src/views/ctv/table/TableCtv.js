@@ -1,4 +1,3 @@
-import { memo } from "react";
 import Datatable from "../../../utils/datatable/Datatable";
 import { headingCtv } from "../../../utils/datatable/headings";
 import configCtv from "../../../utils/datatable/config/configCtv";
@@ -14,4 +13,4 @@ const TableCtv = ({ data, deleted }) => {
     />
   );
 };
-export default memo(TableCtv);
+export default TableCtv;

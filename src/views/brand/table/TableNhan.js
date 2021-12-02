@@ -1,6 +1,5 @@
 import Datatable from "../../../utils/datatable/Datatable";
 import { headingNhan } from "../../../utils/datatable/headings";
-import { memo } from "react";
 import configNhan from "../../../utils/datatable/config/configNhan";
 
 const TableNhan = ({ data, deleted }) => {
@@ -14,4 +13,4 @@ const TableNhan = ({ data, deleted }) => {
     />
   );
 };
-export default memo(TableNhan);
+export default TableNhan;

@@ -8,6 +8,7 @@ import ctv from "./ctv";
 import list_product from "./list_product";
 import list_admin from "./list_admin";
 import list_property from "./list_property";
+import list_orders from "./list_orders";
 
 const myReducer = combineReducers({
   categories,
@@ -19,6 +20,7 @@ const myReducer = combineReducers({
   list_product,
   list_admin,
   list_property,
+  list_orders,
 });
 
 export default myReducer;

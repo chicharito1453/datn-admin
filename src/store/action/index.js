@@ -70,3 +70,10 @@ export const ALL_PROPERTIES = (payload) => {
     payload,
   };
 };
+// DANH SÁCH ORDERS
+export const ALL_ORDERS = (payload) => {
+  return {
+    type: types.ALL_ORDERS,
+    payload,
+  };
+};

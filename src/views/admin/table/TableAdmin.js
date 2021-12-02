@@ -1,4 +1,3 @@
-import { memo } from "react";
 import Datatable from "../../../utils/datatable/Datatable";
 import { headingAdmin } from "../../../utils/datatable/headings";
 import configAdmin from "../../../utils/datatable/config/configAdmin";
@@ -14,4 +13,4 @@ const TableAdmin = ({ data, deleted }) => {
     />
   );
 };
-export default memo(TableAdmin);
+export default TableAdmin;

@@ -8,41 +8,54 @@ import {
 } from "../../../utils/loading-overlay/loading-overlay";
 import InputGroup from "../../../components/InputGroup";
 
-const FormDH = ({ close, initValue }) => {
-  const [nccs, setNccs] = useState(null);
+const FormDH = ({ close, saveAll, initValue }) => {
   const [ctvs, setCtvs] = useState(null);
   const [products, setProducts] = useState(null);
+  const [ncc, setNcc] = useState("");
   const [pro, setPro] = useState({ value: "", label: "Tất cả" });
   const [formData, setFormData] = useState(initValue);
 
+  // set các trường là chuỗi
   function handleChangeOrder(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
+  // set select
   function handleSelect(e, thaotac) {
     if (thaotac === "0") {
       setFormData({
         ...formData,
         ctv: { username: e.value, fullname: e.label },
-      });
-    }
-    if (thaotac === "1") {
-      setFormData({
-        ...formData,
-        ncc: { username: e.value, nccname: e.label },
+        ncc: { username: "", nccname: "Chưa chọn sản phẩm" },
         details: [],
       });
       setPro({ value: "", label: "Tất cả" });
-      onChangeNcc(e);
+      onChangeCtv(e);
     }
-    if (thaotac === "2") {
+    if (thaotac === "1") {
       setPro(e);
+      setFormData({
+        ...formData,
+        ncc: {
+          username: !e.ncc ? "" : e.ncc.username,
+          nccname: !e.ncc ? "Chưa chọn sản phẩm" : e.ncc.nccname,
+        },
+      });
     }
   }
 
+  // thêm sp
   function handleAdd() {
+    if (!formData.ctv.username) {
+      Fail("Chọn cộng tác viên để thêm!");
+      return;
+    }
     if (!pro.value) {
-      Fail("Chưa chọn sản phẩm cần thêm!");
+      Fail("Chọn sản phẩm cần thêm!");
+      return;
+    }
+    if (ncc && ncc !== formData.ncc.username) {
+      Fail("Sản phẩm này thuộc nhà cung cấp khác!");
       return;
     }
     const index = formData.details.findIndex((x) => x.sp === pro.value);
@@ -50,14 +63,16 @@ const FormDH = ({ close, initValue }) => {
       setFormData({
         ...formData,
         total: formData.total + pro.pricectv,
+        payment: formData.payment + pro.payment,
         details: [
           ...formData.details,
           {
             sl: 1,
             sp: pro.value,
-            price_customer: pro.pricectv,
+            price_customer: pro.payment,
             name: pro.label,
             image0: pro.image0,
+            pricesp: pro.pricectv,
           },
         ],
       });
@@ -66,10 +81,16 @@ const FormDH = ({ close, initValue }) => {
         ...formData.details[index],
         sl: formData.details[index].sl + 1,
       };
-      setFormData({ ...formData, total: formData.total + pro.pricectv });
+      setFormData({
+        ...formData,
+        total: formData.total + pro.pricectv,
+        payment: formData.payment + pro.payment,
+      });
     }
+    setNcc(formData.ncc.username);
   }
 
+  // xóa sp
   function handleRemove(index) {
     if (formData.details[index].sl > 1) {
       formData.details[index] = {
@@ -81,6 +102,27 @@ const FormDH = ({ close, initValue }) => {
       formData.details.splice(index, 1);
       setFormData({ ...formData, total: formData.total - pro.pricectv });
     }
+  }
+
+  function compactFormData() {
+    var details = formData.details.map((de) => ({
+      sl: de.sl,
+      sp: de.sp,
+      price_customer: de.price_customer,
+    }));
+    return {
+      ...formData,
+      huyen: formData.huyen.trim(),
+      xa: formData.xa.trim(),
+      address: formData.address.trim(),
+      customer: formData.customer.trim(),
+      sdtcustomer: formData.sdtcustomer.trim(),
+      order_code: formData.order_code.trim(),
+      ctv: formData.ctv.username,
+      ncc: formData.ncc.username,
+      status: Number(formData.status),
+      details,
+    };
   }
 
   // select ctv
@@ -104,40 +146,16 @@ const FormDH = ({ close, initValue }) => {
       { value: "", label: "Tất cả" },
       ...result.map((rs) => ({ value: rs.username, label: rs.fullname })),
     ]);
-    return true;
-  }, []);
-
-  // select ncc
-  const select_ncc = useCallback(async () => {
-    fetchingOn();
-    const [error, resp] = await okteamAPI("/ncc/list");
-    if (error) {
-      fetchingOff();
-      Fail("Không thực hiện được thao tác!");
-      console.log(error);
-      return false;
-    }
-    const { result, message } = resp.data;
-    if (!isOK(message)) {
-      fetchingOff();
-      Fail(message);
-      return false;
-    }
-    fetchingOff();
-    setNccs([
-      { value: "", label: "Tất cả" },
-      ...result.map((rs) => ({ value: rs.username, label: rs.nccname })),
-    ]);
-    onChangeNcc();
+    onChangeCtv();
     return true;
   }, []);
 
   // select sp
-  async function onChangeNcc(select) {
+  async function onChangeCtv(select) {
     const username = select ? select.value : "";
     fetchingOn();
     const [error, resp] = await okteamAPI(
-      `/products/list${username && `?username=${username}`}`
+      `/regi_products/list${username && `?username=${username}`}`
     );
     if (error) {
       fetchingOff();
@@ -155,10 +173,15 @@ const FormDH = ({ close, initValue }) => {
     setProducts([
       { value: "", label: "Tất cả" },
       ...result.map((rs) => ({
-        value: rs.idpro,
-        label: rs.name,
-        pricectv: rs.pricectv,
-        image0: rs.image0,
+        value: rs.products.idpro,
+        label: rs.products.name,
+        pricectv: rs.products.pricectv,
+        image0: rs.products.image0,
+        ncc: {
+          nccname: rs.products.ncc.nccname,
+          username: rs.products.ncc.username,
+        },
+        payment: rs.price,
       })),
     ]);
     return true;
@@ -166,8 +189,7 @@ const FormDH = ({ close, initValue }) => {
 
   useEffect(() => {
     select_ctv();
-    select_ncc();
-  }, [select_ncc, select_ctv]);
+  }, [select_ctv]);
 
   return (
     <>
@@ -202,38 +224,9 @@ const FormDH = ({ close, initValue }) => {
           <InputGroup
             id="order_code"
             name="order_code"
-            text="Order code"
+            text="Mã đơn vận"
             changed={handleChangeOrder}
           />
-          <br />
-          <div className="row">
-            <InputGroup
-              id="ctv"
-              type="select"
-              name="ctv"
-              text="Cộng tác viên"
-              placeholder="Tên nhãn"
-              options={ctvs}
-              value={{
-                value: formData.ctv.username,
-                label: formData.ctv.fullname,
-              }}
-              changed={(e) => handleSelect(e, "0")}
-            />
-            <InputGroup
-              id="ncc"
-              type="select"
-              name="ncc"
-              text="Nhà cung cấp"
-              placeholder="Tên nhà cung cấp"
-              options={nccs}
-              value={{
-                value: formData.ncc.username,
-                label: formData.ncc.nccname,
-              }}
-              changed={(e) => handleSelect(e, "1")}
-            />
-          </div>
           <br />
           <div className="mb-3">
             <label htmlFor="status1" className="form-label">
@@ -313,7 +306,24 @@ const FormDH = ({ close, initValue }) => {
               changed={handleChangeOrder}
             />
           </div>
+          <br />
+
           <div className="row">
+            <div className="col">
+              <InputGroup
+                id="ctv"
+                type="select"
+                name="ctv"
+                text="Cộng tác viên"
+                placeholder="Tên nhãn"
+                options={ctvs}
+                value={{
+                  value: formData.ctv.username,
+                  label: formData.ctv.fullname,
+                }}
+                changed={(e) => handleSelect(e, "0")}
+              />
+            </div>
             <div className="col">
               <InputGroup
                 id="details"
@@ -323,8 +333,12 @@ const FormDH = ({ close, initValue }) => {
                 placeholder="Tên sp"
                 options={products}
                 value={{ value: pro.value, label: pro.label }}
-                changed={(e) => handleSelect(e, "2")}
+                changed={(e) => handleSelect(e, "1")}
               />
+            </div>
+            <div className="col">
+              <label>Nhà cung cấp</label>
+              <p style={{ marginTop: 14 }}>{formData.ncc.nccname}</p>
             </div>
             <div className="col">
               <Button
@@ -350,7 +364,8 @@ const FormDH = ({ close, initValue }) => {
                     <th>Sản phẩm</th>
                     <th>Ảnh</th>
                     <th>Số lượng</th>
-                    <th>Giá</th>
+                    <th>Giá gốc</th>
+                    <th>Giá đăng ký</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -376,14 +391,31 @@ const FormDH = ({ close, initValue }) => {
                             />
                           </td>
                           <td>{dt.sl}</td>
+                          <td>{dt.pricesp}</td>
                           <td>{dt.price_customer}</td>
                         </tr>
                       ))}
                     </>
                   ) : (
                     <tr>
-                      <td align="center" colSpan="5">
+                      <td align="center" colSpan="6">
                         <b style={{ color: "red" }}>Chưa chọn sản phẩm nào</b>
+                      </td>
+                    </tr>
+                  )}
+                  {formData.total > 0 && (
+                    <tr>
+                      <td>
+                        <b>Tổng</b>
+                      </td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>
+                        <b style={{ color: "red" }}>{formData.total}</b>
+                      </td>
+                      <td>
+                        <b style={{ color: "red" }}>{formData.payment}</b>
                       </td>
                     </tr>
                   )}
@@ -395,7 +427,10 @@ const FormDH = ({ close, initValue }) => {
       </Modal.Body>
       <Modal.Footer>
         <div className="btnForm">
-          <Button variant="primary" onClick={() => console.log(formData)}>
+          <Button
+            variant="primary"
+            onClick={() => saveAll(compactFormData(formData))}
+          >
             Lưu
           </Button>
           <Button variant="primary" onClick={close}>

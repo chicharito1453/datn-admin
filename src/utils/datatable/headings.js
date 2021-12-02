@@ -75,3 +75,20 @@ export const headingAdmin = [
 ];
 // thuộc tính
 export const headingTT = ["STT", "Thuộc tính", "Giá trị", "#"];
+export const headingDH = [
+  "#",
+  "Mã đơn",
+  "Trạng thái",
+  "Khách hàng",
+  "SĐT",
+  "Giá gốc",
+  "Giá bán",
+  "Cộng tác viên",
+  "Nhà cung cấp",
+  "Huyện",
+  "Xã",
+  "Địa chỉ",
+  "Mã đơn vận",
+  "Ngày tạo",
+  "Ngày thanh toán",
+];

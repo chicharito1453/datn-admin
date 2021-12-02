@@ -7,3 +7,4 @@ export const SET_CTV = "SET_CTV";
 export const ALL_PRODUCTS = "ALL_PRODUCTS";
 export const ALL_ADMIN = "ALL_ADMIN";
 export const ALL_PROPERTIES = "ALL_PROPERTIES";
+export const ALL_ORDERS = "ALL_ORDERS";
