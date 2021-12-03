@@ -100,7 +100,15 @@ const FormDH = ({ close, saveAll, initValue }) => {
       setFormData({ ...formData, total: formData.total - pro.pricectv });
     } else {
       formData.details.splice(index, 1);
-      setFormData({ ...formData, total: formData.total - pro.pricectv });
+      if (formData.details.length === 0) setNcc("");
+      setFormData({
+        ...formData,
+        total: formData.total - pro.pricectv,
+        ncc:
+          formData.details.length === 0
+            ? { username: "", nccname: "Chưa chọn sản phẩm" }
+            : ncc,
+      });
     }
   }
 

@@ -6,7 +6,7 @@ import { regexSDT } from "../../utils/regex/regex";
 import TableDH from "./table/TableDH";
 import FormDH from "./form/FormDH";
 import okteamAPI from "../../utils/api/okteamAPI";
-import { isOK, Fail } from "../../utils/sweetalert2/alert";
+import { isOK, Fail, Success, Approve } from "../../utils/sweetalert2/alert";
 import {
   fetchingOn,
   fetchingOff,
@@ -33,6 +33,7 @@ const Orders = ({ data, getAllOrders }) => {
   const [initValue, setInitValue] = useState(initialState);
 
   function handleClose() {
+    setInitValue(initialState);
     setShow(false);
   }
 
@@ -60,7 +61,6 @@ const Orders = ({ data, getAllOrders }) => {
 
   // CHECK FORM
   function check_form(formData) {
-    console.log(formData);
     if (!formData.customer) {
       Fail("Chưa nhập khách hàng!");
       return false;
@@ -95,7 +95,54 @@ const Orders = ({ data, getAllOrders }) => {
   // TẠO ĐON HÀNG
   async function saveAll(formData) {
     if (!check_form(formData)) return;
-    console.log("ok");
+    fetchingOn();
+    const [error, resp] = await okteamAPI("/order/add", "POST", formData);
+    if (error) {
+      fetchingOff();
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    const { result, message } = resp.data;
+    if (!isOK(message)) {
+      fetchingOff();
+      Fail(message);
+      return false;
+    }
+    fetchingOff();
+    Success("Tạo đơn hàng thành công!");
+    getAllOrders(result);
+    setShow(false);
+    setInitValue(initialState);
+    return true;
+  }
+
+  // HỦY ĐƠN HÀNG
+  async function detele_order(order) {
+    Approve(
+      "Bạn đang thực hiện hủy đơn hàng này.\nTiếp tục thực hiện ?",
+      async () => {
+        order = { ...order, ncc: order.ncc.username, ctv: order.ctv.username };
+        fetchingOn();
+        const [error, resp] = await okteamAPI("/order/delete", "DELETE", order);
+        if (error) {
+          fetchingOff();
+          Fail("Không thực hiện được thao tác!");
+          console.log(error);
+          return false;
+        }
+        const { result, message } = resp.data;
+        if (!isOK(message)) {
+          fetchingOff();
+          Fail(message);
+          return false;
+        }
+        fetchingOff();
+        Success("Hủy đơn thành công");
+        getAllOrders(result);
+        return true;
+      }
+    );
   }
 
   useEffect(() => {
@@ -116,7 +163,7 @@ const Orders = ({ data, getAllOrders }) => {
       </Button>
       <br />
       <br />
-      <TableDH data={data} />
+      <TableDH data={data} deleted={detele_order} />
       <Modal
         size="lg"
         show={show}
