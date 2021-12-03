@@ -198,6 +198,15 @@ const configSP = {
               /><input id="file_9_sp_${row.idpro}" type="file" style="display: none" onchange="update_sp('${row.idpro}', this.files[0], 9, '${data}', this)" />`;
       },
     },
+    {
+      data: "createdate",
+      render: (data, type, row, meta) => {
+        if (type === "display") {
+          return `<div style="width: 150px;">${data || ""}</div>`;
+        }
+        return data;
+      },
+    },
   ],
   columnDefs: [
     // { targets: [0], width: "10px" },

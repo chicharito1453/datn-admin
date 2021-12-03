@@ -58,6 +58,7 @@ export const headingSP = [
   "Ảnh 2",
   "Ảnh 3",
   "Ảnh 4",
+  "Ngày tạo",
 ];
 // admin
 export const headingAdmin = [

@@ -89,13 +89,13 @@ const configDH = {
     {
       data: "customer",
       render: (data, type, row, meta) => {
-        return `<input style="width: 250px;" onchange="update_order('${row.idorder}', this.value, 1, '', this)" value="${data}"   />`;
+        return `<input style="width: 250px;" onchange="update_order('${row.idorder}', this.value, 1, '${data}', this)" value="${data}"   />`;
       },
     },
     {
       data: "sdtcustomer",
       render: (data, type, row, meta) => {
-        return `<input onchange="update_order('${row.idorder}', this.value, 2, '', this)" value="${data}"   />`;
+        return `<input onchange="update_order('${row.idorder}', this.value, 2, '${data}', this)" value="${data}"   />`;
       },
     },
     {
@@ -129,13 +129,13 @@ const configDH = {
     {
       data: "huyen",
       render: (data, type, row, meta) => {
-        return `<input onchange="update_order('${row.idorder}', this.value, 3, '', this)" value="${data}"   />`;
+        return `<input onchange="update_order('${row.idorder}', this.value, 3, '${data}', this)" value="${data}"   />`;
       },
     },
     {
       data: "xa",
       render: (data, type, row, meta) => {
-        return `<input onchange="update_order('${row.idorder}', this.value, 4, '', this)" value="${data}"   />`;
+        return `<input onchange="update_order('${row.idorder}', this.value, 4, '${data}', this)" value="${data}"   />`;
       },
     },
     {
@@ -171,7 +171,9 @@ const configDH = {
       data: "datefinish",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<div style="width: 150px;">${data || ""}</div>`;
+          return `<div id='datefinish' style="width: 150px;">${
+            data || ""
+          }</div>`;
         }
         return data;
       },

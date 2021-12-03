@@ -135,7 +135,7 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
       address: formData.address.trim(),
       customer: formData.customer.trim(),
       sdtcustomer: formData.sdtcustomer.trim(),
-      order_code: formData.order_code ? formData.order_code.trim() : "",
+      order_code: formData.order_code.trim(),
       ctv: formData.ctv.username,
       ncc: formData.ncc.username,
       status: Number(formData.status),
