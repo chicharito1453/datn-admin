@@ -38,7 +38,13 @@ const configDH = {
     {
       data: "idorder",
       render: (data, type, row, meta) => {
-        return `<i style="cursor:pointer" class="far fa-trash-alt"></i>`;
+        return `<i style="cursor:pointer;" class="far fa-trash-alt"></i>`;
+      },
+    },
+    {
+      data: "idorder",
+      render: (data, type, row, meta) => {
+        return `<div style="cursor:pointer; width: 80px;><i style="cursor:pointer;" class="far fa-edit"></i></div>`;
       },
     },
     {
@@ -108,16 +114,16 @@ const configDH = {
       data: "ctv",
       render: (data, type, row, meta) => {
         if (type === "display" || type === "export")
-          return `<div style="width: 200px;">${data.fullname}&emsp;<i style="cursor:pointer" class="far fa-edit"></i></div>`;
-        return data;
+          return `<div style="width: 200px;">${data.fullname}</div>`;
+        return data.fullname;
       },
     },
     {
       data: "ncc",
       render: (data, type, row, meta) => {
         if (type === "display" || type === "export")
-          return `<div style="width: 200px;">${data.nccname}&emsp;<i style="cursor:pointer" class="far fa-edit"></i></div>`;
-        return data;
+          return `<div style="width: 200px;">${data.nccname}</div>`;
+        return data.nccname;
       },
     },
     {
@@ -174,7 +180,7 @@ const configDH = {
   columnDefs: [
     // { targets: [0], width: "10px" },
     // { targets: "_all", width: "130px" },
-    // { className: "text-center", targets: [1, 6, 7] },
+    { className: "text-center", targets: [1, 2, 6, 7] },
   ],
 };
 export default configDH;

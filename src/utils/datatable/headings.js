@@ -77,6 +77,7 @@ export const headingAdmin = [
 export const headingTT = ["STT", "Thuộc tính", "Giá trị", "#"];
 export const headingDH = [
   "#",
+  "Chi tiết",
   "Mã đơn",
   "Trạng thái",
   "Khách hàng",

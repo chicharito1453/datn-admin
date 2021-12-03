@@ -8,7 +8,7 @@ import {
 } from "../../../utils/loading-overlay/loading-overlay";
 import InputGroup from "../../../components/InputGroup";
 
-const FormDH = ({ close, saveAll, initValue }) => {
+const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
   const [ctvs, setCtvs] = useState(null);
   const [products, setProducts] = useState(null);
   const [ncc, setNcc] = useState("");
@@ -28,6 +28,8 @@ const FormDH = ({ close, saveAll, initValue }) => {
         ctv: { username: e.value, fullname: e.label },
         ncc: { username: "", nccname: "Chưa chọn sản phẩm" },
         details: [],
+        total: 0,
+        payment: 0,
       });
       setPro({ value: "", label: "Tất cả" });
       onChangeCtv(e);
@@ -92,18 +94,25 @@ const FormDH = ({ close, saveAll, initValue }) => {
 
   // xóa sp
   function handleRemove(index) {
+    const gia = formData.details[index].pricesp;
+    const giacustommer = formData.details[index].price_customer;
     if (formData.details[index].sl > 1) {
       formData.details[index] = {
         ...formData.details[index],
         sl: formData.details[index].sl - 1,
       };
-      setFormData({ ...formData, total: formData.total - pro.pricectv });
+      setFormData({
+        ...formData,
+        total: formData.total - gia,
+        payment: formData.payment - giacustommer,
+      });
     } else {
       formData.details.splice(index, 1);
       if (formData.details.length === 0) setNcc("");
       setFormData({
         ...formData,
-        total: formData.total - pro.pricectv,
+        total: formData.total - gia,
+        payment: formData.payment - giacustommer,
         ncc:
           formData.details.length === 0
             ? { username: "", nccname: "Chưa chọn sản phẩm" }
@@ -112,6 +121,7 @@ const FormDH = ({ close, saveAll, initValue }) => {
     }
   }
 
+  // rút gọn formData để thao tác
   function compactFormData() {
     var details = formData.details.map((de) => ({
       sl: de.sl,
@@ -125,13 +135,53 @@ const FormDH = ({ close, saveAll, initValue }) => {
       address: formData.address.trim(),
       customer: formData.customer.trim(),
       sdtcustomer: formData.sdtcustomer.trim(),
-      order_code: formData.order_code.trim(),
+      order_code: formData.order_code ? formData.order_code.trim() : "",
       ctv: formData.ctv.username,
       ncc: formData.ncc.username,
       status: Number(formData.status),
       details,
     };
   }
+
+  // select sp
+  const onChangeCtv = useCallback(
+    async (select) => {
+      var username = formData.ctv.username;
+      fetchingOn();
+      const [error, resp] = await okteamAPI(
+        `/regi_products/list${username && `?username=${username}`}`
+      );
+      if (error) {
+        fetchingOff();
+        Fail("Không thực hiện được thao tác!");
+        console.log(error);
+        return false;
+      }
+      const { result, message } = resp.data;
+      if (!isOK(message)) {
+        fetchingOff();
+        Fail(message);
+        return false;
+      }
+      fetchingOff();
+      setProducts([
+        { value: "", label: "Tất cả" },
+        ...result.map((rs) => ({
+          value: rs.products.idpro,
+          label: rs.products.name,
+          pricectv: rs.products.pricectv,
+          image0: rs.products.image0,
+          ncc: {
+            nccname: rs.products.ncc.nccname,
+            username: rs.products.ncc.username,
+          },
+          payment: rs.price,
+        })),
+      ]);
+      return true;
+    },
+    [formData.ctv.username]
+  );
 
   // select ctv
   const select_ctv = useCallback(async () => {
@@ -156,44 +206,7 @@ const FormDH = ({ close, saveAll, initValue }) => {
     ]);
     onChangeCtv();
     return true;
-  }, []);
-
-  // select sp
-  async function onChangeCtv(select) {
-    const username = select ? select.value : "";
-    fetchingOn();
-    const [error, resp] = await okteamAPI(
-      `/regi_products/list${username && `?username=${username}`}`
-    );
-    if (error) {
-      fetchingOff();
-      Fail("Không thực hiện được thao tác!");
-      console.log(error);
-      return false;
-    }
-    const { result, message } = resp.data;
-    if (!isOK(message)) {
-      fetchingOff();
-      Fail(message);
-      return false;
-    }
-    fetchingOff();
-    setProducts([
-      { value: "", label: "Tất cả" },
-      ...result.map((rs) => ({
-        value: rs.products.idpro,
-        label: rs.products.name,
-        pricectv: rs.products.pricectv,
-        image0: rs.products.image0,
-        ncc: {
-          nccname: rs.products.ncc.nccname,
-          username: rs.products.ncc.username,
-        },
-        payment: rs.price,
-      })),
-    ]);
-    return true;
-  }
+  }, [onChangeCtv]);
 
   useEffect(() => {
     select_ctv();
@@ -203,117 +216,132 @@ const FormDH = ({ close, saveAll, initValue }) => {
     <>
       <Modal.Body>
         <form>
-          <br />
-          <InputGroup
-            id="customer"
-            name="customer"
-            text="Khách hàng"
-            changed={handleChangeOrder}
-          />
-          <InputGroup
-            id="sdtcustomer"
-            name="sdtcustomer"
-            text="SĐT khách hàng"
-            changed={handleChangeOrder}
-          />
-          <InputGroup
-            id="huyen"
-            name="huyen"
-            text="Huyện"
-            changed={handleChangeOrder}
-          />
-          <InputGroup id="xa" name="xa" text="Xã" changed={handleChangeOrder} />
-          <InputGroup
-            id="address"
-            name="address"
-            text="Địa chỉ"
-            changed={handleChangeOrder}
-          />
-          <InputGroup
-            id="order_code"
-            name="order_code"
-            text="Mã đơn vận"
-            changed={handleChangeOrder}
-          />
-          <br />
-          <div className="mb-3">
-            <label htmlFor="status1" className="form-label">
-              <b>Trạng thái</b>
-            </label>
-            <br />
-            <InputGroup
-              nameClass="mb-3 form-check form-check-inline"
-              id="status0"
-              name="status"
-              text="Chờ xác nhận"
-              value="0"
-              labelClass="form-check-label"
-              elementClass="form-check-input"
-              type="radio"
-              isChecked={formData.status === "0"}
-              changed={handleChangeOrder}
-            />
-            <InputGroup
-              nameClass="mb-3 form-check form-check-inline"
-              id="status1"
-              name="status"
-              text="Giao thành công"
-              value="1"
-              labelClass="form-check-label"
-              elementClass="form-check-input"
-              type="radio"
-              isChecked={formData.status === "1"}
-              changed={handleChangeOrder}
-            />
-            <InputGroup
-              nameClass="mb-3 form-check form-check-inline"
-              id="status2"
-              name="status"
-              text="Đang giao"
-              value="2"
-              labelClass="form-check-label"
-              elementClass="form-check-input"
-              type="radio"
-              isChecked={formData.status === "2"}
-              changed={handleChangeOrder}
-            />
-            <InputGroup
-              nameClass="mb-3 form-check form-check-inline"
-              id="status3"
-              name="status"
-              text="Trả về"
-              value="3"
-              labelClass="form-check-label"
-              elementClass="form-check-input"
-              type="radio"
-              isChecked={formData.status === "3"}
-              changed={handleChangeOrder}
-            />
-            <InputGroup
-              nameClass="mb-3 form-check form-check-inline"
-              id="status4"
-              name="status"
-              text="Hủy"
-              value="4"
-              labelClass="form-check-label"
-              elementClass="form-check-input"
-              type="radio"
-              isChecked={formData.status === "4"}
-              changed={handleChangeOrder}
-            />
-            <InputGroup
-              nameClass="mb-3 form-check form-check-inline"
-              id="status5"
-              name="status"
-              text="Đã thanh toán"
-              value="5"
-              labelClass="form-check-label"
-              elementClass="form-check-input"
-              type="radio"
-              isChecked={formData.status === "5"}
-              changed={handleChangeOrder}
-            />
-          </div>
+          {!isUpdate && (
+            <>
+              <br />
+              <InputGroup
+                id="customer"
+                name="customer"
+                text="Khách hàng"
+                value={formData.customer}
+                changed={handleChangeOrder}
+              />
+              <InputGroup
+                id="sdtcustomer"
+                name="sdtcustomer"
+                text="SĐT khách hàng"
+                value={formData.sdtcustomer}
+                changed={handleChangeOrder}
+              />
+              <InputGroup
+                id="huyen"
+                name="huyen"
+                text="Huyện"
+                value={formData.huyen}
+                changed={handleChangeOrder}
+              />
+              <InputGroup
+                id="xa"
+                name="xa"
+                text="Xã"
+                value={formData.xa}
+                changed={handleChangeOrder}
+              />
+              <InputGroup
+                id="address"
+                name="address"
+                text="Địa chỉ"
+                value={formData.address}
+                changed={handleChangeOrder}
+              />
+              <InputGroup
+                id="order_code"
+                name="order_code"
+                text="Mã đơn vận"
+                value={formData.order_code}
+                changed={handleChangeOrder}
+              />
+              <br />
+              <div className="mb-3">
+                <label htmlFor="status1" className="form-label">
+                  <b>Trạng thái</b>
+                </label>
+                <br />
+                <InputGroup
+                  nameClass="mb-3 form-check form-check-inline"
+                  id="status0"
+                  name="status"
+                  text="Chờ xác nhận"
+                  value="0"
+                  labelClass="form-check-label"
+                  elementClass="form-check-input"
+                  type="radio"
+                  isChecked={formData.status === "0"}
+                  changed={handleChangeOrder}
+                />
+                <InputGroup
+                  nameClass="mb-3 form-check form-check-inline"
+                  id="status1"
+                  name="status"
+                  text="Giao thành công"
+                  value="1"
+                  labelClass="form-check-label"
+                  elementClass="form-check-input"
+                  type="radio"
+                  isChecked={formData.status === "1"}
+                  changed={handleChangeOrder}
+                />
+                <InputGroup
+                  nameClass="mb-3 form-check form-check-inline"
+                  id="status2"
+                  name="status"
+                  text="Đang giao"
+                  value="2"
+                  labelClass="form-check-label"
+                  elementClass="form-check-input"
+                  type="radio"
+                  isChecked={formData.status === "2"}
+                  changed={handleChangeOrder}
+                />
+                <InputGroup
+                  nameClass="mb-3 form-check form-check-inline"
+                  id="status3"
+                  name="status"
+                  text="Trả về"
+                  value="3"
+                  labelClass="form-check-label"
+                  elementClass="form-check-input"
+                  type="radio"
+                  isChecked={formData.status === "3"}
+                  changed={handleChangeOrder}
+                />
+                <InputGroup
+                  nameClass="mb-3 form-check form-check-inline"
+                  id="status4"
+                  name="status"
+                  text="Hủy"
+                  value="4"
+                  labelClass="form-check-label"
+                  elementClass="form-check-input"
+                  type="radio"
+                  isChecked={formData.status === "4"}
+                  changed={handleChangeOrder}
+                />
+                <InputGroup
+                  nameClass="mb-3 form-check form-check-inline"
+                  id="status5"
+                  name="status"
+                  text="Đã thanh toán"
+                  value="5"
+                  labelClass="form-check-label"
+                  elementClass="form-check-input"
+                  type="radio"
+                  isChecked={formData.status === "5"}
+                  changed={handleChangeOrder}
+                />
+              </div>
+            </>
+          )}
           <br />
 
           <div className="row">
@@ -435,12 +463,29 @@ const FormDH = ({ close, saveAll, initValue }) => {
       </Modal.Body>
       <Modal.Footer>
         <div className="btnForm">
-          <Button
-            variant="primary"
-            onClick={() => saveAll(compactFormData(formData))}
-          >
-            Lưu
-          </Button>
+          {!isUpdate ? (
+            <Button
+              variant="primary"
+              onClick={() =>
+                saveAll(compactFormData(formData), "/order/add", "POST")
+              }
+            >
+              Lưu
+            </Button>
+          ) : (
+            <Button
+              variant="primary"
+              onClick={() =>
+                saveAll(
+                  compactFormData(formData),
+                  "/order/update-chitiet",
+                  "PUT"
+                )
+              }
+            >
+              Sửa
+            </Button>
+          )}
           <Button variant="primary" onClick={close}>
             Đóng
           </Button>

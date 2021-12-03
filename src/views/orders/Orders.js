@@ -31,6 +31,7 @@ const initialState = {
 const Orders = ({ data, getAllOrders }) => {
   const [show, setShow] = useState(false);
   const [initValue, setInitValue] = useState(initialState);
+  const [isUpdate, setIsUpdate] = useState(false);
 
   function handleClose() {
     setInitValue(initialState);
@@ -93,10 +94,10 @@ const Orders = ({ data, getAllOrders }) => {
   }
 
   // TẠO ĐON HÀNG
-  async function saveAll(formData) {
+  async function saveAll(formData, endpoint, method) {
     if (!check_form(formData)) return;
     fetchingOn();
-    const [error, resp] = await okteamAPI("/order/add", "POST", formData);
+    const [error, resp] = await okteamAPI(endpoint, method, formData);
     if (error) {
       fetchingOff();
       Fail("Không thực hiện được thao tác!");
@@ -110,10 +111,15 @@ const Orders = ({ data, getAllOrders }) => {
       return false;
     }
     fetchingOff();
-    Success("Tạo đơn hàng thành công!");
-    getAllOrders(result);
+    Success(
+      method === "POST"
+        ? "Tạo đơn hàng thành công!"
+        : "Cập nhật thông tin thành công!"
+    );
     setShow(false);
     setInitValue(initialState);
+    setIsUpdate(false);
+    getAllOrders(result);
     return true;
   }
 
@@ -145,6 +151,27 @@ const Orders = ({ data, getAllOrders }) => {
     );
   }
 
+  // SET DATA LÊN FORM
+  function mapRowtoForm(order) {
+    if (!order) return;
+    setIsUpdate(true);
+    var details = order.details.map((de) => ({
+      sp: de.products.idpro,
+      sl: de.qty,
+      price_customer: de.revenue,
+      name: de.products.name,
+      image0: de.products.image0,
+      pricesp: de.products.pricectv,
+    }));
+    setInitValue({
+      ...order,
+      details,
+      status: order.status.toString(),
+      order_code: order.order_code || "",
+    });
+    setShow(true);
+  }
+
   useEffect(() => {
     document.title = "Quản trị - Đơn hàng";
     document.querySelector(".content").style.height = "100vh";
@@ -157,13 +184,16 @@ const Orders = ({ data, getAllOrders }) => {
       <Button
         style={{ float: "right" }}
         variant="primary"
-        onClick={() => setShow(!show)}
+        onClick={() => {
+          setIsUpdate(false);
+          setShow(true);
+        }}
       >
         Tạo đơn hàng
       </Button>
       <br />
       <br />
-      <TableDH data={data} deleted={detele_order} />
+      <TableDH data={data} deleted={detele_order} getRow={mapRowtoForm} />
       <Modal
         size="lg"
         show={show}
@@ -172,9 +202,16 @@ const Orders = ({ data, getAllOrders }) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tạo đơn hàng</Modal.Title>
+          <Modal.Title>
+            {!isUpdate ? "Tạo đơn hàng" : "Chi tiết sản phẩm"}
+          </Modal.Title>
         </Modal.Header>
-        <FormDH close={handleClose} saveAll={saveAll} initValue={initValue} />
+        <FormDH
+          close={handleClose}
+          saveAll={saveAll}
+          initValue={initValue}
+          isUpdate={isUpdate}
+        />
       </Modal>
     </div>
   );
