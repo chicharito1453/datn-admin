@@ -13,10 +13,28 @@ import {
 } from "../../utils/loading-overlay/loading-overlay";
 import { ALL_NCC } from "../../store/action";
 
+const initialState = {
+  username: "",
+  password: "",
+  fullname: "",
+  nccname: "",
+  ncclogo: null,
+  email: "",
+  sdt: "",
+  city: "Tất cả",
+  address: "",
+  active: false,
+  description: "",
+  idghn: "",
+};
+
 const NCC = ({ data, getAllNCC }) => {
   const [show, setShow] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(initialState);
+  const [initValue, setInitValue] = useState(initialState);
 
   function handleClose() {
+    setInitValue(initialState);
     setShow(false);
   }
 
@@ -67,8 +85,8 @@ const NCC = ({ data, getAllNCC }) => {
       Fail("Số điện thoại không hợp lệ!");
       return false;
     }
-    if (!formData.city.trim()) {
-      Fail("Chưa nhập thành phố");
+    if (formData.city === "Tất cả") {
+      Fail("Chưa chọn tỉnh/TP");
       return false;
     }
     if (!formData.address.trim()) {
@@ -160,6 +178,38 @@ const NCC = ({ data, getAllNCC }) => {
     );
   }
 
+  async function update_city(formData) {
+    fetchingOn();
+    const [error, resp] = await okteamAPI(
+      `/ncc/update/${formData.username}?thaotac=5&value=${formData.city}`,
+      "PUT"
+    );
+    if (error) {
+      fetchingOff();
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    const { result, message } = resp.data;
+    if (!isOK(message)) {
+      fetchingOff();
+      Fail(message);
+      return false;
+    }
+    fetchingOff();
+    Success("Cập nhật thông tin thành công!");
+    setShow(false);
+    getAllNCC(result);
+    return true;
+  }
+
+  function mapRowToForm(Ncc) {
+    if (!Ncc) return;
+    setIsUpdate(true);
+    setInitValue({ ...Ncc });
+    setShow(true);
+  }
+
   useEffect(() => {
     document.title = "Quản trị - Nhà cung cấp";
     document.querySelector(".content").style.height = "100vh";
@@ -172,13 +222,16 @@ const NCC = ({ data, getAllNCC }) => {
       <Button
         style={{ float: "right" }}
         variant="primary"
-        onClick={() => setShow(!show)}
+        onClick={() => {
+          setIsUpdate(false);
+          setShow(true);
+        }}
       >
         Thêm nhà cung cấp
       </Button>
       <br />
       <br />
-      <TableNcc data={data} deleted={delete_ncc} />
+      <TableNcc data={data} deleted={delete_ncc} getRow={mapRowToForm} />
       <Modal
         size="lg"
         show={show}
@@ -188,9 +241,17 @@ const NCC = ({ data, getAllNCC }) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Thêm nhà cung cấp</Modal.Title>
+          <Modal.Title>
+            {!isUpdate ? "Thêm nhà cung cấp" : "Cập nhật tỉnh/TP"}
+          </Modal.Title>
         </Modal.Header>
-        <FormNcc add={them_ncc} close={handleClose} />
+        <FormNcc
+          add={them_ncc}
+          close={handleClose}
+          initValue={initValue}
+          isUpdate={isUpdate}
+          update={update_city}
+        />
       </Modal>
     </div>
   );

@@ -6,6 +6,9 @@ async function callAPI(url, method = "GET", data = null) {
       url,
       method,
       data,
+      headers: {
+        token: process.env.REACT_APP_TOKENGHN,
+      },
     });
     return [null, resp];
   } catch (error) {

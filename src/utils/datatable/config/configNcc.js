@@ -136,7 +136,7 @@ const configNcc = {
       data: "city",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<input onchange="update_ncc('${row.username}', this.value, 5, '${data}', this)"  value="${data}" />`;
+          return `<div style="width: 200px;">${data}&emsp;<i style="cursor:pointer" class="far fa-edit"></i></div>`;
         }
         return data;
       },
