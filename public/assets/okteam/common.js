@@ -110,3 +110,13 @@ async function callAPI(url, method = "GET", data = null) {
     return [error, null];
   }
 }
+
+// phóng to, thu nhỏ dùng cho giới thiệu, mộ tả
+function zoomin(element) {
+  element.style.width = "500px";
+  element.style.height = "200px";
+}
+function zoomout(element) {
+  element.style.width = "200px";
+  element.style.height = "50px";
+}

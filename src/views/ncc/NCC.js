@@ -182,6 +182,7 @@ const NCC = ({ data, getAllNCC }) => {
       <Modal
         size="lg"
         show={show}
+        centered
         onHide={handleClose}
         backdrop="static"
         keyboard={false}

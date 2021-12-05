@@ -10,12 +10,18 @@ import NotFound from "../views/notFound/NotFound";
 import Brand from "../views/brand/Brand";
 import Admin from "../views/admin/Admin";
 import Properties from "../views/properties/Properties";
+import Post from "../views/post/Post";
 
 const routes = [
   {
     path: "/",
     exact: true,
     main: <Home />,
+  },
+  {
+    path: "/admin/post",
+    exact: true,
+    main: <Post />,
   },
   {
     path: "/admin/category",

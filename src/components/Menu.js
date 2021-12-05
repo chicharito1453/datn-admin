@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 const menuLink = [
   { to: "/", name: "Trang chủ", classIcon: "fas fa-home" },
+  { to: "/admin/post", name: "Tin tức", classIcon: "fas fa-book-reader" },
   { to: "/admin/category", name: "Loại", classIcon: "fas fa-cogs" },
   { to: "/admin/brand", name: "Nhãn hiệu", classIcon: "fas fa-tags" },
   { to: "/admin/ncc", name: "Nhà cung cấp", classIcon: "fas fa-truck" },

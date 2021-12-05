@@ -9,6 +9,7 @@ import list_product from "./list_product";
 import list_admin from "./list_admin";
 import list_property from "./list_property";
 import list_orders from "./list_orders";
+import posts from "./posts";
 
 const myReducer = combineReducers({
   categories,
@@ -21,6 +22,7 @@ const myReducer = combineReducers({
   list_admin,
   list_property,
   list_orders,
+  posts,
 });
 
 export default myReducer;

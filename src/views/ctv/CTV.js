@@ -164,7 +164,7 @@ const CTV = ({ data, getAllCtv }) => {
       <Button
         style={{ float: "right" }}
         variant="primary"
-        onClick={() => setShow(!show)}
+        onClick={() => setShow(true)}
       >
         Thêm cộng tác viên
       </Button>
@@ -174,6 +174,7 @@ const CTV = ({ data, getAllCtv }) => {
       <Modal
         size="lg"
         show={show}
+        centered
         onHide={handleClose}
         backdrop="static"
         keyboard={false}

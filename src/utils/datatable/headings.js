@@ -1,3 +1,12 @@
+// tin tức
+export const headingPost = [
+  "#",
+  "Mã bài",
+  "Tiêu đề",
+  "Nội dung",
+  "Ảnh",
+  "Tác giả",
+];
 // loại
 export const headingLoai = [
   "#",

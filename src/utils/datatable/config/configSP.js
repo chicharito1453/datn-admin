@@ -130,7 +130,7 @@ const configSP = {
       data: "description",
       render: (data, type, row, meta) => {
         if (type === "display" || type === "export")
-          return `<textarea onchange="update_sp('${row.idpro}', this.value, 5, '${data}', this)" >${data}</textarea>`;
+          return `<textarea onblur="zoomout(this)" onfocus="zoomin(this)" style="width:200px;height:50px" onchange="update_sp('${row.idpro}', this.value, 5, '${data}', this)" >${data}</textarea>`;
         return data;
       },
     },

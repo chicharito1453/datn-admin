@@ -302,6 +302,7 @@ const Products = ({ data, getAllProducts }) => {
       <Modal
         size="lg"
         show={show}
+        centered
         onHide={handleClose}
         backdrop="static"
         keyboard={false}

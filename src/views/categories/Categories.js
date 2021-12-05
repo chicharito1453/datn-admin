@@ -158,6 +158,7 @@ const Categories = ({ data, getAllCategories }) => {
       <TableLoai data={data} deleted={delete_loai} />
       <Modal
         show={show}
+        centered
         onHide={() => setShow(false)}
         backdrop="static"
         keyboard={false}

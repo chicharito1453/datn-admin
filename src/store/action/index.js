@@ -77,3 +77,10 @@ export const ALL_ORDERS = (payload) => {
     payload,
   };
 };
+// DANH SÁCH POSTS
+export const ALL_POSTS = (payload) => {
+  return {
+    type: types.ALL_POSTS,
+    payload,
+  };
+};

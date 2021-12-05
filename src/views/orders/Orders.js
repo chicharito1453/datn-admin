@@ -197,6 +197,7 @@ const Orders = ({ data, getAllOrders }) => {
       <Modal
         size="lg"
         show={show}
+        centered
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
