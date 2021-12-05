@@ -8,6 +8,7 @@ import Image from "../../../components/Image";
 const FormPost = ({ close, add }) => {
   const [temp, setTemp] = useState(null);
   const [formData, setFormData] = useState({
+    idpost: null,
     username: decodeToken(getToken()).jti,
     title: "",
     content: "",

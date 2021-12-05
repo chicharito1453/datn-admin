@@ -57,7 +57,7 @@ const configPost = {
       data: "content",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<textarea onblur="zoomout(this)" onfocus="zoomin(this)" style="width:200px;height:50px" onchange="update_post('${row.idpost}', this.value, 8, '${data}', this)">${data}</textarea>`;
+          return `<textarea onblur="zoomout(this)" onfocus="zoomin(this)" style="width:200px;height:50px" onchange="update_post('${row.idpost}', this.value, 1, '${data}', this)">${data}</textarea>`;
         }
         return data;
       },
@@ -75,7 +75,7 @@ const configPost = {
           alt=""
           style="cursor:pointer"
           className="img img-thumbnail pull-left"
-        /><input id="file_post_${row.idpost}" type="file" style="display: none" onchange="update_loai('${row.idpost}', this.files[0], 1, '${data}', this)" />`;
+        /><input id="file_post_${row.idpost}" type="file" style="display: none" onchange="update_post('${row.idpost}', this.files[0], 2, '${data}', this)" />`;
       },
     },
     {

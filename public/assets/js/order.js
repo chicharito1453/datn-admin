@@ -8,7 +8,7 @@ async function update_order(id, value, thaotac, oldValue, element) {
   }
   fetchingOn();
   const [error, resp] = await okteamAPI(
-    `/order/reform/${id}?thaotac=${thaotac}&value=${value}`,
+    `/order/reform/${id}?thaotac=${thaotac}&value=${value.trim()}`,
     "PUT"
   );
   if (error) {

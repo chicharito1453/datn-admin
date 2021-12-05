@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { ALL_POSTS } from "../../store/action/index";
 import okteamAPI from "../../utils/api/okteamAPI";
 import okteam_upload from "../../utils/api/okteam_upload";
-import { Fail, isOK } from "../../utils/sweetalert2/alert";
+import { Fail, isOK, Success, Approve } from "../../utils/sweetalert2/alert";
 import {
   fetchingOn,
   fetchingOff,
@@ -57,7 +57,64 @@ const Post = ({ data, getAllPosts }) => {
   // THÊM BÀI VIẾT
   async function them_post(formData) {
     if (!check_form(formData)) return;
-    console.log("ok");
+    fetchingOn();
+    // upload anh
+    if (formData.image) {
+      const [error, resp] = await okteam_upload(formData.image);
+      if (error) {
+        fetchingOff();
+        Fail("Không upload được ảnh!");
+        console.log(error);
+        return false;
+      }
+      formData.image = resp.data.secure_url;
+    }
+    // them
+    const [error, resp] = await okteamAPI("/post/add", "POST", formData);
+    if (error) {
+      fetchingOff();
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    const { result, message } = resp.data;
+    if (!isOK(message)) {
+      fetchingOff();
+      Fail(message);
+      return false;
+    }
+    fetchingOff();
+    Success("Tạo bài viết thành công!");
+    setShow(false);
+    getAllPosts(result);
+    return true;
+  }
+
+  // XÓA BÀI VIẾT
+  async function delete_post(post) {
+    Approve(
+      "Bạn đang thực hiện xóa bài viết này.\nTiếp tục thực hiện ?",
+      async () => {
+        fetchingOn();
+        const [error, resp] = await okteamAPI("/post/delete", "DELETE", post);
+        if (error) {
+          fetchingOff();
+          Fail("Không thực hiện được thao tác!");
+          console.log(error);
+          return false;
+        }
+        const { result, message } = resp.data;
+        if (!isOK(message)) {
+          fetchingOff();
+          Fail(message);
+          return false;
+        }
+        fetchingOff();
+        Success("Xóa bài viết thành công!");
+        getAllPosts(result);
+        return true;
+      }
+    );
   }
 
   useEffect(() => {
@@ -78,7 +135,7 @@ const Post = ({ data, getAllPosts }) => {
       </Button>
       <br />
       <br />
-      <TablePost data={data} />
+      <TablePost data={data} deleted={delete_post} />
       <Modal
         size="lg"
         show={show}
