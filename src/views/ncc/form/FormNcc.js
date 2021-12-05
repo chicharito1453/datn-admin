@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { Modal } from "react-bootstrap";
-// import { connect } from "react-redux";
-// import { SET_NCC } from "../../../store/action";
 import InputGroup from "../../../components/InputGroup";
 import Image from "../../../components/Image";
 
@@ -11,6 +9,7 @@ const FormNcc = ({ close, add }) => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
+    fullname: "",
     nccname: "",
     ncclogo: null,
     email: "",
@@ -86,6 +85,13 @@ const FormNcc = ({ close, add }) => {
                 text="Mật khẩu"
                 type="password"
                 value={formData.password}
+                changed={handleChangeNcc}
+              />
+              <InputGroup
+                id="fullname"
+                name="fullname"
+                text="Họ tên"
+                value={formData.fullname}
                 changed={handleChangeNcc}
               />
               <InputGroup
@@ -183,6 +189,7 @@ const FormNcc = ({ close, add }) => {
           onClick={() =>
             add({
               ...formData,
+              fullname: formData.fullname.trim(),
               nccname: formData.nccname.trim(),
               email: formData.email.trim(),
               sdt: formData.sdt.trim(),
@@ -201,19 +208,5 @@ const FormNcc = ({ close, add }) => {
     </>
   );
 };
-
-// const mapStatetoProps = (state) => {
-//   return {
-//     formData: state.ncc,
-//   };
-// };
-
-// const mapDispatchToProps = (dispatch, props) => {
-//   return {
-//     setFormData: (NCC = null) => {
-//       dispatch(SET_NCC(NCC));
-//     },
-//   };
-// };
 
 export default FormNcc;

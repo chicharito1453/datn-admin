@@ -51,6 +51,10 @@ const NCC = ({ data, getAllNCC }) => {
       Fail("Mật khẩu không hợp lệ!");
       return false;
     }
+    if (!formData.fullname.trim()) {
+      Fail("Chưa nhập họ tên!");
+      return false;
+    }
     if (!formData.nccname.trim()) {
       Fail("Chưa nhập tên nhà cung cấp!");
       return false;

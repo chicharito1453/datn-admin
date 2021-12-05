@@ -73,6 +73,15 @@ const configNcc = {
       },
     },
     {
+      data: "fullname",
+      render: (data, type, row, meta) => {
+        if (type === "display") {
+          return `<input onchange="update_ncc('${row.username}', this.value, 9, '${data}', this)"  value="${data}" />`;
+        }
+        return data;
+      },
+    },
+    {
       data: "nccname",
       render: (data, type, row, meta) => {
         if (type === "display") {

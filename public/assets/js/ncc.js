@@ -7,10 +7,18 @@ async function update_ncc(username, value, thaotac, oldValue, element) {
       return false;
     }
   }
+  // fullname
+  if (thaotac == 9) {
+    if (!value.trim()) {
+      Fail("Họ tên không hợp lệ!");
+      element.value = oldValue;
+      return false;
+    }
+  }
   // nccname
   if (thaotac == 1) {
     if (!value.trim()) {
-      Fail("Tên không hợp lệ!");
+      Fail("Tên nhà cung cấp hợp lệ!");
       element.value = oldValue;
       return false;
     }
