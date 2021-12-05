@@ -25,7 +25,7 @@ async function update_order(id, value, thaotac, oldValue, element) {
     return false;
   }
   fetchingOff();
-  Success("Cập nhật thông tin thành công!");
+  if (thaotac != 0) Success("Cập nhật thông tin thành công!");
   if (thaotac == 0) {
     Swal.fire({
       position: "top-end",
