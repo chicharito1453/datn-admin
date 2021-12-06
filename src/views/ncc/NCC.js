@@ -178,6 +178,7 @@ const NCC = ({ data, getAllNCC }) => {
     );
   }
 
+  // CẬP NHẬT THÀNH PHỐ
   async function update_city(formData) {
     fetchingOn();
     const [error, resp] = await okteamAPI(

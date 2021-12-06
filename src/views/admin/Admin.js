@@ -164,6 +164,7 @@ const Admin = ({ data, getAllAdmin }) => {
 
   useEffect(() => {
     document.title = "Quản trị - Admin";
+    document.querySelector(".content").style.height = "100vh";
     list_admin();
   }, [list_admin]);
 

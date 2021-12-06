@@ -1,31 +1,34 @@
 import { Tabs, Tab } from "react-bootstrap";
 import { useEffect } from "react";
-import ProfitCategories from "./tabs/ProfitCategories";
+import Users from "./tabs/Users";
 import ProfitProducts from "./tabs/ProfitProducts";
-import ProfitYears from "./tabs/ProfitYears";
+import OrdersDay from "./tabs/OrdersDay";
+import "chart.js/auto";
+import "react-chartjs-2";
 
 const Reports = () => {
   useEffect(() => {
     document.title = "Thống kê";
+    document.querySelector(".content").style.height =
+      window.innerHeight - 60 + "px";
   }, []);
 
   return (
     <div className="container">
-      <h1 className="hit-the-floor">Thống kê</h1>
       <div className="row">
         <Tabs
-          defaultActiveKey="home"
+          defaultActiveKey="orderD"
           id="uncontrolled-tab-example"
           className="mb-3"
         >
-          <Tab eventKey="home" title="Doanh thu loại hàng">
-            <ProfitCategories />
+          <Tab eventKey="orderD" title="Đơn hàng theo ngày">
+            <OrdersDay />
           </Tab>
-          <Tab eventKey="profile" title="Doanh thu sản phẩm">
-            <ProfitProducts />
+          <Tab eventKey="users" title="Người dùng">
+            <Users />
           </Tab>
           <Tab eventKey="contact" title="Doanh thu năm">
-            <ProfitYears />
+            <ProfitProducts />
           </Tab>
         </Tabs>
       </div>
