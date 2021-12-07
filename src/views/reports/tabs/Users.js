@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 import callAPI from "../../../utils/api/callAPI";
 import { Fail } from "../../../utils/sweetalert2/alert";
 import {
@@ -28,7 +29,6 @@ const Users = () => {
     }
     const { data } = resp;
     fetchingOff();
-    console.log(data);
     setCtvs(data.total_ctv);
     setNccs(data.total_ncc);
     return true;
@@ -53,13 +53,26 @@ const Users = () => {
               {
                 label: "# of votes",
                 data: [ctvs, nccs],
-                backgroundColor: ["blue", "red"],
+                backgroundColor: [
+                  "rgba(255, 99, 132, 0.8)",
+                  "rgba(54, 162, 235, 0.8)",
+                ],
+                borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
+                borderWidth: 1,
               },
             ],
           }}
           options={{
             maintainAspectRatio: false,
+            plugins: {
+              datalabels: {
+                display: true,
+                color: "black",
+                font: { size: "14" },
+              },
+            },
           }}
+          plugins={[ChartDataLabels]}
         />
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Bar } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Button } from "react-bootstrap";
 import callAPI from "../../../utils/api/callAPI";
 import { Fail } from "../../../utils/sweetalert2/alert";
@@ -88,7 +89,9 @@ const OrdersDay = () => {
       <br />
       <br />
       <br />
-      <b>Tổng số đơn hàng trong ngày: {count}</b>
+      <div align="right" className="row">
+        <b>Tổng số đơn hàng trong ngày: {count}</b>
+      </div>
       <br />
       <br />
       <div className="col">
@@ -106,20 +109,23 @@ const OrdersDay = () => {
               {
                 label: "Số đơn hàng",
                 data: formDaTa,
-                backgroundColor: [
-                  "blue",
-                  "blue",
-                  "blue",
-                  "blue",
-                  "blue",
-                  "blue",
-                ],
+                backgroundColor: ["rgba(54, 162, 235, 0.8)"],
+                borderColor: ["rgba(54, 162, 235, 1)"],
+                borderWidth: 1,
               },
             ],
           }}
           options={{
             maintainAspectRatio: false,
+            plugins: {
+              datalabels: {
+                display: true,
+                color: "black",
+                font: { size: "14" },
+              },
+            },
           }}
+          plugins={[ChartDataLabels]}
         />
       </div>
     </div>
