@@ -25,19 +25,7 @@ async function update_order(id, value, thaotac, oldValue, element) {
     return false;
   }
   fetchingOff();
-  if (thaotac != 0) Success("Cập nhật thông tin thành công!");
-  if (thaotac == 0) {
-    Swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "Cập nhật thành công",
-      showConfirmButton: false,
-      timer: 1000,
-    });
-    setTimeout(() => {
-      window.location.reload();
-    }, 1000);
-  }
+  Success("Cập nhật thông tin thành công!");
   if (thaotac != 0) {
     element.outerHTML = `<input onchange="update_order('${id}', this.value, ${thaotac}, '${value.trim()}', this)" value="${value.trim()}">`;
   }
