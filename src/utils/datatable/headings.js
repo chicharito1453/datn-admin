@@ -7,6 +7,16 @@ export const headingPost = [
   "Ảnh",
   "Tác giả",
 ];
+// nạp rút tiền
+export const headingTran = [
+  "Mã gd",
+  "Tài khoản",
+  "Kiểu",
+  "Xác nhận",
+  "Số tiền",
+  "paypal",
+  "Ngày tạo",
+];
 // loại
 export const headingLoai = [
   "#",
@@ -86,6 +96,7 @@ export const headingAdmin = [
 ];
 // thuộc tính
 export const headingTT = ["STT", "Thuộc tính", "Giá trị", "#"];
+// đơn hàng
 export const headingDH = [
   "#",
   "Chi tiết",
