@@ -127,15 +127,33 @@ const configDH = {
       },
     },
     {
+      data: "tinh",
+      render: (data, type, row, meta) => {
+        if (type === "display" || type === "export") {
+          var tinh = data.split("-");
+          return `<div style="width: 200px;">${tinh[1]}</div>`;
+        }
+        return data;
+      },
+    },
+    {
       data: "huyen",
       render: (data, type, row, meta) => {
-        return `<input onchange="update_order('${row.idorder}', this.value, 3, '${data}', this)" value="${data}"   />`;
+        if (type === "display" || type === "export") {
+          var huyen = data.split("-");
+          return `<div style="width: 200px;">${huyen[1]}</div>`;
+        }
+        return data;
       },
     },
     {
       data: "xa",
       render: (data, type, row, meta) => {
-        return `<input onchange="update_order('${row.idorder}', this.value, 4, '${data}', this)" value="${data}"   />`;
+        if (type === "display" || type === "export") {
+          var xa = data.split("-");
+          return `<div style="width: 200px;">${xa[1]}</div>`;
+        }
+        return data;
       },
     },
     {

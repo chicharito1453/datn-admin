@@ -97,6 +97,7 @@ export const headingDH = [
   "Giá bán",
   "Cộng tác viên",
   "Nhà cung cấp",
+  "Tỉnh",
   "Huyện",
   "Xã",
   "Địa chỉ",

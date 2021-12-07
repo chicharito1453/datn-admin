@@ -17,8 +17,9 @@ const initialState = {
   total: 0,
   payment: 0,
   status: "0",
-  huyen: "",
-  xa: "",
+  tinh: { value: "", label: "--Chọn tỉnh/TP--" },
+  huyen: { value: "", label: "--Chọn huyện--" },
+  xa: { value: "", label: "--Chọn xã--" },
   address: "",
   customer: "",
   sdtcustomer: "",
@@ -71,11 +72,11 @@ const Orders = ({ data, getAllOrders }) => {
       return false;
     }
     if (!formData.huyen) {
-      Fail("Chưa nhập thông tin huyện!");
+      Fail("Chưa chọn  huyện!");
       return false;
     }
     if (!formData.xa) {
-      Fail("Chưa nhập thông tin xã!");
+      Fail("Chưa chọn xã!");
       return false;
     }
     if (!formData.address) {
@@ -154,6 +155,9 @@ const Orders = ({ data, getAllOrders }) => {
   // SET DATA LÊN FORM
   function mapRowtoForm(order) {
     if (!order) return;
+    const tinh = order.tinh.split("-");
+    const huyen = order.huyen.split("-");
+    const xa = order.xa.split("-");
     setIsUpdate(true);
     var details = order.details.map((de) => ({
       sp: de.products.idpro,
@@ -166,6 +170,9 @@ const Orders = ({ data, getAllOrders }) => {
     setInitValue({
       ...order,
       details,
+      tinh: { value: tinh[0], label: tinh[1] },
+      huyen: { value: huyen[0], label: huyen[1] },
+      xa: { value: xa[0], label: xa[1] },
       status: order.status.toString(),
       order_code: order.order_code || "",
     });

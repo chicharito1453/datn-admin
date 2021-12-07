@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Modal, Button } from "react-bootstrap";
 import okteamAPI from "../../../utils/api/okteamAPI";
+import callAPI from "../../../utils/api/callAPI";
 import { Fail, isOK } from "../../../utils/sweetalert2/alert";
 import {
   fetchingOn,
@@ -11,6 +12,9 @@ import InputGroup from "../../../components/InputGroup";
 const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
   const [ctvs, setCtvs] = useState(null);
   const [products, setProducts] = useState(null);
+  const [huyens, setHuyens] = useState(null);
+  const [cities, setCities] = useState(null);
+  const [xas, setXas] = useState(null);
   const [ncc, setNcc] = useState("");
   const [pro, setPro] = useState({ value: "", label: "Tất cả" });
   const [formData, setFormData] = useState(initValue);
@@ -43,6 +47,33 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
           nccname: !e.ncc ? "Chưa chọn sản phẩm" : e.ncc.nccname,
         },
       });
+    }
+    if (thaotac === "2") {
+      setFormData({
+        ...formData,
+        huyen: {
+          value: e.value,
+          label: e.label,
+        },
+        xa: { value: "", label: "--Chọn xã--" },
+      });
+      onChangeHuyen(e.value);
+    }
+    if (thaotac === "3") {
+      setFormData({ ...formData, xa: { value: e.value, label: e.label } });
+    }
+    if (thaotac === "4") {
+      setFormData({
+        ...formData,
+        tinh: {
+          value: e.value,
+          label: e.label,
+        },
+        huyen: { value: "", label: "--Chọn huyện--" },
+        xa: { value: "", label: "--Chọn xã--" },
+      });
+      setXas([{ value: "", label: "--Chọn xã--" }]);
+      onChangeTinh(e.value);
     }
   }
 
@@ -130,9 +161,12 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
     }));
     return {
       ...formData,
-      huyen: formData.huyen.trim(),
-      xa: formData.xa.trim(),
-      address: formData.address.trim(),
+      tinh: formData.tinh.value + "-" + formData.tinh.label,
+      huyen: formData.huyen.value + "-" + formData.huyen.label,
+      xa: formData.xa.value + "-" + formData.xa.label,
+      address: `${formData.address.trim()}, ${formData.xa.label}, ${
+        formData.huyen.label
+      }`,
       customer: formData.customer.trim(),
       sdtcustomer: formData.sdtcustomer.trim(),
       order_code: formData.order_code.trim(),
@@ -144,44 +178,41 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
   }
 
   // select sp
-  const onChangeCtv = useCallback(
-    async (select) => {
-      var username = formData.ctv.username;
-      fetchingOn();
-      const [error, resp] = await okteamAPI(
-        `/regi_products/list${username && `?username=${username}`}`
-      );
-      if (error) {
-        fetchingOff();
-        Fail("Không thực hiện được thao tác!");
-        console.log(error);
-        return false;
-      }
-      const { result, message } = resp.data;
-      if (!isOK(message)) {
-        fetchingOff();
-        Fail(message);
-        return false;
-      }
+  const onChangeCtv = useCallback(async () => {
+    const username = formData.ctv.username;
+    fetchingOn();
+    const [error, resp] = await okteamAPI(
+      `/regi_products/list${username && `?username=${username}`}`
+    );
+    if (error) {
       fetchingOff();
-      setProducts([
-        { value: "", label: "Tất cả" },
-        ...result.map((rs) => ({
-          value: rs.products.idpro,
-          label: rs.products.name,
-          pricectv: rs.products.pricectv,
-          image0: rs.products.image0,
-          ncc: {
-            nccname: rs.products.ncc.nccname,
-            username: rs.products.ncc.username,
-          },
-          payment: rs.price,
-        })),
-      ]);
-      return true;
-    },
-    [formData.ctv.username]
-  );
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    const { result, message } = resp.data;
+    if (!isOK(message)) {
+      fetchingOff();
+      Fail(message);
+      return false;
+    }
+    fetchingOff();
+    setProducts([
+      { value: "", label: "Tất cả" },
+      ...result.map((rs) => ({
+        value: rs.products.idpro,
+        label: rs.products.name,
+        pricectv: rs.products.pricectv,
+        image0: rs.products.image0,
+        ncc: {
+          nccname: rs.products.ncc.nccname,
+          username: rs.products.ncc.username,
+        },
+        payment: rs.price,
+      })),
+    ]);
+    return true;
+  }, [formData.ctv.username]);
 
   // select ctv
   const select_ctv = useCallback(async () => {
@@ -208,9 +239,90 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
     return true;
   }, [onChangeCtv]);
 
+  // select xa
+  const onChangeHuyen = useCallback(async (district_id) => {
+    if (!district_id) {
+      setXas([{ value: "", label: "--Chọn xã--" }]);
+      return;
+    }
+    fetchingOn();
+    const [error, resp] = await callAPI(
+      process.env.REACT_APP_URL_XA + district_id
+    );
+    if (error) {
+      fetchingOff();
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    const { data } = resp.data;
+    fetchingOff();
+    if (!data) {
+      setXas([{ value: "", label: "--Chọn xã--" }]);
+      return;
+    }
+    setXas([
+      { value: "", label: "--Chọn xã--" },
+      ...data.map((x) => ({ value: x.WardCode, label: x.WardName })),
+    ]);
+    return true;
+  }, []);
+
+  // select huyen
+  const onChangeTinh = useCallback(
+    async (province_id) => {
+      if (!province_id) {
+        setHuyens([{ value: "", label: "--Chọn huyện--" }]);
+        setXas([{ value: "", label: "--Chọn xã--" }]);
+        return;
+      }
+      fetchingOn();
+      const [error, resp] = await callAPI(
+        process.env.REACT_APP_URL_HUYEN + province_id
+      );
+      if (error) {
+        fetchingOff();
+        Fail("Không thực hiện được thao tác!");
+        console.log(error);
+        return false;
+      }
+      fetchingOff();
+      const { data } = resp.data;
+      setHuyens([
+        { value: "", label: "--Chọn huyện--" },
+        ...data.map((h) => ({ value: h.DistrictID, label: h.DistrictName })),
+      ]);
+      onChangeHuyen();
+      return true;
+    },
+    [onChangeHuyen]
+  );
+
+  // select tỉnh
+  const select_tinh = useCallback(async () => {
+    fetchingOn();
+    const [error, resp] = await callAPI(process.env.REACT_APP_URL_TINH);
+    if (error) {
+      fetchingOff();
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    fetchingOff();
+    setCities([
+      { value: "", label: "--Chọn tỉnh/TP--" },
+      ...resp.data.data.map((rs) => ({
+        value: rs.ProvinceID,
+        label: rs.ProvinceName,
+      })),
+    ]);
+    onChangeTinh();
+  }, [onChangeTinh]);
+
   useEffect(() => {
     select_ctv();
-  }, [select_ctv]);
+    select_tinh();
+  }, [select_ctv, select_tinh]);
 
   return (
     <>
@@ -233,20 +345,37 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
                 value={formData.sdtcustomer}
                 changed={handleChangeOrder}
               />
-              <InputGroup
-                id="huyen"
-                name="huyen"
-                text="Huyện"
-                value={formData.huyen}
-                changed={handleChangeOrder}
-              />
-              <InputGroup
-                id="xa"
-                name="xa"
-                text="Xã"
-                value={formData.xa}
-                changed={handleChangeOrder}
-              />
+            </>
+          )}
+          <InputGroup
+            id="city"
+            type="select"
+            name="city"
+            text="Tỉnh/TP"
+            options={cities}
+            value={formData.tinh}
+            changed={(e) => handleSelect(e, "4")}
+          />
+          <InputGroup
+            id="huyen"
+            type="select"
+            name="huyen"
+            text="Huyện"
+            options={huyens}
+            value={formData.huyen}
+            changed={(e) => handleSelect(e, "2")}
+          />
+          <InputGroup
+            id="xa"
+            type="select"
+            name="xa"
+            text="Xã"
+            options={xas}
+            value={formData.xa}
+            changed={(e) => handleSelect(e, "3")}
+          />
+          {!isUpdate && (
+            <>
               <InputGroup
                 id="address"
                 name="address"
