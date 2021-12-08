@@ -36,7 +36,7 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
         payment: 0,
       });
       setPro({ value: "", label: "Tất cả" });
-      onChangeCtv(e);
+      onChangeCtv();
     }
     if (thaotac === "1") {
       setPro(e);
@@ -57,7 +57,7 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
         },
         xa: { value: "", label: "--Chọn xã--" },
       });
-      onChangeHuyen(e.value);
+      onChangeHuyen();
     }
     if (thaotac === "3") {
       setFormData({ ...formData, xa: { value: e.value, label: e.label } });
@@ -73,7 +73,7 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
         xa: { value: "", label: "--Chọn xã--" },
       });
       setXas([{ value: "", label: "--Chọn xã--" }]);
-      onChangeTinh(e.value);
+      onChangeTinh();
     }
   }
 
@@ -164,9 +164,6 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
       tinh: formData.tinh.value + "-" + formData.tinh.label,
       huyen: formData.huyen.value + "-" + formData.huyen.label,
       xa: formData.xa.value + "-" + formData.xa.label,
-      address: `${formData.address.trim()}, ${formData.xa.label}, ${
-        formData.huyen.label
-      }`,
       customer: formData.customer.trim(),
       sdtcustomer: formData.sdtcustomer.trim(),
       order_code: formData.order_code.trim(),
@@ -240,7 +237,8 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
   }, [onChangeCtv]);
 
   // select xa
-  const onChangeHuyen = useCallback(async (district_id) => {
+  const onChangeHuyen = useCallback(async () => {
+    const district_id = formData.huyen.value;
     if (!district_id) {
       setXas([{ value: "", label: "--Chọn xã--" }]);
       return;
@@ -266,37 +264,35 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
       ...data.map((x) => ({ value: x.WardCode, label: x.WardName })),
     ]);
     return true;
-  }, []);
+  }, [formData.huyen.value]);
 
   // select huyen
-  const onChangeTinh = useCallback(
-    async (province_id) => {
-      if (!province_id) {
-        setHuyens([{ value: "", label: "--Chọn huyện--" }]);
-        setXas([{ value: "", label: "--Chọn xã--" }]);
-        return;
-      }
-      fetchingOn();
-      const [error, resp] = await callAPI(
-        process.env.REACT_APP_URL_HUYEN + province_id
-      );
-      if (error) {
-        fetchingOff();
-        Fail("Không thực hiện được thao tác!");
-        console.log(error);
-        return false;
-      }
+  const onChangeTinh = useCallback(async () => {
+    const province_id = formData.tinh.value;
+    if (!province_id) {
+      setHuyens([{ value: "", label: "--Chọn huyện--" }]);
+      setXas([{ value: "", label: "--Chọn xã--" }]);
+      return;
+    }
+    fetchingOn();
+    const [error, resp] = await callAPI(
+      process.env.REACT_APP_URL_HUYEN + province_id
+    );
+    if (error) {
       fetchingOff();
-      const { data } = resp.data;
-      setHuyens([
-        { value: "", label: "--Chọn huyện--" },
-        ...data.map((h) => ({ value: h.DistrictID, label: h.DistrictName })),
-      ]);
-      onChangeHuyen();
-      return true;
-    },
-    [onChangeHuyen]
-  );
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    fetchingOff();
+    const { data } = resp.data;
+    setHuyens([
+      { value: "", label: "--Chọn huyện--" },
+      ...data.map((h) => ({ value: h.DistrictID, label: h.DistrictName })),
+    ]);
+    onChangeHuyen();
+    return true;
+  }, [onChangeHuyen, formData.tinh.value]);
 
   // select tỉnh
   const select_tinh = useCallback(async () => {

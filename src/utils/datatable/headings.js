@@ -11,7 +11,7 @@ export const headingPost = [
 export const headingTran = [
   "Mã gd",
   "Tài khoản",
-  "Kiểu",
+  "Loại",
   "Xác nhận",
   "Số tiền",
   "paypal",

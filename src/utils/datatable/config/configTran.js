@@ -58,7 +58,7 @@ const configPost = {
       render: (data, type, row, meta) => {
         if (type === "display") {
           return `<div style="width: 120px;">${
-            data == 0 ? "Nạp tiền" : "Rút tiền"
+            data === 0 ? "Nạp tiền" : "Rút tiền"
           }</div>`;
         }
         return data;
@@ -69,10 +69,10 @@ const configPost = {
       render: (data, type, row, meta) => {
         if (type === "display") {
           if (data === 0) {
-            return `<div align='center'><input type="checkbox" onchange="update_duyet('${row.idtran}', this.checked, this)" style="width:15px;height:15px;"/>
+            return `<div align='center'><input type="checkbox" onchange="update_duyet('${row.idtran}', this.checked, this)" style="width:15px;height:15px;"/>duyệt
             <br /><input style="border: 1px solid;" placeholder="Nhập lý do hủy" onchange="update_lydo('${row.idtran}', this.value, this)" /></div>`;
           } else if (data === 1) {
-            return `<i class="fas fa-check"></i><br /><b style="color: 'red';">Đã xác nhận</b>`;
+            return `<i class="fas fa-check"></i><br /><b style="color: red;">Đã xác nhận</b>`;
           } else {
             return `<p><b>Lý do hủy:</b> ${row.note}</p>`;
           }

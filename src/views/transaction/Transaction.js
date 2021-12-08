@@ -3,7 +3,7 @@ import okteamAPI from "../../utils/api/okteamAPI";
 import Datatable from "../../utils/datatable/Datatable";
 import { headingTran } from "../../utils/datatable/headings";
 import configTran from "../../utils/datatable/config/configTran";
-import { Fail, isOK } from "../../utils/sweetalert2/alert";
+import { Fail } from "../../utils/sweetalert2/alert";
 import {
   fetchingOn,
   fetchingOff,
@@ -33,7 +33,7 @@ const Transaction = () => {
     document.title = "Quản trị - Nạp rút tiền";
     document.querySelector(".content").style.height = "100vh";
     list_transaction();
-  }, []);
+  }, [list_transaction]);
 
   return (
     <div className="container">

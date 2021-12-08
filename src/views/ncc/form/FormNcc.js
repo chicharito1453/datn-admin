@@ -49,7 +49,7 @@ const FormNcc = ({ close, add, initValue, isUpdate, update }) => {
     }
     fetchingOff();
     setCities([
-      { value: "Tất cả", label: "Tất cả" },
+      { value: "--Chọn tỉnh/TP--", label: "--Chọn tỉnh/TP--" },
       ...resp.data.data.map((rs) => ({
         value: rs.ProvinceName,
         label: rs.ProvinceName,

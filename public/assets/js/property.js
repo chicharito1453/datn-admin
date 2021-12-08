@@ -20,4 +20,5 @@ async function update_tt(id, value, thaotac, element) {
   }
   fetchingOff();
   Success("Cập nhật thông tin thành công!");
+  return true;
 }

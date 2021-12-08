@@ -21,7 +21,7 @@ const initialState = {
   ncclogo: null,
   email: "",
   sdt: "",
-  city: "Tất cả",
+  city: "--Chọn tỉnh/TP--",
   address: "",
   active: false,
   description: "",
@@ -85,7 +85,7 @@ const NCC = ({ data, getAllNCC }) => {
       Fail("Số điện thoại không hợp lệ!");
       return false;
     }
-    if (formData.city === "Tất cả") {
+    if (formData.city === "--Chọn tỉnh/TP--") {
       Fail("Chưa chọn tỉnh/TP");
       return false;
     }

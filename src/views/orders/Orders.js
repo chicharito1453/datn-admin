@@ -71,11 +71,15 @@ const Orders = ({ data, getAllOrders }) => {
       Fail("Số điện thoại khách hàng không hợp lệ!");
       return false;
     }
-    if (!formData.huyen) {
-      Fail("Chưa chọn  huyện!");
+    if (formData.tinh === "---Chọn tỉnh/TP--") {
+      Fail("Chưa chọn tỉnh!");
       return false;
     }
-    if (!formData.xa) {
+    if (formData.huyen === "---Chọn huyện--") {
+      Fail("Chưa chọn huyện!");
+      return false;
+    }
+    if (formData.xa === "---Chọn xã--") {
       Fail("Chưa chọn xã!");
       return false;
     }
@@ -97,6 +101,10 @@ const Orders = ({ data, getAllOrders }) => {
   // TẠO ĐON HÀNG
   async function saveAll(formData, endpoint, method) {
     if (!check_form(formData)) return;
+    // gan tinh, huyenm xa vao dia chi
+    formData.address = `${formData.address.trim()}- ${formData.xa.label}- ${
+      formData.huyen.label
+    }-${formData.tinh.label}`;
     fetchingOn();
     const [error, resp] = await okteamAPI(endpoint, method, formData);
     if (error) {

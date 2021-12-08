@@ -39,7 +39,7 @@ async function update_post(idpost, value, thaotac, oldValue, element) {
     console.log(error);
     return false;
   }
-  const { result, message } = resp.data;
+  const { message } = resp.data;
   if (!isOK(message)) {
     fetchingOff();
     Fail(message);
