@@ -114,16 +114,16 @@ const configDH = {
       data: "ctv",
       render: (data, type, row, meta) => {
         if (type === "display" || type === "export")
-          return `<div style="width: 200px;">${data.fullname}</div>`;
-        return data.fullname;
+          return `<div style="width: 200px;">${data.username}</div>`;
+        return data.username;
       },
     },
     {
       data: "ncc",
       render: (data, type, row, meta) => {
         if (type === "display" || type === "export")
-          return `<div style="width: 200px;">${data.nccname}</div>`;
-        return data.nccname;
+          return `<div style="width: 200px;">${data.username}</div>`;
+        return data.username;
       },
     },
     {

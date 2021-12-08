@@ -10,7 +10,7 @@ async function update_sp(idpro, value, thaotac, oldValue, element) {
   }
   // pricectv
   if (thaotac == 1) {
-    if (!value.trim()) {
+    if (!value || +value < 0) {
       Fail("Giá không hợp lệ!");
       element.value = oldValue;
       return false;
@@ -18,7 +18,7 @@ async function update_sp(idpro, value, thaotac, oldValue, element) {
   }
   // qty
   if (thaotac == 2) {
-    if (!value.trim()) {
+    if (!value || +value < 0) {
       Fail("Số lượng không hợp lệ!");
       element.value = oldValue;
       return false;

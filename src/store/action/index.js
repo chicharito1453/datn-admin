@@ -84,3 +84,10 @@ export const ALL_POSTS = (payload) => {
     payload,
   };
 };
+// DANH SÁCH REGIP
+export const ALL_REGIP = (payload) => {
+  return {
+    type: types.ALL_REGIP,
+    payload,
+  };
+};

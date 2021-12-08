@@ -19,6 +19,7 @@ const menuLink = [
     name: "Thuộc tính sp",
     classIcon: "fas fa-book-medical",
   },
+  { to: "/admin/regipro", name: "Đăng ký sp", classIcon: "far fa-copyright" },
   { to: "/admin/order", name: "Đơn hàng", classIcon: "fas fa-box-open" },
   { to: "/admin/report", name: "Thống kê", classIcon: "fas fa-desktop" },
   { to: "", name: "", classIcon: "" },

@@ -12,6 +12,7 @@ import Admin from "../views/admin/Admin";
 import Properties from "../views/properties/Properties";
 import Post from "../views/post/Post";
 import Transaction from "../views/transaction/Transaction";
+import RegiProducts from "../views/regiProducts/RegiProducts";
 
 const routes = [
   {
@@ -63,6 +64,11 @@ const routes = [
     path: "/admin/property",
     exact: true,
     main: <Properties />,
+  },
+  {
+    path: "/admin/regipro",
+    exact: true,
+    main: <RegiProducts />,
   },
   {
     path: "/admin/order",

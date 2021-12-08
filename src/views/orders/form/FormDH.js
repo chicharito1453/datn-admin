@@ -44,7 +44,7 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
         ...formData,
         ncc: {
           username: !e.ncc ? "" : e.ncc.username,
-          nccname: !e.ncc ? "Chưa chọn sản phẩm" : e.ncc.nccname,
+          nccname: !e.ncc ? "Chưa chọn sản phẩm" : e.ncc.username,
         },
       });
     }
@@ -169,7 +169,7 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
       order_code: formData.order_code.trim(),
       ctv: formData.ctv.username,
       ncc: formData.ncc.username,
-      status: Number(formData.status),
+      status: +formData.status,
       details,
     };
   }
@@ -230,7 +230,7 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
     fetchingOff();
     setCtvs([
       { value: "", label: "Tất cả" },
-      ...result.map((rs) => ({ value: rs.username, label: rs.fullname })),
+      ...result.map((rs) => ({ value: rs.username, label: rs.username })),
     ]);
     onChangeCtv();
     return true;
@@ -476,7 +476,6 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
                 type="select"
                 name="ctv"
                 text="Cộng tác viên"
-                placeholder="Tên nhãn"
                 options={ctvs}
                 value={{
                   value: formData.ctv.username,
@@ -491,7 +490,6 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
                 type="select"
                 name="details"
                 text="Sản phẩm"
-                placeholder="Tên sp"
                 options={products}
                 value={{ value: pro.value, label: pro.label }}
                 changed={(e) => handleSelect(e, "1")}

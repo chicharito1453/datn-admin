@@ -15,8 +15,8 @@ import TableSP from "./table/TableSP";
 const initialState = {
   idpro: "",
   name: "",
-  pricectv: "",
-  qty: "",
+  pricectv: 0,
+  qty: 0,
   origin: "",
   dvt: "",
   tags: "",
@@ -76,12 +76,12 @@ const Products = ({ data, getAllProducts }) => {
       return false;
     }
     // pricectv
-    if (!formData.pricectv) {
+    if (!formData.pricectv || +formData.pricectv < 0) {
       Fail("Giá sản phẩm không hợp lệ!");
       return false;
     }
     //qty
-    if (!formData.qty) {
+    if (!formData.qty || +formData.qty < 0) {
       Fail("Số lượng sản phẩm không hợp lệ!");
       return false;
     }
@@ -148,8 +148,8 @@ const Products = ({ data, getAllProducts }) => {
 
     formData = {
       ...formData,
-      pricectv: Number(formData.pricectv),
-      qty: Number(formData.qty),
+      pricectv: +formData.pricectv,
+      qty: +formData.qty,
     };
     fetchingOn();
     // upload image 0

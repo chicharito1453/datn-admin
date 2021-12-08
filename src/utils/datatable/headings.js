@@ -61,6 +61,20 @@ export const headingCtv = [
   "Địa chỉ",
   "Ngày tạo",
 ];
+// admin
+export const headingAdmin = [
+  "#",
+  "Tài khoản",
+  "Trạng thái",
+  "Mật khẩu mới",
+  "Tên",
+  "Avatar",
+  "Giới tính",
+  "Email",
+  "SĐT",
+  "Địa chỉ",
+  "Ngày tạo",
+];
 // sản phẩm
 export const headingSP = [
   "#",
@@ -80,22 +94,17 @@ export const headingSP = [
   "Ảnh 4",
   "Ngày tạo",
 ];
-// admin
-export const headingAdmin = [
-  "#",
-  "Tài khoản",
-  "Trạng thái",
-  "Mật khẩu mới",
-  "Tên",
-  "Avatar",
-  "Giới tính",
-  "Email",
-  "SĐT",
-  "Địa chỉ",
-  "Ngày tạo",
-];
 // thuộc tính
 export const headingTT = ["STT", "Thuộc tính", "Giá trị", "#"];
+// sp đăng ký
+export const headingRegiP = [
+  "#",
+  "Mã đăng ký",
+  "Cộng tác viên",
+  "Giá",
+  "Sản phẩm",
+  "Nhà cung cấp",
+];
 // đơn hàng
 export const headingDH = [
   "#",
