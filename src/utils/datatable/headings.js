@@ -17,7 +17,7 @@ export const headingTran = [
   "paypal",
   "Ngày tạo",
 ];
-// loại
+// loại sp
 export const headingLoai = [
   "#",
   "Mã loại",
@@ -27,7 +27,7 @@ export const headingLoai = [
   "Menu cha",
 ];
 // nhãn
-export const headingNhan = ["STT", "Tên nhãn", ""];
+export const headingNhan = ["STT", "Tên nhãn", "#"];
 // nhà cung cấp
 export const headingNcc = [
   "#",

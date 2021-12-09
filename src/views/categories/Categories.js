@@ -23,14 +23,11 @@ const Categories = ({ data, getAllCategories }) => {
       fetchingOff();
       Fail("Không thực hiện được thao tác!");
       console.log(error);
+      getAllCategories([]);
+      document.querySelector(".content").style.height = "auto";
       return false;
     }
-    const { result, message } = resp.data;
-    if (!isOK(message)) {
-      fetchingOff();
-      Fail(message);
-      return false;
-    }
+    const { result } = resp.data;
     fetchingOff();
     getAllCategories(result);
     document.querySelector(".content").style.height = "auto";
@@ -138,8 +135,9 @@ const Categories = ({ data, getAllCategories }) => {
   }
 
   useEffect(() => {
-    document.title = "Quản trị - Loại hàng";
-    document.querySelector(".content").style.height = "100vh";
+    document.title = "Quản trị - Loại sản phẩm";
+    document.querySelector(".content").style.height =
+      window.innerHeight - 60 + "px";
     list_loai();
   }, [list_loai]);
 
@@ -151,7 +149,7 @@ const Categories = ({ data, getAllCategories }) => {
         variant="primary"
         onClick={() => setShow(true)}
       >
-        Thêm loại hàng
+        Thêm loại sản phẩm
       </Button>
       <br />
       <br />
@@ -164,7 +162,7 @@ const Categories = ({ data, getAllCategories }) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Thêm loại hàng</Modal.Title>
+          <Modal.Title>Thêm loại sản phẩm</Modal.Title>
         </Modal.Header>
         <FormLoai add={them_loai} close={() => setShow(false)} />
       </Modal>

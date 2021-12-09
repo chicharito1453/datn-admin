@@ -49,14 +49,11 @@ const Products = ({ data, getAllProducts }) => {
       fetchingOff();
       Fail("Không thực hiện được thao tác!");
       console.log(error);
+      getAllProducts([]);
+      document.querySelector(".content").style.height = "auto";
       return false;
     }
-    const { result, message } = resp.data;
-    if (!isOK(message)) {
-      fetchingOff();
-      Fail(message);
-      return false;
-    }
+    const { result } = resp.data;
     fetchingOff();
     getAllProducts(result);
     document.querySelector(".content").style.height = "auto";
@@ -279,7 +276,8 @@ const Products = ({ data, getAllProducts }) => {
 
   useEffect(() => {
     document.title = "Quản trị - Sản phẩm";
-    document.querySelector(".content").style.height = "100vh";
+    document.querySelector(".content").style.height =
+      window.innerHeight - 60 + "px";
     list_products();
   }, [list_products]);
 

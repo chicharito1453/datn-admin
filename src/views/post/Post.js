@@ -27,14 +27,11 @@ const Post = ({ data, getAllPosts }) => {
       fetchingOff();
       Fail("Không thực hiện được thao tác!");
       console.log(error);
+      getAllPosts([]);
+      document.querySelector(".content").style.height = "auto";
       return false;
     }
-    const { result, message } = resp.data;
-    if (!isOK(message)) {
-      fetchingOff();
-      Fail(message);
-      return false;
-    }
+    const { result } = resp.data;
     fetchingOff();
     getAllPosts(result);
     document.querySelector(".content").style.height = "auto";
@@ -119,7 +116,8 @@ const Post = ({ data, getAllPosts }) => {
 
   useEffect(() => {
     document.title = "Quản trị - Tin tức";
-    document.querySelector(".content").style.height = "100vh";
+    document.querySelector(".content").style.height =
+      window.innerHeight - 60 + "px";
     list_posts();
   }, [list_posts]);
 

@@ -62,10 +62,11 @@ const RegiProducts = ({ data, getALLRegiP }) => {
       fetchingOff();
       Fail("Không thực hiện được thao tác!");
       console.log(error);
+      getALLRegiP([]);
+      document.querySelector(".content").style.height = "auto";
       return false;
     }
     const { result } = resp.data;
-
     fetchingOff();
     setCtvs([
       { value: "", label: "Tất cả" },
@@ -73,7 +74,7 @@ const RegiProducts = ({ data, getALLRegiP }) => {
     ]);
     onChangeCtv();
     return true;
-  }, [onChangeCtv]);
+  }, [getALLRegiP, onChangeCtv]);
 
   // check form
   function check_from(formData) {

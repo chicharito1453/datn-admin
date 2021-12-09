@@ -31,14 +31,11 @@ const Admin = ({ data, getAllAdmin }) => {
       fetchingOff();
       Fail("Không thực hiện được thao tác!");
       console.log(error);
+      getAllAdmin([]);
+      document.querySelector(".content").style.height = "auto";
       return false;
     }
-    const { result, message } = resp.data;
-    if (!isOK(message)) {
-      fetchingOff();
-      Fail(message);
-      return false;
-    }
+    const { result } = resp.data;
     fetchingOff();
     getAllAdmin(result);
     document.querySelector(".content").style.height = "auto";
@@ -164,7 +161,8 @@ const Admin = ({ data, getAllAdmin }) => {
 
   useEffect(() => {
     document.title = "Quản trị - Admin";
-    document.querySelector(".content").style.height = "100vh";
+    document.querySelector(".content").style.height =
+      window.innerHeight - 60 + "px";
     list_admin();
   }, [list_admin]);
 

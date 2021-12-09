@@ -20,6 +20,8 @@ const Transaction = () => {
       fetchingOff();
       Fail("Không thực hiện được thao tác!");
       console.log(error);
+      setData([]);
+      document.querySelector(".content").style.height = "auto";
       return false;
     }
     const { result } = resp.data;
@@ -31,7 +33,8 @@ const Transaction = () => {
 
   useEffect(() => {
     document.title = "Quản trị - Nạp rút tiền";
-    document.querySelector(".content").style.height = "100vh";
+    document.querySelector(".content").style.height =
+      window.innerHeight - 60 + "px";
     list_transaction();
   }, [list_transaction]);
 

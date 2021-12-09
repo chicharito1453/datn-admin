@@ -47,14 +47,11 @@ const Orders = ({ data, getAllOrders }) => {
       fetchingOff();
       Fail("Không thực hiện được thao tác!");
       console.log(error);
+      getAllOrders([]);
+      document.querySelector(".content").style.height = "auto";
       return false;
     }
-    const { result, message } = resp.data;
-    if (!isOK(message)) {
-      fetchingOff();
-      Fail(message);
-      return false;
-    }
+    const { result } = resp.data;
     fetchingOff();
     getAllOrders(result);
     document.querySelector(".content").style.height = "auto";
@@ -189,7 +186,8 @@ const Orders = ({ data, getAllOrders }) => {
 
   useEffect(() => {
     document.title = "Quản trị - Đơn hàng";
-    document.querySelector(".content").style.height = "100vh";
+    document.querySelector(".content").style.height =
+      window.innerHeight - 60 + "px";
     list_orders();
   }, [list_orders]);
 

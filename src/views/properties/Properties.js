@@ -27,12 +27,7 @@ const Properties = ({ data, getAllProperty }) => {
       console.log(error);
       return false;
     }
-    const { result, message } = resp.data;
-    if (!isOK(message)) {
-      fetchingOff();
-      Fail(message);
-      return false;
-    }
+    const { result } = resp.data;
     fetchingOff();
     setMaSP(idpro);
     getAllProperty(result);
@@ -48,14 +43,11 @@ const Properties = ({ data, getAllProperty }) => {
       fetchingOff();
       Fail("Không thực hiện được thao tác!");
       console.log(error);
+      getAllProperty([]);
+      document.querySelector(".content").style.height = "auto";
       return false;
     }
-    const { result, message } = resp.data;
-    if (!isOK(message)) {
-      fetchingOff();
-      Fail(message);
-      return false;
-    }
+    const { result } = resp.data;
     fetchingOff();
     const newResults = result.map((sp) => ({
       value: sp.idpro,
@@ -137,7 +129,8 @@ const Properties = ({ data, getAllProperty }) => {
 
   useEffect(() => {
     document.title = "Quản trị - Thuộc tính sản phẩm";
-    document.querySelector(".content").style.height = "100vh";
+    document.querySelector(".content").style.height =
+      window.innerHeight - 60 + "px";
   }, []);
 
   return (
