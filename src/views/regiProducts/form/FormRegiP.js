@@ -37,7 +37,6 @@ const FormRegiP = ({ close, initValue, ctvs, add }) => {
       return false;
     }
     const { result } = resp.data;
-
     fetchingOff();
     setProducts([
       { value: "", label: "Tất cả" },

@@ -28,7 +28,14 @@ const Brand = ({ data, getAllBrands }) => {
         console.log(error);
         return false;
       }
-      const { result } = resp.data;
+      const { result, message } = resp.data;
+      if (!isOK(message)) {
+        fetchingOff();
+        Fail(message);
+        getAllBrands([]);
+        document.querySelector(".content").style.height = "auto";
+        return false;
+      }
       fetchingOff();
       setMaLoai(idcate);
       getAllBrands(result);

@@ -13,6 +13,7 @@ import Properties from "../views/properties/Properties";
 import Post from "../views/post/Post";
 import Transaction from "../views/transaction/Transaction";
 import RegiProducts from "../views/regiProducts/RegiProducts";
+import Comments from "../views/comments/Comments";
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: "/admin/post",
     exact: true,
     main: <Post />,
+  },
+  {
+    path: "/admin/comment",
+    exact: true,
+    main: <Comments />,
   },
   {
     path: "/admin/transaction",

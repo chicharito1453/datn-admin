@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 const menuLink = [
   { to: "/", name: "Trang chủ", classIcon: "fas fa-home" },
   { to: "/admin/post", name: "Tin tức", classIcon: "fas fa-book-reader" },
+  { to: "/admin/comment", name: "Bình luận", classIcon: "far fa-comments" },
   {
     to: "/admin/transaction",
     name: "Nạp rút tiền",

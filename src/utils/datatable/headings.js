@@ -7,6 +7,15 @@ export const headingPost = [
   "Ảnh",
   "Tác giả",
 ];
+// bình luận
+export const headingCmts = [
+  "#",
+  "Mã bình luận",
+  "Chủ bình luận",
+  "Nội dung",
+  "Đánh giá",
+  "Ngày",
+];
 // nạp rút tiền
 export const headingTran = [
   "Mã gd",
