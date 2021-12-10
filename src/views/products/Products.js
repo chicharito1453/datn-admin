@@ -326,7 +326,7 @@ const Products = ({ data, getAllProducts }) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>{!isUpdate ? "Thêm" : "Sửa"} sản phẩm</Modal.Title>
+          <Modal.Title>{!isUpdate ? "Thêm" : "Cập nhật"} sản phẩm</Modal.Title>
         </Modal.Header>
         <FormSP
           close={handleClose}

@@ -3,19 +3,9 @@ import { Modal, Button } from "react-bootstrap";
 import InputGroup from "../../../components/InputGroup";
 import Image from "../../../components/Image";
 
-const FormAdmin = ({ close, add }) => {
-  const [temp, setTemp] = useState(null);
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    fullname: "",
-    image: null,
-    email: "",
-    sdt: "",
-    address: "",
-    active: false,
-    sex: null,
-  });
+const FormAdmin = ({ close, saveAll, initValue, isUpdate }) => {
+  const [temp, setTemp] = useState(initValue.image);
+  const [formData, setFormData] = useState(initValue);
 
   function handleImage(e) {
     const file = e.target.files[0];
@@ -33,6 +23,18 @@ const FormAdmin = ({ close, add }) => {
 
   function handleActive(e) {
     setFormData({ ...formData, active: e.target.value === "1" });
+  }
+
+  // rút gọn form data
+  function compactFormData() {
+    return {
+      ...formData,
+      password: formData.password.trim(),
+      fullname: formData.fullname.trim(),
+      email: formData.email.trim(),
+      sdt: formData.sdt.trim(),
+      address: formData.address.trim(),
+    };
   }
 
   useEffect(() => {
@@ -78,14 +80,16 @@ const FormAdmin = ({ close, add }) => {
                 value={formData.username}
                 changed={handleChangeAdmin}
               />
-              <InputGroup
-                id="password"
-                name="password"
-                text="Mật khẩu"
-                type="password"
-                value={formData.password}
-                changed={handleChangeAdmin}
-              />
+              {!isUpdate && (
+                <InputGroup
+                  id="password"
+                  name="password"
+                  text="Mật khẩu"
+                  type="password"
+                  value={formData.password}
+                  changed={handleChangeAdmin}
+                />
+              )}
               <InputGroup
                 id="fullname"
                 name="fullname"
@@ -194,21 +198,23 @@ const FormAdmin = ({ close, add }) => {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          variant="primary"
-          onClick={() =>
-            add({
-              ...formData,
-              password: formData.password.trim(),
-              fullname: formData.fullname.trim(),
-              email: formData.email.trim(),
-              sdt: formData.sdt.trim(),
-              address: formData.address.trim(),
-            })
-          }
-        >
-          Thêm
-        </Button>
+        {!isUpdate ? (
+          <Button
+            variant="primary"
+            onClick={() => saveAll(compactFormData(), "/admin/add", "POST")}
+          >
+            Thêm
+          </Button>
+        ) : (
+          <Button
+            variant="primary"
+            onClick={() =>
+              saveAll(compactFormData(), "/admin/update-all", "PUT")
+            }
+          >
+            Sửa
+          </Button>
+        )}
         <Button variant="secondary" onClick={close}>
           Đóng
         </Button>

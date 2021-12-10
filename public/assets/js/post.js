@@ -1,20 +1,4 @@
-async function update_post(idpost, value, thaotac, oldValue, element) {
-  // title
-  if (thaotac == 0) {
-    if (!value.trim()) {
-      Fail("Tiêu đề không hợp lệ!");
-      element.value = oldValue;
-      return false;
-    }
-  }
-  // content
-  if (thaotac == 1) {
-    if (!value.trim()) {
-      Fail("Không để trống nội dung!");
-      element.value = oldValue;
-      return false;
-    }
-  }
+async function update_post(idpost, value, thaotac, element) {
   // image
   if (thaotac == 2) {
     fetchingOn();
@@ -26,6 +10,9 @@ async function update_post(idpost, value, thaotac, oldValue, element) {
       return false;
     }
     value = resp.data.secure_url;
+  }
+  if (thaotac == 1) {
+    value = value.replace(/\r\n|\r|\n/g, "<br>");
   }
   // tien hanh update
   if (thaotac != 2) fetchingOn();
@@ -39,18 +26,31 @@ async function update_post(idpost, value, thaotac, oldValue, element) {
     console.log(error);
     return false;
   }
-  const { message } = resp.data;
+  const { object, message } = resp.data;
   if (!isOK(message)) {
     fetchingOff();
     Fail(message);
+    console.log(object);
+    if (thaotac == 0) {
+      element.value = object.title;
+    }
+    if (thaotac == 1) {
+      element.outerHTML = `<textarea onblur="zoomout(this)" onfocus="zoomin(this)" style="width:200px;height:50px" onchange="update_post('${idpost}', this.value, 1, this)">${object.content.replace(
+        /<br\s?\/?>/g,
+        "\n"
+      )}</textarea>`;
+    }
     return false;
   }
   if (thaotac == 2) getE(`#img_post_${idpost}`).src = value;
   if (thaotac == 0) {
-    element.outerHTML = `<input onchange="update_post('${idpost}', this.value, ${thaotac}, '${value.trim()}', this)" value="${value.trim()}">`;
+    element.outerHTML = `<input onchange="update_post('${idpost}', this.value, ${thaotac}, this)" value="${value.trim()}">`;
   }
   if (thaotac == 1) {
-    element.outerHTML = `<textarea onblur="zoomout(this)" onfocus="zoomin(this)" style="width:200px;height:50px" onchange="update_post('${idpost}', this.value, 1, '${value.trim()}', this)">${value.trim()}</textarea>`;
+    element.outerHTML = `<textarea onblur="zoomout(this)" onfocus="zoomin(this)" style="width:200px;height:50px" onchange="update_post('${idpost}', this.value, 1, this)">${value.replace(
+      /<br\s?\/?>/g,
+      "\n"
+    )}</textarea>`;
   }
   fetchingOff();
   Success("Cập nhật thông tin thành công!");

@@ -13,10 +13,25 @@ import {
 import TableCtv from "./table/TableCtv";
 import FormCtv from "./form/FormCtv";
 
+const initialState = {
+  username: "",
+  password: "",
+  fullname: "",
+  image: null,
+  email: "",
+  sdt: "",
+  address: "",
+  active: false,
+  sex: null,
+};
+
 const CTV = ({ data, getAllCtv }) => {
   const [show, setShow] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [initValue, setInitValue] = useState(initialState);
 
   function handleClose() {
+    setInitValue(initialState);
     setShow(false);
   }
 
@@ -72,10 +87,10 @@ const CTV = ({ data, getAllCtv }) => {
   }, [getAllCtv]);
 
   // THÊM CỘNG TÁC VIÊN
-  async function them_ctv(formData) {
+  async function saveAll(formData, endpoint, method) {
     if (!check_form(formData)) return false;
     // check username truoc khi upload anh
-    if (formData.image) {
+    if (formData.image && !isUpdate) {
       const [error, resp] = await okteamAPI(
         `/ctv/check-id/${formData.username}`
       );
@@ -91,7 +106,7 @@ const CTV = ({ data, getAllCtv }) => {
     }
     fetchingOn();
     // upload hinh anh
-    if (formData.image) {
+    if (formData.image && typeof formData.image !== "string") {
       const [error, resp] = await okteam_upload(formData.image);
       if (error) {
         fetchingOff();
@@ -102,7 +117,7 @@ const CTV = ({ data, getAllCtv }) => {
       formData.image = resp.data.secure_url;
     }
     // them
-    const [error, resp] = await okteamAPI("/ctv/add", "POST", formData);
+    const [error, resp] = await okteamAPI(endpoint, method, formData);
     if (error) {
       fetchingOff();
       Fail("Không thực hiện được thao tác!");
@@ -116,7 +131,11 @@ const CTV = ({ data, getAllCtv }) => {
       return false;
     }
     fetchingOff();
-    Success("Thêm cộng tác viên thành công!");
+    Success(
+      method === "POST"
+        ? "Thêm cộng tác viên thành công!"
+        : "Cập nhật thông tin thành công!"
+    );
     setShow(false);
     getAllCtv(result);
     return true;
@@ -149,6 +168,33 @@ const CTV = ({ data, getAllCtv }) => {
     );
   }
 
+  // đổ dữ liệu lên form
+  async function mapRowToForm(ctv) {
+    if (!ctv) return;
+    setIsUpdate(true);
+    fetchingOn();
+    const [error, resp] = await okteamAPI(
+      `/ctv/getone?username=${ctv.username}`
+    );
+    if (error) {
+      fetchingOff();
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    const { object, result, message } = resp.data;
+    if (!isOK(message)) {
+      fetchingOff();
+      Fail(message);
+      return false;
+    }
+    fetchingOff();
+    object.password = "updating";
+    setInitValue(object);
+    getAllCtv(result);
+    setShow(true);
+  }
+
   useEffect(() => {
     document.title = "Quản trị - Cộng tác viên";
     document.querySelector(".content").style.height =
@@ -162,13 +208,16 @@ const CTV = ({ data, getAllCtv }) => {
       <Button
         style={{ float: "right" }}
         variant="primary"
-        onClick={() => setShow(true)}
+        onClick={() => {
+          setIsUpdate(false);
+          setShow(true);
+        }}
       >
         Thêm cộng tác viên
       </Button>
       <br />
       <br />
-      <TableCtv data={data} deleted={delete_ctv} />
+      <TableCtv data={data} deleted={delete_ctv} getRow={mapRowToForm} />
       <Modal
         size="lg"
         show={show}
@@ -178,9 +227,16 @@ const CTV = ({ data, getAllCtv }) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Thêm cộng tác viên</Modal.Title>
+          <Modal.Title>
+            {!isUpdate ? "Thêm" : "Cập nhật"} cộng tác viên
+          </Modal.Title>
         </Modal.Header>
-        <FormCtv add={them_ctv} close={handleClose} />
+        <FormCtv
+          saveAll={saveAll}
+          close={handleClose}
+          initValue={initValue}
+          isUpdate={isUpdate}
+        />
       </Modal>
     </div>
   );

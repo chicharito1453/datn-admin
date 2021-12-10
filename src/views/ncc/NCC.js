@@ -200,7 +200,7 @@ const NCC = ({ data, getAllNCC }) => {
       return false;
     }
     fetchingOff();
-    object.password = "update";
+    object.password = "updating";
     getAllNCC(result);
     setInitValue(object);
     setShow(true);

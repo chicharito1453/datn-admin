@@ -59,6 +59,7 @@ export const headingNcc = [
 // cộng tác viên
 export const headingCtv = [
   "#",
+  "Chi tiết",
   "Tài khoản",
   "Trạng thái",
   "Mật khẩu mới",
@@ -74,6 +75,7 @@ export const headingCtv = [
 // admin
 export const headingAdmin = [
   "#",
+  "Chi tiết",
   "Tài khoản",
   "Trạng thái",
   "Mật khẩu mới",

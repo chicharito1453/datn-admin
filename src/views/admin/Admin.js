@@ -12,14 +12,33 @@ import {
   fetchingOn,
   fetchingOff,
 } from "../../utils/loading-overlay/loading-overlay";
-import { getToken } from "../../utils/localStorage/localStorage";
+import {
+  getToken,
+  getFromLS,
+  saveToLS,
+} from "../../utils/localStorage/localStorage";
 import { regexEmail, regexSDT } from "../../utils/regex/regex";
+
+const initialState = {
+  username: "",
+  password: "",
+  fullname: "",
+  image: null,
+  email: "",
+  sdt: "",
+  address: "",
+  active: false,
+  sex: null,
+};
 
 const Admin = ({ data, getAllAdmin }) => {
   const [show, setShow] = useState(false);
+  const [initValue, setInitValue] = useState(initialState);
+  const [isUpdate, setisUpdate] = useState(false);
   const { decodedToken } = useJwt(getToken());
 
   function handleClose() {
+    setInitValue(initialState);
     setShow(false);
   }
 
@@ -75,10 +94,10 @@ const Admin = ({ data, getAllAdmin }) => {
   }
 
   // THÊM  ADMIN
-  async function them_admin(formData) {
+  async function saveAll(formData, endpoint, method) {
     if (!check_form(formData)) return false;
     // check username truoc khi upload anh
-    if (formData.image) {
+    if (formData.image && !isUpdate) {
       const [error, resp] = await okteamAPI(
         `/admin/check-id/${formData.username}`
       );
@@ -94,7 +113,7 @@ const Admin = ({ data, getAllAdmin }) => {
     }
     fetchingOn();
     // upload anh
-    if (formData.image) {
+    if (formData.image && typeof formData.image !== "string") {
       const [error, resp] = await okteam_upload(formData.image);
       if (error) {
         fetchingOff();
@@ -106,23 +125,35 @@ const Admin = ({ data, getAllAdmin }) => {
       fetchingOff();
     }
     // them
-    const [error, resp] = await okteamAPI("/admin/add", "POST", formData);
+    const [error, resp] = await okteamAPI(endpoint, method, formData);
     if (error) {
       fetchingOff();
       Fail("Không thực hiện được thao tác!");
       console.log(error);
       return false;
     }
-    const { result, message } = resp.data;
+    const { result, object, message } = resp.data;
     if (!isOK(message)) {
       fetchingOff();
       Fail(message);
       return false;
     }
     fetchingOff();
-    Success("Thêm quản trị viên thành công!");
-    setShow(false);
+    Success(
+      method === "POST"
+        ? "Thêm quản trị viên thành công!"
+        : "Cập nhật thông tin thành công!"
+    );
+    if (method === "PUT") {
+      const { jti } = decodedToken;
+      if (jti === object.username) {
+        saveToLS({ ...getFromLS(), image: object.image });
+        document.querySelector(".profile_image").src =
+          object.image || "/assets/img/avatar.png";
+      }
+    }
     getAllAdmin(result);
+    setShow(false);
     return true;
   }
 
@@ -159,6 +190,33 @@ const Admin = ({ data, getAllAdmin }) => {
     );
   }
 
+  // đổ dữ liệu lên form
+  async function mapRowToForm(admin) {
+    if (!admin) return;
+    setisUpdate(true);
+    fetchingOn();
+    const [error, resp] = await okteamAPI(
+      `/admin/getone?username=${admin.username}`
+    );
+    if (error) {
+      fetchingOff();
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    const { result, object, message } = resp.data;
+    if (!isOK(message)) {
+      fetchingOff();
+      Fail(message);
+      return false;
+    }
+    fetchingOff();
+    object.password = "updating";
+    setInitValue(object);
+    getAllAdmin(result);
+    setShow(true);
+  }
+
   useEffect(() => {
     document.title = "Quản trị - Admin";
     document.querySelector(".content").style.height =
@@ -172,13 +230,16 @@ const Admin = ({ data, getAllAdmin }) => {
       <Button
         style={{ float: "right" }}
         variant="primary"
-        onClick={() => setShow(true)}
+        onClick={() => {
+          setisUpdate(false);
+          setShow(true);
+        }}
       >
         Thêm Quản trị viên
       </Button>
       <br />
       <br />
-      <TableAdmin data={data} deleted={delete_admin} />
+      <TableAdmin data={data} deleted={delete_admin} getRow={mapRowToForm} />
       <Modal
         size="lg"
         show={show}
@@ -188,9 +249,16 @@ const Admin = ({ data, getAllAdmin }) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Thêm cộng tác viên</Modal.Title>
+          <Modal.Title>
+            {!isUpdate ? "Thêm" : "Cập nhật"} quản trị viên
+          </Modal.Title>
         </Modal.Header>
-        <FormAdmin close={handleClose} add={them_admin} />
+        <FormAdmin
+          close={handleClose}
+          saveAll={saveAll}
+          initValue={initValue}
+          isUpdate={isUpdate}
+        />
       </Modal>
     </div>
   );

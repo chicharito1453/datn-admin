@@ -241,9 +241,7 @@ const Orders = ({ data, getAllOrders }) => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>
-            {!isUpdate ? "Tạo đơn hàng" : "Chi tiết sản phẩm"}
-          </Modal.Title>
+          <Modal.Title>{!isUpdate ? "Tạo" : "Cập nhật"} đơn hàng</Modal.Title>
         </Modal.Header>
         <FormDH
           close={handleClose}

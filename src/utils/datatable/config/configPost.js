@@ -48,7 +48,7 @@ const configPost = {
       data: "title",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<input onchange="update_post('${row.idpost}', this.value, 0, '${data}', this)"  value="${data}" />`;
+          return `<input onchange="update_post('${row.idpost}', this.value, 0, this)"  value="${data}" />`;
         }
         return data;
       },
@@ -57,7 +57,12 @@ const configPost = {
       data: "content",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<textarea onblur="zoomout(this)" onfocus="zoomin(this)" style="width:200px;height:50px" onchange="update_post('${row.idpost}', this.value, 1, '${data}', this)">${data}</textarea>`;
+          return `<textarea onblur="zoomout(this)" onfocus="zoomin(this)" style="width:200px;height:50px;" onchange="update_post('${
+            row.idpost
+          }', this.value, 1, this)">${data.replace(
+            /<br\s?\/?>/g,
+            "\n"
+          )}</textarea>`;
         }
         return data;
       },

@@ -85,7 +85,7 @@ const FormPost = ({ close, add }) => {
             add({
               ...formData,
               title: formData.title.trim(),
-              content: formData.content.trim(),
+              content: formData.content.trim().replace(/\r\n|\r|\n/g, "<br />"),
             })
           }
         >

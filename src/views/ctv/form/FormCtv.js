@@ -1,23 +1,11 @@
 import { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
-// import { connect } from "react-redux";
-// import { SET_CTV } from "../../../store/action/index";
 import Image from "../../../components/Image";
 import InputGroup from "../../../components/InputGroup";
 
-const FormCtv = ({ close, add }) => {
-  const [temp, setTemp] = useState(null);
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    fullname: "",
-    image: null,
-    email: "",
-    sdt: "",
-    address: "",
-    active: false,
-    sex: null,
-  });
+const FormCtv = ({ close, saveAll, initValue, isUpdate }) => {
+  const [temp, setTemp] = useState(initValue.image);
+  const [formData, setFormData] = useState(initValue);
 
   function handleImage(e) {
     const file = e.target.files[0];
@@ -35,6 +23,18 @@ const FormCtv = ({ close, add }) => {
 
   function handleActive(e) {
     setFormData({ ...formData, active: e.target.value === "1" });
+  }
+
+  // rút gọn form data
+  function compactFormData() {
+    return {
+      ...formData,
+      password: formData.password.trim(),
+      fullname: formData.fullname.trim(),
+      email: formData.email.trim(),
+      sdt: formData.sdt.trim(),
+      address: formData.address.trim(),
+    };
   }
 
   useEffect(() => {
@@ -78,14 +78,16 @@ const FormCtv = ({ close, add }) => {
                 value={formData.username}
                 changed={handleChangeCtv}
               />
-              <InputGroup
-                id="password"
-                name="password"
-                text="Mật khẩu"
-                type="password"
-                value={formData.password}
-                changed={handleChangeCtv}
-              />
+              {!isUpdate && (
+                <InputGroup
+                  id="password"
+                  name="password"
+                  text="Mật khẩu"
+                  type="password"
+                  value={formData.password}
+                  changed={handleChangeCtv}
+                />
+              )}
               <InputGroup
                 id="fullname"
                 name="fullname"
@@ -194,21 +196,21 @@ const FormCtv = ({ close, add }) => {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          variant="primary"
-          onClick={() =>
-            add({
-              ...formData,
-              password: formData.password.trim(),
-              fullname: formData.fullname.trim(),
-              email: formData.email.trim(),
-              sdt: formData.sdt.trim(),
-              address: formData.address.trim(),
-            })
-          }
-        >
-          Thêm
-        </Button>
+        {!isUpdate ? (
+          <Button
+            variant="primary"
+            onClick={() => saveAll(compactFormData(), "/ctv/add", "POST")}
+          >
+            Thêm
+          </Button>
+        ) : (
+          <Button
+            variant="primary"
+            onClick={() => saveAll(compactFormData(), "/ctv/update-all", "PUT")}
+          >
+            Sửa
+          </Button>
+        )}
         <Button variant="secondary" onClick={close}>
           Đóng
         </Button>
@@ -216,19 +218,4 @@ const FormCtv = ({ close, add }) => {
     </>
   );
 };
-
-// const mapStatetoProps = (state) => {
-//   return {
-//     formData: state.ctv,
-//   };
-// };
-
-// const mapDispatchToProps = (dispatch, props) => {
-//   return {
-//     setFormData: (CTV = null) => {
-//       dispatch(SET_CTV(CTV));
-//     },
-//   };
-// };
-
 export default FormCtv;
