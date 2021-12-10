@@ -324,25 +324,21 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
     <>
       <Modal.Body>
         <form>
-          {!isUpdate && (
-            <>
-              <br />
-              <InputGroup
-                id="customer"
-                name="customer"
-                text="Khách hàng"
-                value={formData.customer}
-                changed={handleChangeOrder}
-              />
-              <InputGroup
-                id="sdtcustomer"
-                name="sdtcustomer"
-                text="SĐT khách hàng"
-                value={formData.sdtcustomer}
-                changed={handleChangeOrder}
-              />
-            </>
-          )}
+          <br />
+          <InputGroup
+            id="customer"
+            name="customer"
+            text="Khách hàng"
+            value={formData.customer}
+            changed={handleChangeOrder}
+          />
+          <InputGroup
+            id="sdtcustomer"
+            name="sdtcustomer"
+            text="SĐT khách hàng"
+            value={formData.sdtcustomer}
+            changed={handleChangeOrder}
+          />
           <InputGroup
             id="city"
             type="select"
@@ -370,103 +366,99 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
             value={formData.xa}
             changed={(e) => handleSelect(e, "3")}
           />
-          {!isUpdate && (
-            <>
-              <InputGroup
-                id="address"
-                name="address"
-                text="Địa chỉ"
-                value={formData.address}
-                changed={handleChangeOrder}
-              />
-              <InputGroup
-                id="order_code"
-                name="order_code"
-                text="Mã đơn vận"
-                value={formData.order_code}
-                changed={handleChangeOrder}
-              />
-              <br />
-              <div className="mb-3">
-                <label htmlFor="status1" className="form-label">
-                  <b>Trạng thái</b>
-                </label>
-                <br />
-                <InputGroup
-                  nameClass="mb-3 form-check form-check-inline"
-                  id="status0"
-                  name="status"
-                  text="Chờ xác nhận"
-                  value="0"
-                  labelClass="form-check-label"
-                  elementClass="form-check-input"
-                  type="radio"
-                  isChecked={formData.status === "0"}
-                  changed={handleChangeOrder}
-                />
-                <InputGroup
-                  nameClass="mb-3 form-check form-check-inline"
-                  id="status1"
-                  name="status"
-                  text="Giao thành công"
-                  value="1"
-                  labelClass="form-check-label"
-                  elementClass="form-check-input"
-                  type="radio"
-                  isChecked={formData.status === "1"}
-                  changed={handleChangeOrder}
-                />
-                <InputGroup
-                  nameClass="mb-3 form-check form-check-inline"
-                  id="status2"
-                  name="status"
-                  text="Đang giao"
-                  value="2"
-                  labelClass="form-check-label"
-                  elementClass="form-check-input"
-                  type="radio"
-                  isChecked={formData.status === "2"}
-                  changed={handleChangeOrder}
-                />
-                <InputGroup
-                  nameClass="mb-3 form-check form-check-inline"
-                  id="status3"
-                  name="status"
-                  text="Trả về"
-                  value="3"
-                  labelClass="form-check-label"
-                  elementClass="form-check-input"
-                  type="radio"
-                  isChecked={formData.status === "3"}
-                  changed={handleChangeOrder}
-                />
-                <InputGroup
-                  nameClass="mb-3 form-check form-check-inline"
-                  id="status4"
-                  name="status"
-                  text="Hủy"
-                  value="4"
-                  labelClass="form-check-label"
-                  elementClass="form-check-input"
-                  type="radio"
-                  isChecked={formData.status === "4"}
-                  changed={handleChangeOrder}
-                />
-                <InputGroup
-                  nameClass="mb-3 form-check form-check-inline"
-                  id="status5"
-                  name="status"
-                  text="Đã thanh toán"
-                  value="5"
-                  labelClass="form-check-label"
-                  elementClass="form-check-input"
-                  type="radio"
-                  isChecked={formData.status === "5"}
-                  changed={handleChangeOrder}
-                />
-              </div>
-            </>
-          )}
+          <InputGroup
+            id="address"
+            name="address"
+            text="Địa chỉ"
+            value={formData.address}
+            changed={handleChangeOrder}
+          />
+          <InputGroup
+            id="order_code"
+            name="order_code"
+            text="Mã đơn vận"
+            value={formData.order_code}
+            changed={handleChangeOrder}
+          />
+          <br />
+          <div className="mb-3">
+            <label htmlFor="status1" className="form-label">
+              <b>Trạng thái</b>
+            </label>
+            <br />
+            <InputGroup
+              nameClass="mb-3 form-check form-check-inline"
+              id="status0"
+              name="status"
+              text="Chờ xác nhận"
+              value="0"
+              labelClass="form-check-label"
+              elementClass="form-check-input"
+              type="radio"
+              isChecked={formData.status === "0"}
+              changed={handleChangeOrder}
+            />
+            <InputGroup
+              nameClass="mb-3 form-check form-check-inline"
+              id="status1"
+              name="status"
+              text="Giao thành công"
+              value="1"
+              labelClass="form-check-label"
+              elementClass="form-check-input"
+              type="radio"
+              isChecked={formData.status === "1"}
+              changed={handleChangeOrder}
+            />
+            <InputGroup
+              nameClass="mb-3 form-check form-check-inline"
+              id="status2"
+              name="status"
+              text="Đang giao"
+              value="2"
+              labelClass="form-check-label"
+              elementClass="form-check-input"
+              type="radio"
+              isChecked={formData.status === "2"}
+              changed={handleChangeOrder}
+            />
+            <InputGroup
+              nameClass="mb-3 form-check form-check-inline"
+              id="status3"
+              name="status"
+              text="Trả về"
+              value="3"
+              labelClass="form-check-label"
+              elementClass="form-check-input"
+              type="radio"
+              isChecked={formData.status === "3"}
+              changed={handleChangeOrder}
+            />
+            <InputGroup
+              nameClass="mb-3 form-check form-check-inline"
+              id="status4"
+              name="status"
+              text="Hủy"
+              value="4"
+              labelClass="form-check-label"
+              elementClass="form-check-input"
+              type="radio"
+              isChecked={formData.status === "4"}
+              changed={handleChangeOrder}
+            />
+            <InputGroup
+              nameClass="mb-3 form-check form-check-inline"
+              id="status5"
+              name="status"
+              text="Đã thanh toán"
+              value="5"
+              labelClass="form-check-label"
+              elementClass="form-check-input"
+              type="radio"
+              isChecked={formData.status === "5"}
+              changed={handleChangeOrder}
+            />
+          </div>
           <br />
 
           <div className="row">

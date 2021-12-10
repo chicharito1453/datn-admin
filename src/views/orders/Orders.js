@@ -99,9 +99,12 @@ const Orders = ({ data, getAllOrders }) => {
   async function saveAll(formData, endpoint, method) {
     if (!check_form(formData)) return;
     // gan tinh, huyenm xa vao dia chi
-    formData.address = `${formData.address.trim()}- ${formData.xa.label}- ${
-      formData.huyen.label
-    }-${formData.tinh.label}`;
+    formData.address =
+      method === "PUT"
+        ? formData.address.trim()
+        : `${formData.address.trim()}- ${formData.xa.label}- ${
+            formData.huyen.label
+          }-${formData.tinh.label}`;
     fetchingOn();
     const [error, resp] = await okteamAPI(endpoint, method, formData);
     if (error) {
@@ -158,13 +161,34 @@ const Orders = ({ data, getAllOrders }) => {
   }
 
   // SET DATA LÊN FORM
-  function mapRowtoForm(order) {
+  async function mapRowtoForm(order) {
     if (!order) return;
-    const tinh = order.tinh.split("-");
-    const huyen = order.huyen.split("-");
-    const xa = order.xa.split("-");
+    fetchingOn();
+    const [error, resp] = await okteamAPI(
+      `/order/getone?idorder=${order.idorder}`
+    );
+    if (error) {
+      fetchingOff();
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    const { object, message } = resp.data;
+    if (!isOK(message)) {
+      fetchingOff();
+      Fail(message);
+      return false;
+    }
+    fetchingOff();
+    if ([1, 2, 5].includes(object.status)) {
+      Fail("Tạng thái đơn hàng không phù hợp để cập nhật!");
+      return;
+    }
+    const tinh = object.tinh.split("-");
+    const huyen = object.huyen.split("-");
+    const xa = object.xa.split("-");
     setIsUpdate(true);
-    var details = order.details.map((de) => ({
+    var details = object.details.map((de) => ({
       sp: de.products.idpro,
       sl: de.qty,
       price_customer: de.revenue,
@@ -173,13 +197,13 @@ const Orders = ({ data, getAllOrders }) => {
       pricesp: de.products.pricectv,
     }));
     setInitValue({
-      ...order,
+      ...object,
       details,
       tinh: { value: tinh[0], label: tinh[1] },
       huyen: { value: huyen[0], label: huyen[1] },
       xa: { value: xa[0], label: xa[1] },
-      status: order.status.toString(),
-      order_code: order.order_code || "",
+      status: object.status.toString(),
+      order_code: object.order_code || "",
     });
     setShow(true);
   }

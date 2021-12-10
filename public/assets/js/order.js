@@ -26,10 +26,11 @@ async function update_order(id, value, thaotac, oldValue, element) {
   }
   fetchingOff();
   Success("Cập nhật thông tin thành công!");
+  if (thaotac == 0) {
+    getE(`#datefinish-${id}`).innerHTML = object;
+  }
   if (thaotac != 0) {
     element.outerHTML = `<input onchange="update_order('${id}', this.value, ${thaotac}, '${value.trim()}', this)" value="${value.trim()}">`;
-  } else {
-    getE("#datefinish").innerHTML = object;
   }
   return true;
 }

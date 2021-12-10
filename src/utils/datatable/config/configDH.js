@@ -189,7 +189,7 @@ const configDH = {
       data: "datefinish",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<div id='datefinish' style="width: 150px;">${
+          return `<div id='datefinish-${row.idorder}' style="width: 150px;">${
             data || ""
           }</div>`;
         }
