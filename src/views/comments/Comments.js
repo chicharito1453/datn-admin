@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import okteamAPI from "../../utils/api/okteamAPI";
-import { Fail, isOK } from "../../utils/sweetalert2/alert";
+import { Fail, isOK, Success, Approve } from "../../utils/sweetalert2/alert";
 import {
   fetchingOn,
   fetchingOff,
@@ -18,6 +18,7 @@ const Comments = () => {
     label: "Tất cả",
   });
 
+  // cmt theo sp
   const onChangePro = useCallback(async (e) => {
     const idpro = e ? e.value : "";
     fetchingOn();
@@ -65,6 +66,37 @@ const Comments = () => {
     return true;
   }, [onChangePro]);
 
+  // xoa cmt
+  async function delete_cmt(cmt) {
+    if (!cmt) return;
+    Approve(
+      "Bạn đang thực hiện xóa bình luận này.\nTiếp tục thực hiện ?",
+      async () => {
+        fetchingOn();
+        const [error, resp] = await okteamAPI(
+          `/comments/delete/${cmt.idcmt}${sp ? `?idpro=${sp.value}` : ""}`,
+          "DELETE"
+        );
+        if (error) {
+          fetchingOff();
+          Fail("Không thực hiện được thao tác!");
+          console.log(error);
+          return false;
+        }
+        const { result, message } = resp.data;
+        if (!isOK(message)) {
+          fetchingOff();
+          Fail(message);
+          return false;
+        }
+        fetchingOff();
+        Success("Xóa bình luận thành công!");
+        setData(result);
+        return true;
+      }
+    );
+  }
+
   useEffect(() => {
     document.title = "Quản trị - Bình luận";
     document.querySelector(".content").style.height =
@@ -94,6 +126,7 @@ const Comments = () => {
           id="dataTable"
           headings={headingCmts}
           data={data}
+          deleted={delete_cmt}
           config={configCmts}
         />
       </div>
