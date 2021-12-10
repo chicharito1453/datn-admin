@@ -10,8 +10,8 @@ import {
 import InputGroup from "../../../components/InputGroup";
 import Image from "../../../components/Image";
 
-const FormNcc = ({ close, add, initValue, isUpdate, update }) => {
-  const [temp, setTemp] = useState(null);
+const FormNcc = ({ close, saveAll, initValue, isUpdate }) => {
+  const [temp, setTemp] = useState(initValue.ncclogo);
   const [cities, setCities] = useState(null);
   const [formData, setFormData] = useState(initValue);
 
@@ -39,7 +39,7 @@ const FormNcc = ({ close, add, initValue, isUpdate, update }) => {
 
   // select tỉnh
   const select_tinh = useCallback(async () => {
-    fetchingOn();
+    if (!isUpdate) fetchingOn();
     const [error, resp] = await callAPI(process.env.REACT_APP_URL_TINH);
     if (error) {
       fetchingOff();
@@ -55,7 +55,21 @@ const FormNcc = ({ close, add, initValue, isUpdate, update }) => {
         label: rs.ProvinceName,
       })),
     ]);
-  }, []);
+  }, [isUpdate]);
+
+  // rút gọn form data
+  function compactFormData() {
+    return {
+      ...formData,
+      fullname: formData.fullname.trim(),
+      nccname: formData.nccname.trim(),
+      email: formData.email.trim(),
+      sdt: formData.sdt.trim(),
+      city: formData.city.trim(),
+      address: formData.address.trim(),
+      description: formData.description.trim(),
+    };
+  }
 
   useEffect(() => {
     select_tinh();
@@ -66,23 +80,21 @@ const FormNcc = ({ close, add, initValue, isUpdate, update }) => {
     <>
       <Modal.Body>
         <div className="row">
-          {!isUpdate && (
-            <Image
-              cssImage={{
-                marginTop: 30,
-                height: "35%",
-                width: "90%",
-                float: "right",
-              }}
-              classWraper="col-sm-5"
-              src={temp || "/assets/img/default.jpg"}
-              text="Chọn hình ảnh"
-              idFile="ncclogo"
-              idButton="btnLogoNcc"
-              classButton="danger"
-              changed={handleImage}
-            />
-          )}
+          <Image
+            cssImage={{
+              marginTop: 30,
+              height: "35%",
+              width: "90%",
+              float: "right",
+            }}
+            classWraper="col-sm-5"
+            src={temp || "/assets/img/default.jpg"}
+            text="Chọn hình ảnh"
+            idFile="ncclogo"
+            idButton="btnLogoNcc"
+            classButton="danger"
+            changed={handleImage}
+          />
           <div className="col">
             <form
               style={{
@@ -93,53 +105,51 @@ const FormNcc = ({ close, add, initValue, isUpdate, update }) => {
               }}
               id="nccForm"
             >
+              <InputGroup
+                id="username"
+                name="username"
+                text="Tài khoản"
+                value={formData.username}
+                changed={handleChangeNcc}
+              />
               {!isUpdate && (
-                <>
-                  <InputGroup
-                    id="username"
-                    name="username"
-                    text="Tài khoản"
-                    value={formData.username}
-                    changed={handleChangeNcc}
-                  />
-                  <InputGroup
-                    id="password"
-                    name="password"
-                    text="Mật khẩu"
-                    type="password"
-                    value={formData.password}
-                    changed={handleChangeNcc}
-                  />
-                  <InputGroup
-                    id="fullname"
-                    name="fullname"
-                    text="Họ tên"
-                    value={formData.fullname}
-                    changed={handleChangeNcc}
-                  />
-                  <InputGroup
-                    id="nccname"
-                    name="nccname"
-                    text="Tên nhà cung cấp"
-                    value={formData.nccname}
-                    changed={handleChangeNcc}
-                  />
-                  <InputGroup
-                    id="email"
-                    name="email"
-                    text="Email"
-                    value={formData.email}
-                    changed={handleChangeNcc}
-                  />
-                  <InputGroup
-                    id="sdt"
-                    name="sdt"
-                    text="SĐT"
-                    value={formData.sdt}
-                    changed={handleChangeNcc}
-                  />
-                </>
+                <InputGroup
+                  id="password"
+                  name="password"
+                  text="Mật khẩu"
+                  type="password"
+                  value={formData.password}
+                  changed={handleChangeNcc}
+                />
               )}
+              <InputGroup
+                id="fullname"
+                name="fullname"
+                text="Họ tên"
+                value={formData.fullname}
+                changed={handleChangeNcc}
+              />
+              <InputGroup
+                id="nccname"
+                name="nccname"
+                text="Tên nhà cung cấp"
+                value={formData.nccname}
+                changed={handleChangeNcc}
+              />
+              <InputGroup
+                id="email"
+                name="email"
+                text="Email"
+                value={formData.email}
+                changed={handleChangeNcc}
+              />
+              <InputGroup
+                id="sdt"
+                name="sdt"
+                text="SĐT"
+                value={formData.sdt}
+                changed={handleChangeNcc}
+              />
               <InputGroup
                 id="city"
                 type="select"
@@ -149,71 +159,63 @@ const FormNcc = ({ close, add, initValue, isUpdate, update }) => {
                 value={{ value: formData.city, label: formData.city }}
                 changed={handleSelect}
               />
-              {!isUpdate && (
-                <>
-                  <InputGroup
-                    id="address"
-                    name="address"
-                    text="Địa chỉ"
-                    value={formData.address}
-                    changed={handleChangeNcc}
-                  />
-                  <InputGroup
-                    id="idghn"
-                    name="idghn"
-                    text="ID giao hàng nhanh (nếu có)"
-                    value={formData.idghn}
-                    changed={handleChangeNcc}
-                  />
-                </>
-              )}
+              <InputGroup
+                id="address"
+                name="address"
+                text="Địa chỉ"
+                value={formData.address}
+                changed={handleChangeNcc}
+              />
+              <InputGroup
+                id="idghn"
+                name="idghn"
+                text="ID giao hàng nhanh (nếu có)"
+                value={formData.idghn}
+                changed={handleChangeNcc}
+              />
               <br />
-              {!isUpdate && (
-                <>
-                  <div className="col">
-                    <label htmlFor="active" className="form-label">
-                      <b>Trạng thái</b>
-                    </label>
-                    <br />
-                    <InputGroup
-                      nameClass="form-check form-check-inline"
-                      id="active"
-                      name="active"
-                      text="Kích hoạt"
-                      value="1"
-                      labelClass="form-check-label"
-                      elementClass="form-check-input"
-                      type="radio"
-                      isChecked={formData.active && "checked"}
-                      changed={handleActive}
-                    />
-                    <InputGroup
-                      nameClass="form-check form-check-inline"
-                      id="nonactive"
-                      name="active"
-                      text="Vô hiệu"
-                      value="0"
-                      labelClass="form-check-label"
-                      elementClass="form-check-input"
-                      type="radio"
-                      isChecked={!formData.active && "checked"}
-                      changed={handleActive}
-                    />
-                  </div>
-                  <br />
-                  <div className="form-floating">
-                    <textarea
-                      className="form-control"
-                      id="description"
-                      name="description"
-                      style={{ height: 100 }}
-                      value={formData.description}
-                      onChange={handleChangeNcc}
-                    ></textarea>
-                    <label htmlFor="description">Giới thiệu</label>
-                  </div>
-                </>
-              )}
+              <div className="col">
+                <label htmlFor="active" className="form-label">
+                  <b>Trạng thái</b>
+                </label>
+                <br />
+                <InputGroup
+                  nameClass="form-check form-check-inline"
+                  id="active"
+                  name="active"
+                  text="Kích hoạt"
+                  value="1"
+                  labelClass="form-check-label"
+                  elementClass="form-check-input"
+                  type="radio"
+                  isChecked={formData.active && "checked"}
+                  changed={handleActive}
+                />
+                <InputGroup
+                  nameClass="form-check form-check-inline"
+                  id="nonactive"
+                  name="active"
+                  text="Vô hiệu"
+                  value="0"
+                  labelClass="form-check-label"
+                  elementClass="form-check-input"
+                  type="radio"
+                  isChecked={!formData.active && "checked"}
+                  changed={handleActive}
+                />
+              </div>
+              <br />
+              <div className="form-floating">
+                <textarea
+                  className="form-control"
+                  id="description"
+                  name="description"
+                  style={{ height: 100 }}
+                  value={formData.description}
+                  onChange={handleChangeNcc}
+                ></textarea>
+                <label htmlFor="description">Giới thiệu</label>
+              </div>
             </form>
           </div>
         </div>
@@ -222,36 +224,14 @@ const FormNcc = ({ close, add, initValue, isUpdate, update }) => {
         {!isUpdate ? (
           <Button
             variant="primary"
-            onClick={() =>
-              add({
-                ...formData,
-                fullname: formData.fullname.trim(),
-                nccname: formData.nccname.trim(),
-                email: formData.email.trim(),
-                sdt: formData.sdt.trim(),
-                city: formData.city.trim(),
-                address: formData.address.trim(),
-                description: formData.description.trim(),
-              })
-            }
+            onClick={() => saveAll(compactFormData(), "/ncc/add", "POST")}
           >
             Lưu
           </Button>
         ) : (
           <Button
             variant="primary"
-            onClick={() =>
-              update({
-                username: formData.username,
-                fullname: formData.fullname.trim(),
-                nccname: formData.nccname.trim(),
-                email: formData.email.trim(),
-                sdt: formData.sdt.trim(),
-                city: formData.city.trim(),
-                address: formData.address.trim(),
-                description: formData.description.trim(),
-              })
-            }
+            onClick={() => saveAll(compactFormData(), "/ncc/update-all", "PUT")}
           >
             Sửa
           </Button>

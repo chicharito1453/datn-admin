@@ -44,6 +44,12 @@ const configNcc = {
     {
       data: "username",
       render: (data, type, row, meta) => {
+        return `<div style="cursor:pointer; width: 80px;><i style="cursor:pointer;" class="far fa-edit"></i></div>`;
+      },
+    },
+    {
+      data: "username",
+      render: (data, type, row, meta) => {
         if (type === "display") {
           return `<div style="width: 150px;">${data}</div>`;
         }
@@ -136,7 +142,7 @@ const configNcc = {
       data: "city",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<div style="width: 200px;">${data}&emsp;<i style="cursor:pointer" class="far fa-edit"></i></div>`;
+          return `<div style="width: 200px;">${data}</div>`;
         }
         return data;
       },

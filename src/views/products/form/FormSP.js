@@ -89,7 +89,7 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
     ]);
     onchangeLoai();
     return true;
-  }, [onchangeLoai]);
+  }, [onchangeLoai, isUpdate]);
 
   // SET PRODUCT
   function handleChangeProduct(e) {

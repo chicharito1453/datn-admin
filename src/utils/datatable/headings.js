@@ -40,6 +40,7 @@ export const headingNhan = ["STT", "Tên nhãn", "#"];
 // nhà cung cấp
 export const headingNcc = [
   "#",
+  "Chi tiết",
   "Tài khoản",
   "Trạng thái",
   "Mật khẩu mới",

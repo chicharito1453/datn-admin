@@ -98,10 +98,10 @@ const NCC = ({ data, getAllNCC }) => {
   }
 
   // THÊM NHÀ CUNG CẤP
-  async function them_ncc(formData) {
+  async function saveAll(formData, endpoint, method) {
     if (!check_form(formData)) return false;
     // check username truoc khi upload anh
-    if (formData.ncclogo) {
+    if (formData.ncclogo && !isUpdate) {
       const [error, resp] = await okteamAPI(
         `/ncc/check-id/${formData.username}`
       );
@@ -117,7 +117,7 @@ const NCC = ({ data, getAllNCC }) => {
     }
     fetchingOn();
     // upload hinh anh
-    if (formData.ncclogo) {
+    if (formData.ncclogo && typeof formData.ncclogo !== "string") {
       const [error, resp] = await okteam_upload(formData.ncclogo);
       if (error) {
         fetchingOff();
@@ -128,7 +128,7 @@ const NCC = ({ data, getAllNCC }) => {
       formData.ncclogo = resp.data.secure_url;
     }
     // them
-    const [error, resp] = await okteamAPI("/ncc/add", "POST", formData);
+    const [error, resp] = await okteamAPI(endpoint, method, formData);
     if (error) {
       fetchingOff();
       Fail("Không thực hiện được thao tác!");
@@ -142,7 +142,11 @@ const NCC = ({ data, getAllNCC }) => {
       return false;
     }
     fetchingOff();
-    Success("Thêm nhà cung cấp thành công!");
+    Success(
+      method === "POST"
+        ? "Thêm nhà cung cấp thành công!"
+        : "Cập nhật thông tin thành công!"
+    );
     setShow(false);
     getAllNCC(result);
     return true;
@@ -175,12 +179,13 @@ const NCC = ({ data, getAllNCC }) => {
     );
   }
 
-  // CẬP NHẬT THÀNH PHỐ
-  async function update_city(formData) {
+  // đổ dữ liệu lên form
+  async function mapRowToForm(Ncc) {
+    if (!Ncc) return;
+    setIsUpdate(true);
     fetchingOn();
     const [error, resp] = await okteamAPI(
-      `/ncc/update/${formData.username}?thaotac=5&value=${formData.city}`,
-      "PUT"
+      `/ncc/getone?username=${Ncc.username}`
     );
     if (error) {
       fetchingOff();
@@ -188,23 +193,16 @@ const NCC = ({ data, getAllNCC }) => {
       console.log(error);
       return false;
     }
-    const { result, message } = resp.data;
+    const { object, result, message } = resp.data;
     if (!isOK(message)) {
       fetchingOff();
       Fail(message);
       return false;
     }
     fetchingOff();
-    Success("Cập nhật thông tin thành công!");
-    setShow(false);
+    object.password = "update";
     getAllNCC(result);
-    return true;
-  }
-
-  function mapRowToForm(Ncc) {
-    if (!Ncc) return;
-    setIsUpdate(true);
-    setInitValue({ ...Ncc });
+    setInitValue(object);
     setShow(true);
   }
 
@@ -241,15 +239,14 @@ const NCC = ({ data, getAllNCC }) => {
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {!isUpdate ? "Thêm nhà cung cấp" : "Cập nhật tỉnh/TP"}
+            {!isUpdate ? "Thêm" : "Cập nhật"} nhà cung cấp
           </Modal.Title>
         </Modal.Header>
         <FormNcc
-          add={them_ncc}
+          saveAll={saveAll}
           close={handleClose}
           initValue={initValue}
           isUpdate={isUpdate}
-          update={update_city}
         />
       </Modal>
     </div>

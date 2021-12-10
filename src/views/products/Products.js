@@ -120,10 +120,11 @@ const Products = ({ data, getAllProducts }) => {
     if (!check_form(formData)) return false;
     // check idpro khi co anh can upload
     if (
-      formData.image0 ||
-      formData.image1 ||
-      formData.image2 ||
-      formData.image3
+      (formData.image0 ||
+        formData.image1 ||
+        formData.image2 ||
+        formData.image3) &&
+      !isUpdate
     ) {
       const [error, resp] = await okteamAPI(
         `/products/check-id/${formData.idpro}`
