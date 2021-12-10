@@ -173,7 +173,7 @@ const Orders = ({ data, getAllOrders }) => {
       console.log(error);
       return false;
     }
-    const { object, message } = resp.data;
+    const { result, object, message } = resp.data;
     if (!isOK(message)) {
       fetchingOff();
       Fail(message);
@@ -205,6 +205,7 @@ const Orders = ({ data, getAllOrders }) => {
       status: object.status.toString(),
       order_code: object.order_code || "",
     });
+    getAllOrders(result);
     setShow(true);
   }
 

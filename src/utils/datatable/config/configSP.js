@@ -42,6 +42,12 @@ const configSP = {
       },
     },
     {
+      data: "idpro",
+      render: (data, type, row, meta) => {
+        return `<div style="cursor:pointer; width: 80px;><i style="cursor:pointer;" class="far fa-edit"></i></div>`;
+      },
+    },
+    {
       data: "name",
       render: (data, type, row, meta) => {
         if (type === "display") {
@@ -106,7 +112,7 @@ const configSP = {
       data: "category",
       render: (data, type, row, meta) => {
         if (type === "display" || type === "export")
-          return `<div style="width: 200px;">${data.typename}&emsp;<i style="cursor:pointer" class="far fa-edit"></i></div>`;
+          return `<div style="width: 200px;">${data.typename}</div>`;
         return data;
       },
     },
@@ -114,7 +120,7 @@ const configSP = {
       data: "p_brand",
       render: (data, type, row, meta) => {
         if (type === "display" || type === "export")
-          return `<div style="width: 200px;">${data.name}&emsp;<i style="cursor:pointer" class="far fa-edit"></i></div>`;
+          return `<div style="width: 200px;">${data.name}</div>`;
         return data;
       },
     },
@@ -122,7 +128,7 @@ const configSP = {
       data: "ncc",
       render: (data, type, row, meta) => {
         if (type === "display" || type === "export")
-          return `<div style="width: 200px;">${data.nccname}&emsp;<i style="cursor:pointer" class="far fa-edit"></i></div>`;
+          return `<div style="width: 200px;">${data.nccname}</div>`;
         return data;
       },
     },
@@ -211,7 +217,7 @@ const configSP = {
   columnDefs: [
     // { targets: [0], width: "10px" },
     // { targets: "_all", width: "130px" },
-    { className: "text-center", targets: [2, 10] },
+    { className: "text-center", targets: [1, 2, 10] },
   ],
 };
 export default configSP;

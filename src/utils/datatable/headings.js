@@ -87,6 +87,7 @@ export const headingAdmin = [
 // sản phẩm
 export const headingSP = [
   "#",
+  "Chi tiết",
   "Sản phẩm",
   "Mở bán",
   "Giá",

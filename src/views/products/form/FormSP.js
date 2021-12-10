@@ -68,7 +68,7 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
 
   // FILL SELECT LOẠI
   const select_category = useCallback(async () => {
-    fetchingOn();
+    if (!isUpdate) fetchingOn();
     // lay danh sach loai
     const [error, resp] = await okteamAPI("/category/list");
     if (error) {
@@ -145,6 +145,21 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
     setFormData({ ...formData, active: e.target.value === "1" });
   }
 
+  // rút gọn formData để thao tác
+  function compactFormData() {
+    return {
+      ...formData,
+      name: formData.name.trim(),
+      origin: formData.origin.trim(),
+      dvt: formData.dvt.trim(),
+      tags: formData.tags.trim(),
+      idcate: formData.idcate.idcate,
+      idbrand: formData.idbrand.id,
+      username: formData.username.username,
+      description: formData.description.trim(),
+    };
+  }
+
   useEffect(() => {
     select_ncc();
     select_category();
@@ -161,63 +176,59 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
       <Modal.Body>
         <form id="productForm">
           <div className="col">
-            {!isUpdate && (
-              <>
-                <InputGroup
-                  id="idpro"
-                  name="idpro"
-                  text="Mã sản phẩm"
-                  value={formData.idpro}
-                  changed={handleChangeProduct}
-                />
-                <InputGroup
-                  id="name"
-                  name="name"
-                  text="Tên sản phẩm"
-                  value={formData.name}
-                  changed={handleChangeProduct}
-                />
-                <InputGroup
-                  id="pricectv"
-                  name="pricectv"
-                  text="Giá"
-                  type="number"
-                  min="0"
-                  value={formData.pricectv}
-                  changed={handleChangeProduct}
-                />
-                <InputGroup
-                  id="qty"
-                  name="qty"
-                  text="Số lượng"
-                  type="number"
-                  min="0"
-                  value={formData.qty}
-                  changed={handleChangeProduct}
-                />
-                <InputGroup
-                  id="origin"
-                  name="origin"
-                  text="Nơi sản xuất"
-                  value={formData.origin}
-                  changed={handleChangeProduct}
-                />
-                <InputGroup
-                  id="dvt"
-                  name="dvt"
-                  text="Đơn vị tính"
-                  value={formData.dvt}
-                  changed={handleChangeProduct}
-                />
-                <InputGroup
-                  id="tags"
-                  name="tags"
-                  text="Tags"
-                  value={formData.tags}
-                  changed={handleChangeProduct}
-                />
-              </>
-            )}
+            <InputGroup
+              id="idpro"
+              name="idpro"
+              text="Mã sản phẩm"
+              value={formData.idpro}
+              changed={handleChangeProduct}
+            />
+            <InputGroup
+              id="name"
+              name="name"
+              text="Tên sản phẩm"
+              value={formData.name}
+              changed={handleChangeProduct}
+            />
+            <InputGroup
+              id="pricectv"
+              name="pricectv"
+              text="Giá"
+              type="number"
+              min="0"
+              value={formData.pricectv}
+              changed={handleChangeProduct}
+            />
+            <InputGroup
+              id="qty"
+              name="qty"
+              text="Số lượng"
+              type="number"
+              min="0"
+              value={formData.qty}
+              changed={handleChangeProduct}
+            />
+            <InputGroup
+              id="origin"
+              name="origin"
+              text="Nơi sản xuất"
+              value={formData.origin}
+              changed={handleChangeProduct}
+            />
+            <InputGroup
+              id="dvt"
+              name="dvt"
+              text="Đơn vị tính"
+              value={formData.dvt}
+              changed={handleChangeProduct}
+            />
+            <InputGroup
+              id="tags"
+              name="tags"
+              text="Tags"
+              value={formData.tags}
+              changed={handleChangeProduct}
+            />
             <div className="row">
               <InputGroup
                 id="idcate"
@@ -263,88 +274,84 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
               />
             </div>
             <br />
-            {!isUpdate && (
-              <>
-                <div className="col">
-                  <label htmlFor="active" className="form-label">
-                    <b>Trạng thái</b>
-                  </label>
-                  <br />
-                  <InputGroup
-                    nameClass="form-check form-check-inline"
-                    id="active"
-                    name="active"
-                    text="Mở bán"
-                    value="1"
-                    labelClass="form-check-label"
-                    elementClass="form-check-input"
-                    type="radio"
-                    isChecked={formData.active && "checked"}
-                    changed={handletActive}
-                  />
-                  <InputGroup
-                    nameClass="form-check form-check-inline"
-                    id="nonactive"
-                    name="active"
-                    text="Không mở bán"
-                    value="0"
-                    labelClass="form-check-label"
-                    elementClass="form-check-input"
-                    type="radio"
-                    isChecked={!formData.active && "checked"}
-                    changed={handletActive}
-                  />
-                </div>
-                <br />
-                <div className="row">
-                  <Image
-                    text="Chọn ảnh 1"
-                    idFile="link1"
-                    idButton="btnLink1"
-                    classButton="danger"
-                    src={temp0 || "/assets/img/default.jpg"}
-                    changed={(e) => handleImage(e, "0")}
-                  />
-                  <Image
-                    text="Chọn ảnh 2"
-                    idFile="link2"
-                    idButton="btnLink2"
-                    classButton="danger"
-                    src={temp1 || "/assets/img/default.jpg"}
-                    changed={(e) => handleImage(e, "1")}
-                  />
-                  <Image
-                    text="Chọn ảnh 3"
-                    idFile="link3"
-                    idButton="btnLink3"
-                    classButton="danger"
-                    src={temp2 || "/assets/img/default.jpg"}
-                    changed={(e) => handleImage(e, "2")}
-                  />
-                  <Image
-                    text="Chọn ảnh 4"
-                    idFile="link4"
-                    idButton="btnLink4"
-                    classButton="danger"
-                    src={temp3 || "/assets/img/default.jpg"}
-                    changed={(e) => handleImage(e, "3")}
-                  />
-                </div>
-                <br />
-                <br />
-                <div className="form-floating">
-                  <textarea
-                    className="form-control"
-                    id="description"
-                    name="description"
-                    style={{ height: 150 }}
-                    value={formData.description}
-                    onChange={handleChangeProduct}
-                  ></textarea>
-                  <label htmlFor="description">Mô tả</label>
-                </div>
-              </>
-            )}
+            <div className="col">
+              <label htmlFor="active" className="form-label">
+                <b>Trạng thái</b>
+              </label>
+              <br />
+              <InputGroup
+                nameClass="form-check form-check-inline"
+                id="active"
+                name="active"
+                text="Mở bán"
+                value="1"
+                labelClass="form-check-label"
+                elementClass="form-check-input"
+                type="radio"
+                isChecked={formData.active && "checked"}
+                changed={handletActive}
+              />
+              <InputGroup
+                nameClass="form-check form-check-inline"
+                id="nonactive"
+                name="active"
+                text="Không mở bán"
+                value="0"
+                labelClass="form-check-label"
+                elementClass="form-check-input"
+                type="radio"
+                isChecked={!formData.active && "checked"}
+                changed={handletActive}
+              />
+            </div>
+            <br />
+            <div className="row">
+              <Image
+                text="Chọn ảnh 1"
+                idFile="link1"
+                idButton="btnLink1"
+                classButton="danger"
+                src={temp0 || "/assets/img/default.jpg"}
+                changed={(e) => handleImage(e, "0")}
+              />
+              <Image
+                text="Chọn ảnh 2"
+                idFile="link2"
+                idButton="btnLink2"
+                classButton="danger"
+                src={temp1 || "/assets/img/default.jpg"}
+                changed={(e) => handleImage(e, "1")}
+              />
+              <Image
+                text="Chọn ảnh 3"
+                idFile="link3"
+                idButton="btnLink3"
+                classButton="danger"
+                src={temp2 || "/assets/img/default.jpg"}
+                changed={(e) => handleImage(e, "2")}
+              />
+              <Image
+                text="Chọn ảnh 4"
+                idFile="link4"
+                idButton="btnLink4"
+                classButton="danger"
+                src={temp3 || "/assets/img/default.jpg"}
+                changed={(e) => handleImage(e, "3")}
+              />
+            </div>
+            <br />
+            <br />
+            <div className="form-floating">
+              <textarea
+                className="form-control"
+                id="description"
+                name="description"
+                style={{ height: 150 }}
+                value={formData.description}
+                onChange={handleChangeProduct}
+              ></textarea>
+              <label htmlFor="description">Mô tả</label>
+            </div>
             <br />
           </div>
         </form>
@@ -355,21 +362,7 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
             <Button
               variant="primary"
               onClick={() =>
-                saveAll(
-                  {
-                    ...formData,
-                    name: formData.name.trim(),
-                    origin: formData.origin.trim(),
-                    dvt: formData.dvt.trim(),
-                    tags: formData.tags.trim(),
-                    idcate: formData.idcate.idcate,
-                    idbrand: formData.idbrand.id,
-                    username: formData.username.username,
-                    description: formData.description.trim(),
-                  },
-                  "/products/add",
-                  "POST"
-                )
+                saveAll(compactFormData(), "/products/add", "POST")
               }
             >
               Thêm
@@ -378,22 +371,7 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
             <Button
               variant="primary"
               onClick={() =>
-                saveAll(
-                  {
-                    ...formData,
-                    idpro: formData.idpro.trim(),
-                    name: formData.name.trim(),
-                    origin: formData.origin.trim(),
-                    dvt: formData.dvt.trim(),
-                    tags: formData.tags.trim(),
-                    idcate: formData.idcate.idcate,
-                    idbrand: formData.idbrand.id,
-                    username: formData.username.username,
-                    description: formData.description.trim(),
-                  },
-                  "/products/update-all",
-                  "PUT"
-                )
+                saveAll(compactFormData(), "/products/update-all", "PUT")
               }
             >
               Sửa

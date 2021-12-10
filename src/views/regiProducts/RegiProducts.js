@@ -21,8 +21,8 @@ const initialState = {
     value: "",
     label: "Tất cả",
   },
-  price: 0,
-  sl: 0,
+  price: "0",
+  sl: "0",
 };
 
 const RegiProducts = ({ data, getALLRegiP }) => {

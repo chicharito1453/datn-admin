@@ -581,9 +581,7 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
           {!isUpdate ? (
             <Button
               variant="primary"
-              onClick={() =>
-                saveAll(compactFormData(formData), "/order/add", "POST")
-              }
+              onClick={() => saveAll(compactFormData(), "/order/add", "POST")}
             >
               Lưu
             </Button>
@@ -591,11 +589,7 @@ const FormDH = ({ close, saveAll, initValue, isUpdate }) => {
             <Button
               variant="primary"
               onClick={() =>
-                saveAll(
-                  compactFormData(formData),
-                  "/order/update-chitiet",
-                  "PUT"
-                )
+                saveAll(compactFormData(), "/order/update-chitiet", "PUT")
               }
             >
               Sửa

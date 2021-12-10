@@ -15,8 +15,8 @@ import TableSP from "./table/TableSP";
 const initialState = {
   idpro: "",
   name: "",
-  pricectv: 0,
-  qty: 0,
+  pricectv: "0",
+  qty: "0",
   origin: "",
   dvt: "",
   tags: "",
@@ -78,7 +78,7 @@ const Products = ({ data, getAllProducts }) => {
       return false;
     }
     //qty
-    if (!formData.qty || +formData.qty < 0) {
+    if (!formData.qty) {
       Fail("Số lượng sản phẩm không hợp lệ!");
       return false;
     }
@@ -252,25 +252,44 @@ const Products = ({ data, getAllProducts }) => {
   }
 
   // SET DATA LÊN FORM
-  function mapRowtoForm(product) {
+  async function mapRowtoForm(product) {
     if (!product) return;
+    fetchingOn();
+    const [error, resp] = await okteamAPI(
+      `/products/getone?idpro=${product.idpro}`
+    );
+    if (error) {
+      fetchingOff();
+      Fail("Không thực hiện được thao tác!");
+      console.log(error);
+      return false;
+    }
+    const { result, object, message } = resp.data;
+    if (!isOK(message)) {
+      fetchingOff();
+      Fail(message);
+      return false;
+    }
     setIsUpdate(true);
     setInitValue({
-      ...product,
+      ...object,
+      pricectv: object.pricectv + "",
+      qty: object.qty + "",
       idcate: {
-        idcate: product.category.idcate,
-        typename: product.category.typename,
+        idcate: object.category.idcate,
+        typename: object.category.typename,
       },
-      idbrand: { id: product.p_brand.id, name: product.p_brand.name },
+      idbrand: { id: object.p_brand.id, name: object.p_brand.name },
       username: {
-        username: product.ncc.username,
-        nccname: product.ncc.nccname,
+        username: object.ncc.username,
+        nccname: object.ncc.nccname,
       },
-      image0: product.image0 || null,
-      image1: product.image1 || null,
-      image2: product.image2 || null,
-      image3: product.image3 || null,
+      image0: object.image0 || null,
+      image1: object.image1 || null,
+      image2: object.image2 || null,
+      image3: object.image3 || null,
     });
+    getAllProducts(result);
     setShow(true);
   }
 
