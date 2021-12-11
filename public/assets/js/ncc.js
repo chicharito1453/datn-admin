@@ -70,6 +70,9 @@ async function update_ncc(username, value, thaotac, oldValue, element) {
   if (thaotac != 2) {
     fetchingOn();
   }
+  if (thaotac == 8) {
+    value = value.replace(/\r\n|\r|\n/g, "<br>");
+  }
   // tien hanh update
   const [error, resp] = await okteamAPI(
     `/ncc/update/${username}?thaotac=${thaotac}&value=${value.trim()}`,
@@ -92,6 +95,12 @@ async function update_ncc(username, value, thaotac, oldValue, element) {
   if (thaotac == 0) element.value = "";
   if (![0, 2, 8].includes(thaotac)) {
     element.outerHTML = `<input onchange="update_ncc('${username}', this.value, ${thaotac}, '${value.trim()}', this)" value="${value.trim()}">`;
+  }
+  if (thaotac == 8) {
+    element.outerHTML = `<textarea onblur="zoomout(this)" onfocus="zoomin(this)" style="width:200px;height:50px" onchange="update_ncc('${username}', this.value, 8, '${value}', this)">${value.replace(
+      /<br\s?\/?>/g,
+      "\n"
+    )}</textarea>`;
   }
   fetchingOff();
   Success("Cập nhật thông tin thành công!");

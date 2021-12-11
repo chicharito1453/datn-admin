@@ -53,6 +53,10 @@ async function update_sp(idpro, value, thaotac, oldValue, element) {
     value = resp.data.secure_url;
   }
 
+  if (thaotac == 5) {
+    value = value.replace(/\r\n|\r|\n/g, "<br>");
+  }
+
   // tien hanh update
   if (![6, 7, 8, 9].includes(thaotac)) {
     fetchingOn();
@@ -79,6 +83,12 @@ async function update_sp(idpro, value, thaotac, oldValue, element) {
   }
   if ([6, 7, 8, 9].includes(thaotac)) {
     getE(`#img_${thaotac}_sp_${idpro}`).src = value;
+  }
+  if (thaotac == 5) {
+    element.outerHTML = `<textarea onblur="zoomout(this)" onfocus="zoomin(this)" style="width:200px;height:50px" onchange="update_sp('${idpro}', this.value, 5, '${value}', this)" >${value.replace(
+      /<br\s?\/?>/g,
+      "\n"
+    )}</textarea>`;
   }
   fetchingOff();
   Success("Cập nhật thông tin thành công!");

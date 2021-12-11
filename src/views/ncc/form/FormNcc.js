@@ -67,7 +67,7 @@ const FormNcc = ({ close, saveAll, initValue, isUpdate }) => {
       sdt: formData.sdt.trim(),
       city: formData.city.trim(),
       address: formData.address.trim(),
-      description: formData.description.trim(),
+      description: formData.description.trim().replace(/\r\n|\r|\n/g, "<br />"),
     };
   }
 

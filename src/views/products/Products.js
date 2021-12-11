@@ -289,6 +289,7 @@ const Products = ({ data, getAllProducts }) => {
       image1: object.image1 || null,
       image2: object.image2 || null,
       image3: object.image3 || null,
+      description: object.description.replace(/<br\s?\/?>/g, "\n"),
     });
     getAllProducts(result);
     setShow(true);

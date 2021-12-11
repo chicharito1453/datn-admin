@@ -171,7 +171,12 @@ const configNcc = {
       data: "description",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<textarea onblur="zoomout(this)" onfocus="zoomin(this)" style="width:200px;height:50px" onchange="update_ncc('${row.username}', this.value, 8, '${data}', this)">${data}</textarea>`;
+          return `<textarea onblur="zoomout(this)" onfocus="zoomin(this)" style="width:200px;height:50px" onchange="update_ncc('${
+            row.username
+          }', this.value, 8, '${data}', this)">${data.replace(
+            /<br\s?\/?>/g,
+            "\n"
+          )}</textarea>`;
         }
         return data;
       },

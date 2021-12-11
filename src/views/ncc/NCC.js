@@ -148,6 +148,7 @@ const NCC = ({ data, getAllNCC }) => {
         : "Cập nhật thông tin thành công!"
     );
     setShow(false);
+    setInitValue(initialState);
     getAllNCC(result);
     return true;
   }
@@ -201,6 +202,7 @@ const NCC = ({ data, getAllNCC }) => {
     }
     fetchingOff();
     object.password = "updating";
+    object.description = object.description.replace(/<br\s?\/?>/g, "\n");
     getAllNCC(result);
     setInitValue(object);
     setShow(true);

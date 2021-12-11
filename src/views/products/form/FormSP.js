@@ -14,10 +14,10 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
   const [Nccs, setNccs] = useState(null);
   const [Nhans, setNhans] = useState(null);
   const [formData, setFormData] = useState(initValue);
-  const [temp0, setTemp0] = useState(initValue.image0 || null);
-  const [temp1, setTemp1] = useState(initValue.image1 || null);
-  const [temp2, setTemp2] = useState(initValue.image2 || null);
-  const [temp3, setTemp3] = useState(initValue.image3 || null);
+  const [temp0, setTemp0] = useState(initValue.image0);
+  const [temp1, setTemp1] = useState(initValue.image1);
+  const [temp2, setTemp2] = useState(initValue.image2);
+  const [temp3, setTemp3] = useState(initValue.image3);
 
   // FILL SELECT NCC
   const select_ncc = useCallback(async () => {
@@ -68,7 +68,7 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
 
   // FILL SELECT LOẠI
   const select_category = useCallback(async () => {
-    if (!isUpdate) fetchingOn();
+    fetchingOn();
     // lay danh sach loai
     const [error, resp] = await okteamAPI("/category/list");
     if (error) {
@@ -83,13 +83,14 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
       Fail(message);
       return false;
     }
+    fetchingOff();
     setLoais([
       { value: "", label: "Tất cả" },
       ...result.map((cate) => ({ value: cate.idcate, label: cate.typename })),
     ]);
     onchangeLoai();
     return true;
-  }, [onchangeLoai, isUpdate]);
+  }, [onchangeLoai]);
 
   // SET PRODUCT
   function handleChangeProduct(e) {
@@ -156,7 +157,7 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
       idcate: formData.idcate.idcate,
       idbrand: formData.idbrand.id,
       username: formData.username.username,
-      description: formData.description.trim(),
+      description: formData.description.trim().replace(/\r\n|\r|\n/g, "<br />"),
     };
   }
 
