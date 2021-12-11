@@ -1,4 +1,4 @@
-// cap nhat thuoc tinh
+// cap nhat nhanh thuoc tinh
 async function update_tt(id, value, thaotac, element) {
   fetchingOn();
   const [error, resp] = await okteamAPI(

@@ -89,7 +89,7 @@ const configDH = {
     {
       data: "customer",
       render: (data, type, row, meta) => {
-        return `<input style="width: 250px;" onchange="update_order('${row.idorder}', this.value, 1, '${data}', this)" value="${data}"   />`;
+        return `<input style="width: 250px;" onchange="update_order('${row.idorder}', this.value, 1, '', this)" value="${data}"   />`;
       },
     },
     {
@@ -160,7 +160,7 @@ const configDH = {
       data: "address",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<input style="width: 500px;" onchange="update_order('${row.idorder}', this.value, 5, '${data}', this)"  value="${data}" />`;
+          return `<input style="width: 500px;" onchange="update_order('${row.idorder}', this.value, 5, '', this)"  value="${data}" />`;
         }
         return data;
       },
@@ -171,7 +171,7 @@ const configDH = {
         if (type === "display") {
           return `<input onchange="update_order('${
             row.idorder
-          }', this.value, 6, '${data}', this)"  value="${data || ""}" />`;
+          }', this.value, 6, '', this)"  value="${data || ""}" />`;
         }
         return data;
       },

@@ -51,7 +51,7 @@ const configSP = {
       data: "name",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<input onchange="update_sp('${row.idpro}', this.value, 0, '${data}', this)"  value="${data}" />`;
+          return `<input onchange="update_sp('${row.idpro}', this.value, 0, '', this)"  value="${data}" />`;
         }
         return data;
       },
@@ -94,7 +94,7 @@ const configSP = {
       data: "origin",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<input onchange="update_sp('${row.idpro}', this.value, 3, '${data}', this)"  value="${data}" />`;
+          return `<input onchange="update_sp('${row.idpro}', this.value, 3, '', this)"  value="${data}" />`;
         }
         return data;
       },
@@ -103,7 +103,7 @@ const configSP = {
       data: "dvt",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<input onchange="update_sp('${row.idpro}', this.value, 4, '${data}', this)"  value="${data}" />`;
+          return `<input onchange="update_sp('${row.idpro}', this.value, 4, '', this)"  value="${data}" />`;
         }
         return data;
       },
@@ -138,7 +138,7 @@ const configSP = {
         if (type === "display" || type === "export")
           return `<textarea onblur="zoomout(this)" onfocus="zoomin(this)" style="width:200px;height:50px" onchange="update_sp('${
             row.idpro
-          }', this.value, 5, '${data}', this)" >${data.replace(
+          }', this.value, 5, '', this)" >${data.replace(
             /<br\s?\/?>/g,
             "\n"
           )}</textarea>`;

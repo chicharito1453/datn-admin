@@ -1,25 +1,9 @@
-// cap nhat ncc
+// cap nhat nhanh ncc
 async function update_ncc(username, value, thaotac, oldValue, element) {
   // password
   if (thaotac == 0) {
     if (!value.trim()) {
       Fail("Mật khẩu không hợp lệ!");
-      return false;
-    }
-  }
-  // fullname
-  if (thaotac == 9) {
-    if (!value.trim()) {
-      Fail("Họ tên không hợp lệ!");
-      element.value = oldValue;
-      return false;
-    }
-  }
-  // nccname
-  if (thaotac == 1) {
-    if (!value.trim()) {
-      Fail("Tên nhà cung cấp hợp lệ!");
-      element.value = oldValue;
       return false;
     }
   }
@@ -51,22 +35,6 @@ async function update_ncc(username, value, thaotac, oldValue, element) {
       return false;
     }
   }
-  // city
-  if (thaotac == 5) {
-    if (!value.trim()) {
-      Fail("Thành phố không hợp lệ!");
-      element.value = oldValue;
-      return false;
-    }
-  }
-  // address
-  if (thaotac == 6) {
-    if (!value.trim()) {
-      Fail("Địa chỉ không hợp lệ!");
-      element.value = oldValue;
-      return false;
-    }
-  }
   if (thaotac != 2) {
     fetchingOn();
   }
@@ -84,20 +52,28 @@ async function update_ncc(username, value, thaotac, oldValue, element) {
     console.log(error);
     return false;
   }
-  const { message } = resp.data;
+  const { object, message } = resp.data;
   if (!isOK(message)) {
     fetchingOff();
     Fail(message);
-    element.value = oldValue;
+    if (thaotac == 1) {
+      element.value = object.nccname;
+    }
+    if (thaotac == 6) {
+      element.value = object.address;
+    }
+    if (thaotac == 9) {
+      element.value = object.fullname;
+    }
     return false;
   }
   if (thaotac == 2) getE(`#img_ncc_${username}`).src = value;
   if (thaotac == 0) element.value = "";
-  if (![0, 2, 8].includes(thaotac)) {
+  if (![0, 1, 6, 2, , 8, 9].includes(thaotac)) {
     element.outerHTML = `<input onchange="update_ncc('${username}', this.value, ${thaotac}, '${value.trim()}', this)" value="${value.trim()}">`;
   }
   if (thaotac == 8) {
-    element.outerHTML = `<textarea onblur="zoomout(this)" onfocus="zoomin(this)" style="width:200px;height:50px" onchange="update_ncc('${username}', this.value, 8, '${value}', this)">${value.replace(
+    element.outerHTML = `<textarea onblur="zoomout(this)" onfocus="zoomin(this)" style="width:200px;height:50px" onchange="update_ncc('${username}', this.value, 8, '', this)">${value.replace(
       /<br\s?\/?>/g,
       "\n"
     )}</textarea>`;
@@ -106,7 +82,7 @@ async function update_ncc(username, value, thaotac, oldValue, element) {
   Success("Cập nhật thông tin thành công!");
   return true;
 }
-// cap nhat trang thai ncc
+// cap nhat nhanh trang thai ncc
 async function update_trangthai_ncc(username, isChecked, element) {
   fetchingOn();
   const [error, resp] = await okteamAPI(

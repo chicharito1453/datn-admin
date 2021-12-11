@@ -82,7 +82,7 @@ const configCtv = {
       data: "fullname",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<input onchange="update_ctv('${row.username}', this.value, 1, '${data}', this)"  value="${data}" />`;
+          return `<input onchange="update_ctv('${row.username}', this.value, 1, '', this)"  value="${data}" />`;
         }
         return data;
       },
@@ -154,7 +154,7 @@ const configCtv = {
       data: "address",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<input onchange="update_ctv('${row.username}', this.value, 6, '${data}', this)"  value="${data}" />`;
+          return `<input onchange="update_ctv('${row.username}', this.value, 6, '', this)"  value="${data}" />`;
         }
         return data;
       },

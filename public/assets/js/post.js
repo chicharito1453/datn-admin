@@ -1,3 +1,4 @@
+// cap nhat nhanh bai viet
 async function update_post(idpost, value, thaotac, element) {
   // image
   if (thaotac == 2) {

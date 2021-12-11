@@ -82,7 +82,7 @@ const configNcc = {
       data: "fullname",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<input onchange="update_ncc('${row.username}', this.value, 9, '${data}', this)"  value="${data}" />`;
+          return `<input onchange="update_ncc('${row.username}', this.value, 9, '', this)"  value="${data}" />`;
         }
         return data;
       },
@@ -91,7 +91,7 @@ const configNcc = {
       data: "nccname",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<input onchange="update_ncc('${row.username}', this.value, 1, '${data}', this)"  value="${data}" />`;
+          return `<input onchange="update_ncc('${row.username}', this.value, 1, '', this)"  value="${data}" />`;
         }
         return data;
       },
@@ -151,7 +151,7 @@ const configNcc = {
       data: "address",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<input onchange="update_ncc('${row.username}', this.value, 6, '${data}', this)"  value="${data}" />`;
+          return `<input onchange="update_ncc('${row.username}', this.value, 6, '', this)"  value="${data}" />`;
         }
         return data;
       },
@@ -162,7 +162,7 @@ const configNcc = {
         if (type === "display") {
           return `<input onchange="update_ncc('${
             row.username
-          }', this.value, 7, '${data}', this)"  value="${data || ""}" />`;
+          }', this.value, 7, '', this)"  value="${data || ""}" />`;
         }
         return data;
       },
@@ -173,7 +173,7 @@ const configNcc = {
         if (type === "display") {
           return `<textarea onblur="zoomout(this)" onfocus="zoomin(this)" style="width:200px;height:50px" onchange="update_ncc('${
             row.username
-          }', this.value, 8, '${data}', this)">${data.replace(
+          }', this.value, 8, '', this)">${data.replace(
             /<br\s?\/?>/g,
             "\n"
           )}</textarea>`;

@@ -1,3 +1,4 @@
+// cap nhat nhanh dang ky sp
 async function update_regi(idregi, value, oldValue, element) {
   if (!value || +value < 0) {
     Fail("Giá không hợp lệ!");
@@ -15,7 +16,7 @@ async function update_regi(idregi, value, oldValue, element) {
     console.log(error);
     return false;
   }
-  const { result, message } = resp.data;
+  const { message } = resp.data;
   if (!isOK(message)) {
     fetchingOff();
     Fail(message);

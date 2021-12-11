@@ -1,4 +1,4 @@
-// cap nhat nhan
+// cap nhat nhanh nhan
 async function update_nhan(id, value, element) {
   fetchingOn();
   const [error, resp] = await okteamAPI(

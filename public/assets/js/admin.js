@@ -1,17 +1,9 @@
-// cap nhat admin
+// cap nhat nhanh admin
 async function update_admin(username, value, thaotac, oldValue, element) {
   // password
   if (thaotac == 0) {
     if (!value.trim()) {
       Fail("Mật khẩu không hợp lệ!");
-      return false;
-    }
-  }
-  // fullname
-  if (thaotac == 1) {
-    if (!value.trim()) {
-      Fail("Họ tên không hợp lệ!");
-      element.value = oldValue;
       return false;
     }
   }
@@ -43,14 +35,6 @@ async function update_admin(username, value, thaotac, oldValue, element) {
       return false;
     }
   }
-  // address
-  if (thaotac == 6) {
-    if (!value.trim()) {
-      Fail("Địa chỉ không hợp lệ!");
-      element.value = oldValue;
-      return false;
-    }
-  }
   if (thaotac != 2) {
     fetchingOn();
   }
@@ -65,11 +49,16 @@ async function update_admin(username, value, thaotac, oldValue, element) {
     console.log(error);
     return false;
   }
-  const { message } = resp.data;
+  const { object, message } = resp.data;
   if (!isOK(message)) {
     fetchingOff();
     Fail(message);
-    element.value = oldValue;
+    if (thaotac == 1) {
+      element.value = object.fullname;
+    }
+    if (thaotac == 6) {
+      element.value = object.address;
+    }
     return false;
   }
   if (thaotac == 2) {
@@ -80,7 +69,7 @@ async function update_admin(username, value, thaotac, oldValue, element) {
       getE(".profile_image").src = value;
     }
   }
-  if (![0, 2, 3].includes(thaotac)) {
+  if (![0, 1, 2, 3, 6].includes(thaotac)) {
     element.outerHTML = `<input onchange="update_admin('${username}', this.value, ${thaotac}, '${value.trim()}', this)" ${
       thaotac == 4 && 'style="width: 350px;"'
     } value="${value.trim()}">`;
@@ -89,7 +78,7 @@ async function update_admin(username, value, thaotac, oldValue, element) {
   Success("Cập nhật thông tin thành công");
   return true;
 }
-// cap nhat trang thai admin
+// cap nhat nhanh trang thai admin
 async function update_trangthai_admin(username, isChecked, element) {
   fetchingOn();
   const [error, resp] = await okteamAPI(

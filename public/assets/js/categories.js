@@ -1,4 +1,4 @@
-// cap nhat loai
+// cap nhat nhanh loai
 async function update_loai(idcate, value, thaotac, oldValue, element) {
   fetchingOn();
   if (thaotac == "1") {

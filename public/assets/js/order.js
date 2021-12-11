@@ -1,5 +1,6 @@
+// cap nhat nhanh don hang
 async function update_order(id, value, thaotac, oldValue, element) {
-  if (thaotac != 0 && thaotac != 6) {
+  if (![0, 1, 5, 6].includes(thaotac)) {
     if (!value.trim()) {
       Fail("Giá trị không hợp lệ!");
       element.value = oldValue;
@@ -21,7 +22,12 @@ async function update_order(id, value, thaotac, oldValue, element) {
   if (!isOK(message)) {
     fetchingOff();
     Fail(message);
-    element.value = oldValue;
+    if (thaotac == 1) {
+      element.value = object.customer;
+    }
+    if (thaotac == 5) {
+      element.value = object.address;
+    }
     return false;
   }
   fetchingOff();
@@ -29,7 +35,7 @@ async function update_order(id, value, thaotac, oldValue, element) {
   if (thaotac == 0) {
     getE(`#datefinish-${id}`).innerHTML = object;
   }
-  if (thaotac != 0) {
+  if (![0, 1, 5].includes(thaotac)) {
     element.outerHTML = `<input onchange="update_order('${id}', this.value, ${thaotac}, '${value.trim()}', this)" value="${value.trim()}">`;
   }
   return true;
