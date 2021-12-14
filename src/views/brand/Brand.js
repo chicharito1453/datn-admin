@@ -59,11 +59,14 @@ const Brand = ({ data, getAllBrands }) => {
     }
     const { result } = resp.data;
     fetchingOff();
-    const newResult = result.map((rs) => ({
-      value: rs.idcate,
-      label: rs.typename,
-    }));
-    setOptions([{ value: "", label: "Tất cả" }, ...newResult]);
+    const newResult = result.filter((rs) => rs.lv === 1);
+    setOptions([
+      { value: "", label: "Tất cả" },
+      ...newResult.map((rs) => ({
+        value: rs.idcate,
+        label: rs.typename,
+      })),
+    ]);
     onchangeLoai();
     return true;
   }, [getAllBrands, onchangeLoai]);

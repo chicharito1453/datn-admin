@@ -87,10 +87,9 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
       return false;
     }
     fetchingOff();
-    const categories = result.filter((rs) => rs.parent);
     setLoais([
       { value: "", label: "Tất cả" },
-      ...categories.map((cate) => ({
+      ...result.map((cate) => ({
         value: cate.idcate,
         label: cate.typename,
       })),
