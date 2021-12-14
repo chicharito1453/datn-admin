@@ -1,5 +1,5 @@
 // url api okteam
-const REACT_APP_GATE_V1 = "http://localhost:8080/api/v1";
+const REACT_APP_GATE_V1 = "//www.bigmarketokteam.xyz:8080/datn/api/v1";
 const REACT_APP_UPLOAD_PRESET = "x2qgwhlm";
 const REACT_APP_UPLOAD_URL =
   "https://api.cloudinary.com/v1_1/okteam/image/upload";
