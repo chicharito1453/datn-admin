@@ -40,31 +40,34 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
   }, []);
 
   //FILL SELECT NHÃN
-  const onchangeLoai = useCallback(async (select, isFetch) => {
-    const idcate = select ? select.value : "";
-    if (isFetch) fetchingOn();
-    const [error, resp] = await okteamAPI(
-      `/brand/list${idcate && `?idcate=${idcate}`}`
-    );
-    if (error) {
+  const onchangeLoai = useCallback(
+    async (isFetch) => {
+      const idcate = formData.idcate.idcate || "";
+      if (isFetch) fetchingOn();
+      const [error, resp] = await okteamAPI(
+        `/brand/list${idcate && `?idcate=${idcate}`}`
+      );
+      if (error) {
+        fetchingOff();
+        Fail("Không thực hiện được thao tác!");
+        console.log(error);
+        return false;
+      }
+      const { result, message } = resp.data;
+      if (!isOK(message)) {
+        fetchingOff();
+        Fail(message);
+        return false;
+      }
       fetchingOff();
-      Fail("Không thực hiện được thao tác!");
-      console.log(error);
-      return false;
-    }
-    const { result, message } = resp.data;
-    if (!isOK(message)) {
-      fetchingOff();
-      Fail(message);
-      return false;
-    }
-    fetchingOff();
-    setNhans([
-      { value: "", label: "Tất cả" },
-      ...result.map((nhan) => ({ value: nhan.id, label: nhan.name })),
-    ]);
-    return true;
-  }, []);
+      setNhans([
+        { value: "", label: "Tất cả" },
+        ...result.map((nhan) => ({ value: nhan.id, label: nhan.name })),
+      ]);
+      return true;
+    },
+    [formData.idcate.idcate]
+  );
 
   // FILL SELECT LOẠI
   const select_category = useCallback(async () => {
@@ -84,9 +87,13 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
       return false;
     }
     fetchingOff();
+    const categories = result.filter((rs) => rs.parent);
     setLoais([
       { value: "", label: "Tất cả" },
-      ...result.map((cate) => ({ value: cate.idcate, label: cate.typename })),
+      ...categories.map((cate) => ({
+        value: cate.idcate,
+        label: cate.typename,
+      })),
     ]);
     onchangeLoai();
     return true;
@@ -130,7 +137,7 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
         idcate: { idcate: e.value, typename: e.label },
         idbrand: { id: "", name: "Tất cả" },
       });
-      onchangeLoai(e, true);
+      onchangeLoai(true);
     } else if (thaotac === "1") {
       setFormData({ ...formData, idbrand: { id: e.value, name: e.label } });
     } else {
