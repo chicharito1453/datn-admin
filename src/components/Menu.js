@@ -32,7 +32,7 @@ const menuLink = [
 const Menu = () => {
   const redirect = (e) => {
     e.preventDefault();
-    window.location = "https://www.youtube.com/";
+    window.location = "http://bm.bigmarketokteam.xyz/";
   };
 
   return (
