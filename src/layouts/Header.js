@@ -1,7 +1,7 @@
 const Header = () => {
   function handleLogout() {
     localStorage.removeItem("myData");
-    window.location.reload();
+    window.location = "http://admin.bigmarketokteam.xyz/login";
   }
 
   return (
