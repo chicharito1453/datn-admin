@@ -42,7 +42,7 @@ const Login = () => {
     }
     saveToLS("myData", result[0]);
     const { location } = history;
-    window.location = `http://localhost:8000${
+    window.location = `http://admin.bigmarketokteam.xyz${
       location.state ? location.state.next : "/"
     }`;
   }
