@@ -20,7 +20,7 @@ const initialState = {
   origin: "",
   dvt: "",
   tags: "",
-  idcate: { idcate: "", typename: "Tất cả" },
+  idcate: { idcate: "", typename: "Tất cả", parent: "" },
   idbrand: { id: "", name: "Tất cả" },
   username: { username: "", nccname: "Tất cả" },
   active: false,
@@ -279,6 +279,7 @@ const Products = ({ data, getAllProducts }) => {
       idcate: {
         idcate: object.category.idcate,
         typename: object.category.typename,
+        parent: object.category.parent,
       },
       idbrand: { id: object.p_brand.id, name: object.p_brand.name },
       username: {

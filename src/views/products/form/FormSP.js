@@ -11,6 +11,9 @@ import InputGroup from "../../../components/InputGroup";
 
 const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
   const [Loais, setLoais] = useState(null);
+  const [loaiLv2, setloaiLv2] = useState(null);
+  const [allLoai, setAllLoai] = useState(null);
+  const [idcate2, setIdcate2] = useState({ value: "", label: "Tất cả" });
   const [Nccs, setNccs] = useState(null);
   const [Nhans, setNhans] = useState(null);
   const [formData, setFormData] = useState(initValue);
@@ -42,10 +45,9 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
   //FILL SELECT NHÃN
   const onchangeLoai = useCallback(
     async (isFetch) => {
-      const idcate = formData.idcate.idcate || "";
       if (isFetch) fetchingOn();
       const [error, resp] = await okteamAPI(
-        `/brand/list${idcate && `?idcate=${idcate}`}`
+        `/brand/list${idcate2.value && `?idcate=${idcate2.value}`}`
       );
       if (error) {
         fetchingOff();
@@ -66,7 +68,7 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
       ]);
       return true;
     },
-    [formData.idcate.idcate]
+    [idcate2.value]
   );
 
   // FILL SELECT LOẠI
@@ -87,16 +89,32 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
       return false;
     }
     fetchingOff();
+    const categories = result.filter((rs) => rs.lv === 1);
+    const cateLv2 = idcate2.value
+      ? result.filter((rs) => rs.parent === idcate2.value)
+      : result.filter((rs) => rs.lv === 2);
     setLoais([
       { value: "", label: "Tất cả" },
-      ...result.map((cate) => ({
+      ...categories.map((cate) => ({
         value: cate.idcate,
         label: cate.typename,
       })),
     ]);
+    setloaiLv2([
+      { value: "", label: "Tất cả" },
+      ...cateLv2.map((cate) => ({
+        value: cate.idcate,
+        label: cate.typename,
+      })),
+    ]);
+    setAllLoai(result);
+    if (isUpdate) {
+      const cate = result.find((rs) => rs.idcate === formData.idcate.parent);
+      setIdcate2({ value: cate.idcate, label: cate.typename });
+    }
     onchangeLoai();
     return true;
-  }, [onchangeLoai]);
+  }, [onchangeLoai, idcate2.value, isUpdate, formData.idcate.parent]);
 
   // SET PRODUCT
   function handleChangeProduct(e) {
@@ -133,12 +151,26 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
     if (thaotac === "0") {
       setFormData({
         ...formData,
-        idcate: { idcate: e.value, typename: e.label },
+        idcate: { idcate: "", typename: "Tất cả" },
         idbrand: { id: "", name: "Tất cả" },
       });
+      setIdcate2({ value: e.value, label: e.label });
+      const list = allLoai.filter((rs) => rs.parent === e.value);
+      setloaiLv2([
+        { value: "", label: "Tất cả" },
+        ...list.map((cate) => ({
+          value: cate.idcate,
+          label: cate.typename,
+        })),
+      ]);
       onchangeLoai(true);
     } else if (thaotac === "1") {
       setFormData({ ...formData, idbrand: { id: e.value, name: e.label } });
+    } else if (thaotac === "2") {
+      setFormData({
+        ...formData,
+        idcate: { idcate: e.value, typename: e.label },
+      });
     } else {
       setFormData({
         ...formData,
@@ -160,7 +192,7 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
       origin: formData.origin.trim(),
       dvt: formData.dvt.trim(),
       tags: formData.tags.trim(),
-      idcate: formData.idcate.idcate,
+      idcate: idcate2.value ? formData.idcate.idcate : null,
       idbrand: formData.idbrand.id,
       username: formData.username.username,
       description: formData.description.trim().replace(/\r\n|\r|\n/g, "<br />"),
@@ -243,13 +275,22 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
                 name="idcate"
                 text="Loại hàng"
                 options={Loais}
+                value={idcate2}
+                changed={(e) => {
+                  handleSelect(e, "0");
+                }}
+              />
+              <InputGroup
+                id="idcate2"
+                type="select"
+                name="idcate2"
+                text="Loại chi tiết"
+                options={loaiLv2}
                 value={{
                   value: formData.idcate.idcate,
                   label: formData.idcate.typename,
                 }}
-                changed={(e) => {
-                  handleSelect(e, "0");
-                }}
+                changed={(e) => handleSelect(e, "2")}
               />
               <InputGroup
                 id="idbrand"
@@ -276,7 +317,7 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
                   label: formData.username.nccname,
                 }}
                 changed={(e) => {
-                  handleSelect(e, "2");
+                  handleSelect(e, "3");
                 }}
               />
             </div>
