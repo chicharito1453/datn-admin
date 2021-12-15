@@ -45,7 +45,7 @@ const configRegiP = {
       data: "idregi",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<div style="width:100px;">${data}</div>`;
+          return `<div style="width:80px;">${data}</div>`;
         }
         return data;
       },
@@ -81,15 +81,6 @@ const configRegiP = {
       data: "products",
       render: (data, type, row, meta) => {
         if (type === "display") {
-          return `<p>${data.idpro}</p>`;
-        }
-        return data.idpro;
-      },
-    },
-    {
-      data: "products",
-      render: (data, type, row, meta) => {
-        if (type === "display") {
           return `<div style="width: 90px;" >${data.ncc.username}</div>`;
         }
         return data.ncc.username;
@@ -99,7 +90,7 @@ const configRegiP = {
   columnDefs: [
     // { targets: [0], width: "400px" },
     // { targets: "_all", width: "70%" },
-    { className: "text-center", targets: [1] },
+    { className: "text-center", targets: [1, 2, 3] },
   ],
 };
 export default configRegiP;
