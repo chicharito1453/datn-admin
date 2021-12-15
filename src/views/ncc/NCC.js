@@ -204,7 +204,7 @@ const NCC = ({ data, getAllNCC }) => {
     object.password = "updating";
     object.description = object.description.replace(/<br\s?\/?>/g, "\n");
     getAllNCC(result);
-    setInitValue(object);
+    setInitValue({ ...object, idghn: object.idghn || "" });
     setShow(true);
   }
 
