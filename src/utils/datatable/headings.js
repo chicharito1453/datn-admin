@@ -112,10 +112,11 @@ export const headingTT = ["STT", "Thuộc tính", "Giá trị", "#"];
 // sp đăng ký
 export const headingRegiP = [
   "#",
-  "Mã đăng ký",
+  "Mã đk",
   "Cộng tác viên",
   "Giá",
   "Sản phẩm",
+  "Mã",
   "Nhà cung cấp",
 ];
 // đơn hàng

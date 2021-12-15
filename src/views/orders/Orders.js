@@ -180,10 +180,6 @@ const Orders = ({ data, getAllOrders }) => {
       return false;
     }
     fetchingOff();
-    if ([1, 2, 5].includes(object.status)) {
-      Fail("Tạng thái đơn hàng không phù hợp để cập nhật!");
-      return;
-    }
     const tinh = object.tinh.split("-");
     const huyen = object.huyen.split("-");
     const xa = object.xa.split("-");

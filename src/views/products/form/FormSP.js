@@ -221,6 +221,7 @@ const FormSP = ({ close, saveAll, initValue, isUpdate }) => {
               text="Mã sản phẩm"
               value={formData.idpro}
               changed={handleChangeProduct}
+              disabled={isUpdate}
             />
             <InputGroup
               id="name"

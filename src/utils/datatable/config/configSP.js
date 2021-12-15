@@ -113,7 +113,7 @@ const configSP = {
       render: (data, type, row, meta) => {
         if (type === "display" || type === "export")
           return `<div style="width: 200px;">${data.typename}</div>`;
-        return data;
+        return data.typename;
       },
     },
     {
@@ -121,7 +121,7 @@ const configSP = {
       render: (data, type, row, meta) => {
         if (type === "display" || type === "export")
           return `<div style="width: 200px;">${data.name}</div>`;
-        return data;
+        return data.name;
       },
     },
     {
@@ -129,7 +129,7 @@ const configSP = {
       render: (data, type, row, meta) => {
         if (type === "display" || type === "export")
           return `<div style="width: 200px;">${data.nccname}</div>`;
-        return data;
+        return data.nccname;
       },
     },
     {
