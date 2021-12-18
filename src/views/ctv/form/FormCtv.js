@@ -75,6 +75,7 @@ const FormCtv = ({ close, saveAll, initValue, isUpdate }) => {
                 id="username"
                 name="username"
                 text="Tài khoản"
+                disabled={isUpdate}
                 value={formData.username}
                 changed={handleChangeCtv}
               />
