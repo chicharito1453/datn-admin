@@ -99,12 +99,13 @@ const Orders = ({ data, getAllOrders }) => {
   async function saveAll(formData, endpoint, method) {
     if (!check_form(formData)) return;
     // gan tinh, huyenm xa vao dia chi
+    const tinh = formData.tinh.split("-");
+    const huyen = formData.huyen.split("-");
+    const xa = formData.xa.split("-");
     formData.address =
       method === "PUT"
         ? formData.address.trim()
-        : `${formData.address.trim()}- ${formData.xa.label}- ${
-            formData.huyen.label
-          }-${formData.tinh.label}`;
+        : `${formData.address.trim()} - ${xa[1]} - ${huyen[1]} - ${tinh[1]}`;
     fetchingOn();
     const [error, resp] = await okteamAPI(endpoint, method, formData);
     if (error) {
